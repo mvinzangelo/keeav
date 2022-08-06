@@ -4,20 +4,11 @@
         <p>Article headline:
         <h1>HEADLINE</h1>
         </p>
-        <p>Publisher icon: <img class="publisher-logo"
-                src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png" alt="Logo"> </p>
-        <p>Article picture: <img class="article-img"
-                src="https://cdn.cnn.com/cnnnext/dam/assets/220806023306-zaporizhzhia-nuclear-plant-file-exlarge-169.jpg"
-                alt="Article image"> </p>
-        <p>Author name: <span>James Doe</span></p>
-        <p>Date published: <span>mm/dd/yyyy</span></p>
-        <p>Description: <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Sed turpis tincidunt id aliquet risus feugiat in ante. Eleifend mi in
-                null posuere. Integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus. Nulla facilisi
-                cras
-                ullamcorper. Ac ut consequat semper viverra nam.
-            </span></p>
+        <p>Publisher icon: <img class="publisher-logo" :src="publisherLogoLink" alt="Logo"> </p>
+        <p>Article picture: <img class="article-img" :src="articlePictureLink" alt="Article image"> </p>
+        <p>Author name: <span>{{ author }}</span></p>
+        <p>Date published: <span>{{ date }}</span></p>
+        <p>Description: <span> {{ description }}</span></p>
 
     </div>
 </template>
@@ -26,6 +17,12 @@
 export default {
     data() {
         return {
+            headline: "HEADLINE",
+            publisherLogoLink: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png",
+            articlePictureLink: "https://cdn.cnn.com/cnnnext/dam/assets/220806023306-zaporizhzhia-nuclear-plant-file-exlarge-169.jpg",
+            author: "John Doe",
+            date: "mm/dd/yyyy",
+            description: "Lorem ipsum dolor"
         }
     },
     props: {
