@@ -1,6 +1,9 @@
 <template>
     <div class="block">
-        Article: <a v-bind:href="link">{{ link }}</a>
+        <p>Article: <a v-bind:href="link">{{ link }}</a></p>
+        <p>Publisher icon: <img class="publisher-logo"
+                src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png" alt="Logo"> </p>
+
     </div>
 </template>
 
@@ -35,5 +38,11 @@ export default {
     width: 500px;
     height: 500px;
     background-color: black;
+}
+
+.publisher-logo {
+    height: 40px;
+    width: auto;
+    border-radius: 100%;
 }
 </style>
