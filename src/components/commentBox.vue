@@ -30,6 +30,7 @@ export default {
         <div id="commentMaker">
             <p>Where the comment would be typed initialy: {{desiredComment}}</p>
             <textarea v-model="desiredComment" placeholder="Comment..."></textarea>
+            <button class="commentSubmit">&#x27A1</button>
         </div>
     </div>
 </template>
