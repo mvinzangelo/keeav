@@ -1,12 +1,13 @@
 <template>
-    <div class="block"></div>
+    <div class="block">
+        Article: <a v-bind:href="link">{{ link }}</a>
+    </div>
 </template>
 
 <script>
 export default {
     data() {
         return {
-
         }
     },
     props: {
