@@ -1,6 +1,9 @@
 <template>
     <div class="block">
         <p>Article: <a v-bind:href="link">{{ link }}</a></p>
+        <p>Article headline:
+        <h1>HEADLINE</h1>
+        </p>
         <p>Publisher icon: <img class="publisher-logo"
                 src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png" alt="Logo"> </p>
         <p>Article picture: <img class="article-img"
