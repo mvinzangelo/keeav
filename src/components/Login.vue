@@ -8,46 +8,86 @@ export default {
     data() {
         return {
             // responsive variables go here
-            createAcc: true,
-            userNotValid: false,
-            user: '',
-            pass: '',
-            userError: ''
-            // ex: count: 0,
-            //need a submit button
-            //maybe one day we will have a sign in with other sites button
+            acc: {
+                createAcc: true,
+                userNotValid: false,
+                passNotValid: false,
+                user: '',
+                userError: '',
+                pass: '',
+                passError: '',
+                confirmPass: '',
+                confirmPassError: '',
+                email: '',
+                emailError: '',
+                dob: '',
+                dobError: '',
+            }
         }
+        // ex: count: 0,
+        //need a submit button
+        //maybe one day we will have a sign in with other sites button
     },
     methods: {
-        emptyRes(message) {
-            this.name = "emptyRes";
-            this.message = message;
+        resetLogin() {
+            this.$data.acc.createAcc = !this.$data.acc.createAcc;
+            this.$data.acc.userNotValid = false;
+            this.$data.acc.passNotValid = false;
+            this.$data.acc.user = '';
+            this.$data.acc.userError = '';
+            this.$data.acc.pass = '';
+            this.$data.acc.passError = '';
+            this.$data.acc.confirmPass = '';
+            this.$data.acc.confirmPassError = '';
+            this.$data.acc.email = '';
+            this.$data.acc.emailError = '';
+            this.$data.acc.dob = '';
+            this.$data.acc.dobError = '';
         },
         isLoginUserValid(user) {
             try {
                 if (!user.length) {
-                    throw new emptyRes("Your username must contain characters!");
+                    throw new Error("Your username must contain characters!");
                 }
             } catch (e) {
-                userNotValid = true;
-                userError = e.message;
+                this.$data.acc.userNotValid = true;
+                this.$data.acc.userError = e.message;
+                return;
             }
-            if (name.search(/[^A-Za-z\s]/) != -1) {
-                throw new invalidPas("Invalid name");
+            try {
+                if (name.search(/[^A-Za-z\s]/) != -1) {
+                    throw new Error("Invalid name");
+                }
+            } catch (e) {
+                this.$data.acc.userNotValid = true;
+                this.$data.acc.userError = e.message;
+                return;
             }
+            this.$data.acc.userNotValid = false;
+            this.$data.acc.passNotValid = false;
         },
         isLoginPassValid(pass) {
-            if (!pass.length) {
-                throw new emptyRes("Your password must contain characters!");
+            try {
+                if (!pass.length) {
+                    throw new Error("Your password must contain characters!");
+                }
+                else if (pass.length < 8) {
+                    throw new Error("Your password much have atleast 8 characters!")
+                }
             }
+            catch (e) {
+                this.$data.acc.passNotValid = true;
+                this.$data.acc.passError = e.message;
+                return;
+            }
+            this.$data.acc.passNotValid = false;
         },
         submit(user, pass) {
-            //isLoginUserValid(user);
-            //isLoginPassValid(pass);
-            alert(user + " " + pass);
+            this.isLoginUserValid(user);
+            this.isLoginPassValid(pass);
         },
         signup() {
-            createAcc = true;
+            this.$data.acc.createAcc = true;
         }
         // callable functions for HTML go here
         // ex: incCount()
@@ -60,24 +100,26 @@ export default {
 <template>
     <!-- HTML for components goes here -->
     <p>Username:</p>
-    <input v-model="user" placeholder="username here" />
+    <input v-model="acc.user" placeholder="username here" required />
+    <p v-if="acc.userNotValid && acc.createAcc">{{ acc.userError }}</p>
 
     <p>Password:</p>
-    <input v-model="pass" placeholder="password here" />
-
-    <br>
-    <div v-if="!createAcc">
+    <input type="password" v-model="acc.pass" placeholder="password here" required />
+    <p v-if="acc.passNotValid && acc.createAcc">{{ acc.passError }}</p>
+    <div v-if="!acc.createAcc">
         <p>Confirm Password:</p>
-        <input v-model="confirmPass" placeholder="confirm here" />
+        <input type="password" v-model="acc.confirmPass" placeholder="confirm here" required />
         <p>Email:</p>
-        <input v-model="email" placeholder="email here" />
+        <input type="email" v-model="acc.email" placeholder="email here" required />
         <p>Date of Birth:</p>
-        <input v-model="dob" placeholder="date of birth here" />
+        <input type="date" v-model="acc.dob" placeholder="date of birth here" required />
     </div>
-    <button @click="submit(user, pass)">Log in</button>
-    <br>
-    <button v-if="createAcc" @click="createAcc = !createAcc">Sign up</button>
-    <button v-if="!createAcc" @click="createAcc = !createAcc">Return to Login</button>
+    <div>
+        <button @click="submit(acc.user, acc.pass)">Log in</button>
+        <br>
+        <button v-if="acc.createAcc" @click="resetLogin()">Sign up</button>
+        <button v-if="!acc.createAcc" @click="resetLogin()">Return to Login</button>
+    </div>
 </template >
     <style scoped>
     /* Styles for component go here */
