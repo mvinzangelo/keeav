@@ -24,7 +24,7 @@ export default {
             type: String,
             default: "https://www.google.com/",
             required: true,
-            // validation function by https://stackoverflow.com/users/1092711/pavlo
+            // validation function by https://stackoverflow.com/users/1092711/pavlo on https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
             validator(value) {
                 let url;
                 try {
