@@ -1,6 +1,5 @@
 <template>
     <div class="block"></div>
-
 </template>
 
 <script>
@@ -9,8 +8,8 @@
 
 <style>
 .block {
-    width: 50%;
-    height: 40%;
+    width: 500px;
+    height: 500px;
     background-color: black;
 }
 </style>
