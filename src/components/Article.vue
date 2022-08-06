@@ -9,6 +9,15 @@
         <p>Article picture: <img class="article-img"
                 src="https://cdn.cnn.com/cnnnext/dam/assets/220806023306-zaporizhzhia-nuclear-plant-file-exlarge-169.jpg"
                 alt="Article image"> </p>
+        <p>Author name: <span>James Doe</span></p>
+        <p>Date published: <span>mm/dd/yyyy</span></p>
+        <p>Description: <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Sed turpis tincidunt id aliquet risus feugiat in ante. Eleifend mi in
+                null posuere. Integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus. Nulla facilisi
+                cras
+                ullamcorper. Ac ut consequat semper viverra nam.
+            </span></p>
 
     </div>
 </template>
