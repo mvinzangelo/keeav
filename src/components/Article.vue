@@ -24,6 +24,7 @@ export default {
             type: String,
             default: "https://www.google.com/",
             required: true,
+            // validation function by https://stackoverflow.com/users/1092711/pavlo
             validator(value) {
                 let url;
                 try {
