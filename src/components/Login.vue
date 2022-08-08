@@ -98,30 +98,36 @@ export default {
 }
 </script>
 <template>
-    <!-- HTML for components goes here -->
-    <label for="username">Username:</label><br>
-    <input type="text" v-model="acc.user" placeholder="username here" required />
-    <p v-if="acc.userNotValid">{{ acc.userError }}</p>
+    <div id="compAlign">
+        <!-- HTML for components goes here -->
+        <p>Username:</p>
+        <input type="text" v-model="acc.user" placeholder="username here" required />
+        <p v-if="acc.userNotValid">{{ acc.userError }}</p>
 
-    <p>Password:</p>
-    <input type="password" v-model="acc.pass" placeholder="password here" required />
-    <p v-if="acc.passNotValid">{{ acc.passError }}</p>
-    <div v-if="!acc.createAcc">
-        <p>Confirm Password:</p>
-        <input type="password" v-model="acc.confirmPass" placeholder="confirm here" required />
-        <p v-if="acc.pass != acc.confirmPass">The passwords must match!</p>
-        <p>Email:</p>
-        <input type="email" v-model="acc.email" placeholder="email here" required />
-        <p>Date of Birth:</p>
-        <input type="date" v-model="acc.dob" placeholder="date of birth here" required />
-    </div>
-    <div>
-        <button @click="submit(acc.user, acc.pass)">Log in</button>
-        <br>
-        <button v-if="acc.createAcc" @click="resetLogin()">Sign up</button>
-        <button v-if="!acc.createAcc" @click="resetLogin()">Return to Login</button>
+        <p>Password:</p>
+        <input type="password" v-model="acc.pass" placeholder="password here" required />
+        <p v-if="acc.passNotValid">{{ acc.passError }}</p>
+        <div v-if="!acc.createAcc">
+            <p>Confirm Password:</p>
+            <input type="password" v-model="acc.confirmPass" placeholder="confirm here" required />
+            <p v-if="acc.pass != acc.confirmPass">The passwords must match!</p>
+            <p>Email:</p>
+            <input type="email" v-model="acc.email" placeholder="email here" required />
+            <p>Date of Birth:</p>
+            <input type="date" v-model="acc.dob" placeholder="date of birth here" required />
+        </div>
+        <div>
+            <button @click="submit(acc.user, acc.pass)">Log in</button>
+            <br>
+            <button v-if="acc.createAcc" @click="resetLogin()">Sign up</button>
+            <button v-if="!acc.createAcc" @click="resetLogin()">Return to Login</button>
+        </div>
     </div>
 </template>
     <style scoped>
-    /* Styles for component go here */
+    #compAlign {
+        text-align: center;
+        position: relative;
+        top: 50%;
+    }
     </style>
