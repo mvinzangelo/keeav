@@ -4,6 +4,11 @@ export default {
     props: {
         // properties go here
             // ex: title: String,
+            postedComments: 
+            [
+                {timeStamp: NaN, poster: NaN, responseToo: NaN, comment: NaN},
+                {},
+            ],
     },
     data() {
         return {
@@ -18,6 +23,11 @@ export default {
             // {
             //     this.count++;
             // }
+        submitComment()
+        {
+            // alert('sdfsd')
+                  
+        }
     }
 }
 </script>
@@ -30,7 +40,7 @@ export default {
         <div id="commentMaker">
             <p>Where the comment would be typed initialy: {{desiredComment}}</p>
             <textarea v-model="desiredComment" placeholder="Comment..."></textarea>
-            <button class="commentSubmit">&#x27A1</button>
+            <button class="commentSubmit" @click="submitComment">&#x27A1</button>
         </div>
     </div>
 </template>
