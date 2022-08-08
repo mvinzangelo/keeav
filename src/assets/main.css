@@ -1,10 +1,19 @@
 @import "./base.css";
 
+/* everything contained withing the app created by main.js */
+/* Ps this is different from the entire website since it is 
+    affecting the App.vue project and not the entire HTML */
 #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(57, 100%, 37%, 0.94);
+  }
 }
 
 @media (min-width: 1024px) {

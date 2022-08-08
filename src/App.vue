@@ -8,8 +8,9 @@ import { RouterLink, RouterView } from 'vue-router'
 
     <div class="wrapper">
       <nav>
+        <!-- Add routes in here -->
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/tempory">Tempory</RouterLink>
+        <!-- <RouterLink to="/tempory">Tempory</RouterLink> -->
       </nav>
     </div>
   </header>
