@@ -1,15 +1,14 @@
 <template>
     <div class="block">
-        <p>Article: <a v-bind:href="link">{{ link }}</a></p>
+        <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p>
         <p>Article headline:
-        <h1>HEADLINE</h1>
+        <h1>{{ headline }}</h1>
         </p>
         <p>Publisher icon: <img class="publisher-logo" :src="publisherLogoLink" alt="Logo"> </p>
         <p>Article picture: <img class="article-img" :src="articlePictureLink" alt="Article image"> </p>
         <p>Author name: <span>{{ author }}</span></p>
         <p>Date published: <span>{{ date }}</span></p>
         <p>Description: <span> {{ description }}</span></p>
-
     </div>
 </template>
 
@@ -17,18 +16,18 @@
 export default {
     data() {
         return {
-            headline: "HEADLINE",
+            headline: "Fears for nuclear safety after shelling at Ukrainian power plant",
             publisherLogoLink: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png",
             articlePictureLink: "https://cdn.cnn.com/cnnnext/dam/assets/220806023306-zaporizhzhia-nuclear-plant-file-exlarge-169.jpg",
-            author: "John Doe",
-            date: "mm/dd/yyyy",
+            author: "Vasco Cotovio",
+            date: "09/06/2022",
             description: "Lorem ipsum dolor"
         }
     },
     props: {
         link: {
             type: String,
-            default: "https://www.google.com/",
+            default: "https://edition.cnn.com/2022/08/06/europe/zaporizhzhia-nuclear-plant-intl/index.html",
             required: true,
             // validation function by https://stackoverflow.com/users/1092711/pavlo on https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
             validator(value) {
@@ -62,5 +61,9 @@ export default {
 .article-img {
     height: 100px;
     widows: auto;
+}
+
+p {
+    font-weight: bold;
 }
 </style>
