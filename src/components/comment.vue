@@ -26,10 +26,21 @@ export default {
 </script>
 <template>
 <!-- HTML for components goes here -->
-<h4 class="commentOwner">{{poster.userName}}</h4>
-<p>{{timestamp}}--{{comment}}</p>
-<p>{{}}</p>
+<div class="displayedComment">
+    
+    <h4 class="commentOwner">{{poster.userName}}</h4>
+    <p>{{timestamp}}--{{comment}}</p>
+</div>
 </template>
 <style scoped>
     /* Styles for component go here */
+    .displayedComment
+    {
+        padding: 10px;
+        width: 100%;
+        border-radius: 20px 10px 10px 30px;
+        border: 2px solid;
+        background-color: antiquewhite;
+
+    }
 </style>

@@ -72,10 +72,10 @@ export default {
     #displayCommentBox
     {
         background-color: rgb(208, 208, 208);
-        padding: 10px;
-        top: 10px;
-        width: calc(100% - 20px);
-        margin: 0 auto;
+        /* top: 10px;  */
+        /* padding: 10px; */
+        width: 100%;
+        /* margin: 10px 10px 10px 10px; */
     }
     #commentMaker
     {
