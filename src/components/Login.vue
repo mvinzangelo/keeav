@@ -1,5 +1,7 @@
 <script>
 // local functions can be decalred here
+import { app } from "../firestoreResources.js"
+import { addDoc, collection, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore"
 export default {
     props: {
         // properties go here
