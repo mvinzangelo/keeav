@@ -11,10 +11,12 @@
         <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
         <p><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
+        <button v-on:click="getArticle">Update</button>
     </div>
 </template>
 
 <script>
+import app from '../firebaseResources.js'
 export default {
     data() {
         return {
@@ -105,5 +107,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+button {
+    height: 50px;
+    width: 50px;
 }
 </style>
