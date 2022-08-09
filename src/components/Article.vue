@@ -75,8 +75,9 @@ export default {
 }
 
 .headline {
-    font-weight: bold;
+    font-weight: bolder;
     font-size: 1.3rem;
+    line-height: 1;
 }
 
 .info-wrapper {
@@ -87,6 +88,7 @@ export default {
 .info-text {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 a {
