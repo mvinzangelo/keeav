@@ -43,6 +43,12 @@ export default {
         }
     },
     props: {
+        articleType: String,
+    },
+    methods: {
+        getArticle: () => {
+            // TODO: Get article info from database
+        }
     }
 }
 
