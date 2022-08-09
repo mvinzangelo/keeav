@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import app from '../firebaseResources.js'
+import { db } from '../firebaseResources'
 export default {
     data() {
         return {
