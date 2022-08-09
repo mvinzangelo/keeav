@@ -3,7 +3,7 @@
         <div class="info-wrapper">
             <p><img class="publisher-logo" :src="publisherLogoLink" alt="Logo"> </p>
             <div class="info-text">
-                <p class="headline">{{ headline }}</p>
+                <p class="headline"><a :href="link" target="_blank">{{ headline }}</a></p>
                 <p>By: <span>{{ author }}</span></p>
                 <!-- <p><span>{{ publisher }}</span></p> -->
             </div>
@@ -87,5 +87,14 @@ export default {
 .info-text {
     display: flex;
     flex-direction: column;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 </style>
