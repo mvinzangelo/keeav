@@ -5,6 +5,7 @@
         <h1>{{ headline }}</h1>
         </p>
         <p>Publisher icon: <img class="publisher-logo" :src="publisherLogoLink" alt="Logo"> </p>
+        <p>Publisher: <span>{{ publisher }}</span></p>
         <p>Article picture: <img class="article-img" :src="articlePictureLink" alt="Article image"> </p>
         <p>Author name: <span>{{ author }}</span></p>
         <p>Date published: <span>{{ date }}</span></p>
@@ -18,6 +19,7 @@ export default {
         return {
             headline: "Fears for nuclear safety after shelling at Ukrainian power plant",
             publisherLogoLink: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png",
+            publisher: "CNN",
             articlePictureLink: "https://cdn.cnn.com/cnnnext/dam/assets/220806023306-zaporizhzhia-nuclear-plant-file-exlarge-169.jpg",
             author: "Vasco Cotovio",
             date: "09/06/2022",
