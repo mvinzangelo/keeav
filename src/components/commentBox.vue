@@ -1,5 +1,18 @@
 <script>
+
 import Comment from './comment.vue'
+
+import { db } from '../firebaseResources';
+import {
+  collection,
+  doc,
+  addDoc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+} from 'firebase/firestore'
 // local functions can be decalred here
 
 export default {
@@ -23,11 +36,39 @@ export default {
         // ex: incCount()
         // {
         //     this.count++;
-        // }
+        // }p
+        async createComment()
+        {
+            if(this.desiredComment != null /*&& userLoggedIn == true */)
+            {
+                try {
+                    console.log('calling create comment');
+                    console.log('Comment: ' + this.createComment);
+                    const date = new Date();
+                    const cal = String(date.getFullYear()+'_'+String(date.getMonth()+1)+'_'+String(date.getDate()));
+
+                    const docReference = await addDoc(
+                        collection(db, ('commentsFor'+cal)),
+                        {
+                            timeStamp: new Date(),
+                            poster: {},
+                            replies: [],
+                            comment: this.desiredComment
+                        });
+                console.log('New comment has ID:', docReference.id);
+                console.log('Completed createComment')
+                } catch(e)
+                {
+                    alert(e);
+                    console.error(e);
+                }
+            }
+        },
         submitComment() {
             const time = this.getTime();
+            this.createComment();
             this.postedComments.push({ timestamp: new Date(), poster: NaN, responseToo: NaN, comment: this.desiredComment },);
-            alert(time);
+            // alert(time);
         },
         getTime() 
         {
