@@ -8,7 +8,7 @@
                 <!-- <p><span>{{ publisher }}</span></p> -->
             </div>
         </div>
-        <p><img class="article-img" :src="articlePictureLink" alt="Article image"> </p>
+        <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
         <p><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
     </div>
