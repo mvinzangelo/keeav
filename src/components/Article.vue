@@ -18,13 +18,13 @@
 export default {
     data() {
         return {
-            headline: "Fears for nuclear safety after shelling at Ukrainian power plant",
-            publisherLogoLink: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png",
-            publisher: "CNN",
-            articlePictureLink: "https://cdn.cnn.com/cnnnext/dam/assets/220806023306-zaporizhzhia-nuclear-plant-file-exlarge-169.jpg",
-            author: "Vasco Cotovio",
-            date: "09/06/2022",
-            description: "Ukrainian officials and international experts have been warning for months of the risk that fighting poses to a sprawling nuclear power plant on the banks of Dnipro River in southern Ukraine. Earlier this week, the global nuclear watchdog said the situation was becoming increasingly perilous. "
+            headline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium.",
+            publisherLogoLink: "src/assets/placeholderImage.svg",
+            publisher: "[Publisher]",
+            articlePictureLink: "src/assets/placeholderImage.svg",
+            author: "[Author]",
+            date: "mm/dd/yyyy",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta felis ut elementum vehicula. Praesent malesuada finibus nunc, vel mollis risus vestibulum et. Pellentesque consectetur tincidunt gravida. Suspendisse gravida justo at arcu vehicula dignissim. Cras tempor orci tempor mollis vulputate. Sed varius lectus sed interdum tincidunt. In nec eros fringilla purus tristique finibus sit amet ut nisl. Nullam semper rutrum nunc, ac blandit."
         }
     },
     props: {
@@ -60,7 +60,7 @@ export default {
 
 .publisher-logo {
     height: 80px;
-    width: auto;
+    width: 80px;
     border-radius: 100%;
     border: 2px black solid;
 }
