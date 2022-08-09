@@ -1,30 +1,24 @@
 <script>
 // local functions can be decalred here
-import { app } from "../firestoreResources.js"
-import { addDoc, collection, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore"
+import { db } from '../firebaseResources.js';
+import { addDoc, collection, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
 export default {
-    props: {
-        // properties go here
-        // ex: title: String,
-    },
     data() {
         return {
             // responsive variables go here
-            acc: {
-                createAcc: true,
-                userNotValid: false,
-                passNotValid: false,
-                user: '',
-                userError: '',
-                pass: '',
-                passError: '',
-                confirmPass: '',
-                confirmPassError: '',
-                email: '',
-                emailError: '',
-                dob: '',
-                dobError: '',
-            }
+            createAcc: true,
+            userNotValid: false,
+            passNotValid: false,
+            user: '',
+            userError: '',
+            pass: '',
+            passError: '',
+            confirmPass: '',
+            confirmPassError: '',
+            email: '',
+            emailError: '',
+            dob: '',
+            dobError: '',
         }
         // ex: count: 0,
         //need a submit button
@@ -32,41 +26,35 @@ export default {
     },
     methods: {
         resetLogin() {
-            this.$data.acc.createAcc = !this.$data.acc.createAcc;
-            this.$data.acc.userNotValid = false;
-            this.$data.acc.passNotValid = false;
-            this.$data.acc.user = '';
-            this.$data.acc.userError = '';
-            this.$data.acc.pass = '';
-            this.$data.acc.passError = '';
-            this.$data.acc.confirmPass = '';
-            this.$data.acc.confirmPassError = '';
-            this.$data.acc.email = '';
-            this.$data.acc.emailError = '';
-            this.$data.acc.dob = '';
-            this.$data.acc.dobError = '';
+            this.createAcc = !this.createAcc;
+            this.userNotValid = false;
+            this.passNotValid = false;
+            this.user = '';
+            this.userError = '';
+            this.pass = '';
+            this.passError = '';
+            this.confirmPass = '';
+            this.confirmPassError = '';
+            this.email = '';
+            this.emailError = '';
+            this.dob = '';
+            this.dobError = '';
         },
         isLoginUserValid(user) {
             try {
                 if (!user.length) {
                     throw new Error("Your username must contain characters!");
                 }
-            } catch (e) {
-                this.$data.acc.userNotValid = true;
-                this.$data.acc.userError = e.message;
-                return;
-            }
-            try {
-                if (!/^[A-Za-z0-9]*$/.test(user)) {
+                else if (!/^[A-Za-z0-9]*$/.test(user)) {
                     throw new Error("Invalid name!");
                 }
             } catch (e) {
-                this.$data.acc.userNotValid = true;
-                this.$data.acc.userError = e.message;
+                this.userNotValid = true;
+                this.userError = e.message;
                 return;
             }
-            this.$data.acc.userNotValid = false;
-            this.$data.acc.passNotValid = false;
+            this.userNotValid = false;
+            return true;
         },
         isLoginPassValid(pass) {
             try {
@@ -74,23 +62,32 @@ export default {
                     throw new Error("Your password must contain characters!");
                 }
                 else if (pass.length < 8) {
-                    throw new Error("Your password much have atleast 8 characters!")
+                    throw new Error("Your password much have atleast 8 characters!");
                 }
             }
             catch (e) {
-                this.$data.acc.passNotValid = true;
-                this.$data.acc.passError = e.message;
+                this.passNotValid = true;
+                this.passError = e.message;
                 return;
             }
-            this.$data.acc.passNotValid = false;
+            this.passNotValid = false;
+            return true;
         },
-        submit(user, pass) {
-            this.isLoginUserValid(user);
-            this.isLoginPassValid(pass);
+        async createUser() {
+            if (this.isLoginUserValid(this.user) && this.isLoginPassValid(this.pass) && (this.pass == this.confirmPass)) {
+                try {
+                    const docReference = await addDoc(
+                        collection(db, 'myUsers'),
+                        {
+                            name: this.user,
+                            password: this.pass,
+                        }
+                    );
+                } catch (err) {
+                    console.error(err);
+                }
+            }
         },
-        signup() {
-            this.$data.acc.createAcc = true;
-        }
         // callable functions for HTML go here
         // ex: incCount()
         // {
@@ -103,26 +100,27 @@ export default {
     <div id="compAlign">
         <!-- HTML for components goes here -->
         <p>Username:</p>
-        <input type="text" v-model="acc.user" placeholder="username here" required />
-        <p v-if="acc.userNotValid">{{ acc.userError }}</p>
+        <input type="text" v-model="user" placeholder="username here" />
+        <p v-if="userNotValid">{{ userError }}</p>
 
         <p>Password:</p>
-        <input type="password" v-model="acc.pass" placeholder="password here" required />
-        <p v-if="acc.passNotValid">{{ acc.passError }}</p>
-        <div v-if="!acc.createAcc">
+        <input type="password" v-model="pass" placeholder="password here" />
+        <p v-if="passNotValid">{{ passError }}</p>
+        <div v-if="!createAcc">
             <p>Confirm Password:</p>
-            <input type="password" v-model="acc.confirmPass" placeholder="confirm here" required />
-            <p v-if="acc.pass != acc.confirmPass">The passwords must match!</p>
+            <input type="password" v-model="confirmPass" placeholder="confirm here" />
+            <p v-if="pass != confirmPass">The passwords must match!</p>
             <p>Email:</p>
-            <input type="email" v-model="acc.email" placeholder="email here" required />
+            <input type="email" v-model="email" placeholder="email here" />
             <p>Date of Birth:</p>
-            <input type="date" v-model="acc.dob" placeholder="date of birth here" required />
+            <input type="date" v-model="dob" placeholder="date of birth here" />
         </div>
         <div>
-            <button @click="submit(acc.user, acc.pass)">Log in</button>
+            <button v-if="createAcc" @click="submit(user, pass)">Log in</button>
+            <button v-if="!createAcc" @click="createUser()">Create Account</button>
             <br>
-            <button v-if="acc.createAcc" @click="resetLogin()">Sign up</button>
-            <button v-if="!acc.createAcc" @click="resetLogin()">Return to Login</button>
+            <button v-if="createAcc" @click="createAcc = !createAcc">Sign up</button>
+            <button v-if="!createAcc" @click="createAcc = !createAcc">Return to Login</button>
         </div>
     </div>
 </template>
