@@ -25,10 +25,8 @@ export default {
             // responsive variables go here
             // ex: count: 0,
             desiredComment: undefined,
-            postedComments: [
-                { timeStamp: NaN, poster: NaN, replies: [], comment: "te8st" },
-                { timeStamp: NaN, poster: NaN, replies: [], comment: "test" },
-            ],
+            // date: new Date(),
+            postedComments: [],
         };
     },
     methods: {
@@ -36,7 +34,30 @@ export default {
         // ex: incCount()
         // {
         //     this.count++;
-        // }p
+        // }
+        async getComments() {
+            try 
+            {   
+                const date = new Date();
+                    const cal = String(String(date.getMonth()+1)+'_'+String(date.getDate()));
+
+                this.postedComments=[];
+                // alert('443');
+                let q = query(collection(db, ('comments/commentsFor'+date.getFullYear()+'/'+cal)));
+
+                // alert('543');
+                const qSnap = await getDocs(q);
+
+                qSnap.forEach((rdoc) => {
+                    this.postedComments.push(rdoc.data())
+            
+                });
+            } catch (e)
+            {
+                alert('retrieve' + e);
+            }
+        
+        },
         async createComment()
         {
             if(this.desiredComment != null /*&& userLoggedIn == true */)
@@ -45,21 +66,22 @@ export default {
                     console.log('calling create comment');
                     console.log('Comment: ' + this.createComment);
                     const date = new Date();
-                    const cal = String(date.getFullYear()+'_'+String(date.getMonth()+1)+'_'+String(date.getDate()));
+                    const cal = String(String(date.getMonth()+1)+'_'+String(date.getDate()));
 
                     const docReference = await addDoc(
-                        collection(db, ('commentsFor'+cal)),
+                        collection(db, ('comments/commentsFor'+date.getFullYear()+'/'+cal)),
                         {
                             timeStamp: new Date(),
                             poster: {},
                             replies: [],
                             comment: this.desiredComment
                         });
+                        // alert('commen');
                 console.log('New comment has ID:', docReference.id);
                 console.log('Completed createComment')
                 } catch(e)
                 {
-                    alert(e);
+                    alert('create comment'+e);
                     console.error(e);
                 }
             }
@@ -67,7 +89,11 @@ export default {
         submitComment() {
             const time = this.getTime();
             this.createComment();
-            this.postedComments.push({ timestamp: new Date(), poster: NaN, responseToo: NaN, comment: this.desiredComment },);
+            // alert('111');
+            this.getComments();
+            // alert('22211');
+            // this.postedComments.push({ timestamp: new Date(), poster: NaN, responseToo: NaN, comment: this.desiredComment },);
+            // this.postedComments = this.getComments();
             // alert(time);
         },
         getTime() 
@@ -76,11 +102,16 @@ export default {
             // alert(calendar);
             return calendar;
         }
+        
     },
+     beforeMount()
+     {
+        this.getComments();
+     },
     components: { Comment }
 }
 </script>
-<template>
+<template onl>
 <!-- HTML for components goes here -->
     <div id="commentWrapper">
         <div id="displayCommentBox">
