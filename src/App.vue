@@ -10,7 +10,7 @@ import Voting from './components/Voting.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-
+      <Voting newsOrg="Fox News" author="John Doe" userVote="None"/>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
