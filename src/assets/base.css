@@ -6,7 +6,7 @@
 
 /* applying  color variables to entire project */
   --color-background: var(--vt-c-white);
-  --section-gap: 160px;
+  --section-gap: 200px;
 }
 /* global CSS for dark mode users */
 @media (prefers-color-scheme: dark) {

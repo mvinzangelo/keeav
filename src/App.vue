@@ -1,15 +1,22 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import MainHeader from '../src/components/MainHeader.vue'
+
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/hammer.png" width="125"/>
+    <!-- <img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="125"/> -->
+  
 
     <div class="wrapper">
+      <MainHeader></MainHeader>
+
+      
       <nav>
         <!-- Add routes in here -->
-        <RouterLink to="/">Home</RouterLink>
+        <!-- <RouterLink to="/">Home</RouterLink> -->
         <!-- <RouterLink to="/tempory">Tempory</RouterLink> -->
       </nav>
     </div>
@@ -21,11 +28,14 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped>
 header {
   line-height: 1.5;
-  max-height: 100vh;
+  max-height: 100vh; 
+
+  width: 100vw;
+  /* background-color: green; */
 }
 .logo {
   display: block;
-  margin: 0 auto 2rem;
+  /* margin: 0 auto 2rem; */
 }
 
 nav {
@@ -45,7 +55,7 @@ nav a.router-link-exact-active:hover {
 
 nav a {
   display: inline-block;
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
   border-left: 1px solid var(--color-border);
 }
 
@@ -57,7 +67,7 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    /* padding-right: calc(var(--section-gap) / 2); */
   }
 
   .logo {
@@ -75,7 +85,7 @@ nav a:first-of-type {
     margin-left: -1rem;
     font-size: 1rem;
 
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
     margin-top: 1rem;
   }
 }
