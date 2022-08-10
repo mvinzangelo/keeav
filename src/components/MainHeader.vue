@@ -31,6 +31,7 @@ export default {
 </template>
 <style scoped>
 .headerbox{
+  width: 100vw;
   display: flex;
   justify-content: space-around;
 }

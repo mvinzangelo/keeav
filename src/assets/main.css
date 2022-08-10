@@ -18,14 +18,13 @@
 
 @media (min-width: 50px) {
   body {
-    background-color: red;
     /* display: flex; */
     place-items: center;
     /* position: absolute; */
     margin: 0;
     /* left: 0; */
     
-    /* background-color: grey; */
+    background-color: grey;
   }
 
   #app {
