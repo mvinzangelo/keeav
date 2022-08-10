@@ -39,11 +39,10 @@ export default {
             try 
             {   
                 const date = new Date();
-                    const cal = String(String(date.getMonth()+1)+'_'+String(date.getDate()));
 
                 this.postedComments=[];
                 // alert('443');
-                let q = query(collection(db, ('comments/commentsFor'+date.getFullYear()+'/'+cal)));
+                let q = query(collection(db, ('comments')));
 
                 // alert('543');
                 const qSnap = await getDocs(q);
@@ -66,12 +65,11 @@ export default {
                     console.log('calling create comment');
                     console.log('Comment: ' + this.createComment);
                     const date = new Date();
-                    const cal = String(String(date.getMonth()+1)+'_'+String(date.getDate()));
-
                     const docReference = await addDoc(
-                        collection(db, ('comments/commentsFor'+date.getFullYear()+'/'+cal)),
+                        collection(db, ('comments')),
                         {
                             timeStamp: new Date(),
+                            topicId: '',
                             poster: {},
                             replies: [],
                             comment: this.desiredComment
