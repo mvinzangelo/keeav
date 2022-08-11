@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { DocumentSnapshot } from '@firebase/firestore';
 import { db } from '../firebaseResources.js'
 import {
     doc,
