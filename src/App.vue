@@ -1,8 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import MainHeader from '../src/components/MainHeader.vue'
-
-
+import comments from './components/commentBox.vue'
 </script>
 
 <template>
@@ -22,7 +21,8 @@ import MainHeader from '../src/components/MainHeader.vue'
     </div>
   </header>
 
-  <RouterView />
+  <!-- <RouterView /> -->
+  <comments/>
 </template>
 
 <style scoped>
