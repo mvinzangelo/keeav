@@ -1,12 +1,12 @@
 <template>
     <div class="articles-container">
-        <Article />
+        <Article></Article>
+        <Article></Article>
     </div>
 </template>
 
-<script>
-import Article from './Article.vue'
-
+<script setup>
+import Article from './Article.vue';
 </script>
 
 <style>
@@ -15,7 +15,6 @@ import Article from './Article.vue'
     width: 100%;
     background-color: grey;
     display: flex;
-    gap: 10px;
     justify-content: space-around;
 }
 
