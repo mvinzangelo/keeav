@@ -1,35 +1,35 @@
 @import "./base.css";
 
+/* everything contained withing the app created by main.js */
+/* Ps this is different from the entire website since it is 
+    affecting the App.vue project and not the entire HTML */
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-
+  /* padding: 2rem; */
   font-weight: normal;
+  overflow-x: hidden;
 }
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: hsla(0, 100%, 37%, 0.94);
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 50px) {
   body {
-    display: flex;
+    /* display: flex; */
     place-items: center;
+    /* position: absolute; */
+    margin: 0;
+    /* left: 0; */
+    
+    background-color: grey;
   }
 
   #app {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    /* padding: 0 2rem; */
   }
 }
