@@ -5,8 +5,34 @@
     </div>
 </template>
 
+<!-- Is there a better way of doing this? -->
 <script setup>
 import Article from './Article.vue';
+</script>
+
+<script>
+export default {
+    data() {
+        return {
+        }
+    },
+    props: {
+    },
+    methods: {
+        async getArticle() {
+            try {
+                const articleRef = doc(db, "articles", "5afWqCvSoLihevJz4HPc");
+                const articleSnap = await getDoc(articleRef);
+                if (articleSnap.exists()) {
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
+}
 </script>
 
 <style>
