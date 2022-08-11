@@ -1,7 +1,9 @@
 <script>
 // local functions can be decalred here
 import { db, auth } from '../firebaseResources.js';
-import { addDoc, setDoc, collection, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
+import { mapStores } from 'pinia'
+import { useLoginStore } from "../stores/loginStatus";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "@firebase/auth";
 export default {
     data() {
@@ -9,7 +11,6 @@ export default {
             createAcc: true,
             firstName: '',
             lastName: '',
-            users: [],
             readUsersData: '',
             email: '',
             user: '',
@@ -18,10 +19,14 @@ export default {
             userFilter: '',
         }
     },
+    computed: {
+        ...mapStores(useLoginStore),
+    },
     methods: {
         async createUser() {
             createUserWithEmailAndPassword(auth, this.email, this.pass).then(async (userCredential) => {
                 const user = userCredential.user;
+                this.loginStatusStore.$patch({ userID: user.uid });
                 console.log(user.uid);
                 try {
                     const docReference = await setDoc(
@@ -45,7 +50,6 @@ export default {
             signInWithEmailAndPassword(auth, this.email, this.pass)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log(JSON.stringify(userCredential.user, null, 2));
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -55,6 +59,7 @@ export default {
         },
         signOut() {
             signOut(auth).then(() => {
+                this.loginStatusStore.$reset();
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -64,7 +69,7 @@ export default {
 }
 </script>
 <template>
-    <div id="compAlign">
+    <div v-if="loginStatusStore.userID == ''" id="compAlign">
         <div v-if="!createAcc">
             <p>First Name:</p>
             <input type="text" v-model="firstName" placeholder="name here" />
@@ -85,6 +90,7 @@ export default {
             <button v-if="!createAcc" @click="createAcc = !createAcc">Return to Login</button>
         </div>
     </div>
+    <button v-if="loginStatusStore.userID != ''" id="compAlign" @click="signOut()">Sign Out</button>
 </template>
     <style scoped>
     #compAlign {
