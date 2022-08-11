@@ -11,8 +11,8 @@
         <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
         <p><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
+        <button v-on:click="getArticle">Update</button>
     </div>
-    <button v-on:click="getArticle">Update</button>
 </template>
 
 <script>
@@ -89,6 +89,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    overflow: scroll;
 }
 
 .publisher-logo {
