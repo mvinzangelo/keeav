@@ -14,6 +14,10 @@ import Article from './Article.vue';
 export default {
     data() {
         return {
+            date: "mm/dd/yyyy",
+            topic: "Lorem ipsum",
+            leftArticle: '',
+            rightArticle: '',
         }
     },
     props: {
@@ -21,9 +25,10 @@ export default {
     methods: {
         async getArticle() {
             try {
-                const articleRef = doc(db, "articles", "5afWqCvSoLihevJz4HPc");
-                const articleSnap = await getDoc(articleRef);
-                if (articleSnap.exists()) {
+                const topicRef = doc(db, "topics", "IR3BBS28TlRT34k3gJ4a");
+                const topicSnap = await getDoc(topicRef);
+                if (topicSnap.exists()) {
+
                 } else {
                     console.log("No such document!");
                 }
