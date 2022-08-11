@@ -16,7 +16,14 @@
 </template>
 
 <script>
-import { db } from '../firebaseResources'
+import { DocumentSnapshot } from '@firebase/firestore';
+import { db } from '../firebaseResources.js'
+import {
+    doc,
+    getDoc,
+    query,
+} from 'firebase/firestore'
+
 export default {
     data() {
         return {
@@ -27,7 +34,7 @@ export default {
             author: "[Author]",
             date: "mm/dd/yyyy",
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta felis ut elementum vehicula. Praesent malesuada finibus nunc, vel mollis risus vestibulum et. Pellentesque consectetur tincidunt gravida. Suspendisse gravida justo at arcu vehicula dignissim. Cras tempor orci tempor mollis vulputate. Sed varius lectus sed interdum tincidunt. In nec eros fringilla purus tristique finibus sit amet ut nisl. Nullam semper rutrum nunc, ac blandit.",
-            link: "https://edition.cnn.com/2022/08/06/europe/zaporizhzhia-nuclear-plant-intl/index.html"
+            link: "https://www.lipsum.com/feed/html"
             // link: {
             //     type: String,
             //     default: "https://edition.cnn.com/2022/08/06/europe/zaporizhzhia-nuclear-plant-intl/index.html",
@@ -48,8 +55,25 @@ export default {
         articleType: String,
     },
     methods: {
-        getArticle: () => {
-            // TODO: Get article info from database
+        async getArticle() {
+            try {
+                // TODO: Get article info from database
+                const articleRef = doc(db, "articles", "5afWqCvSoLihevJz4HPc");
+                const articleSnap = await getDoc(articleRef);
+                if (articleSnap.exists()) {
+                    console.log("Article data: ", articleSnap.data());
+                    this.description = articleSnap.data().description;
+                    this.link = articleSnap.data().link;
+                    this.articlePictureLink = articleSnap.data().articleImage;
+                    this.author = articleSnap.data().author;
+                    this.headline = articleSnap.data().headline;
+                    this.publisherLogoLink = articleSnap.data().publisherLogo;
+                } else {
+                    console.log("NONE!");
+                }
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 }
@@ -72,6 +96,7 @@ export default {
     width: 80px;
     border-radius: 100%;
     border: 2px black solid;
+    object-fit: fill;
 }
 
 .article-img {
