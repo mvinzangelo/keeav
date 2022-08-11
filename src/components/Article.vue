@@ -68,7 +68,7 @@ export default {
                     this.headline = articleSnap.data().headline;
                     this.publisherLogoLink = articleSnap.data().publisherLogo;
                 } else {
-                    console.log("NONE!");
+                    console.log("No such article!");
                 }
             } catch (err) {
                 console.log(err);
