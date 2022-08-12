@@ -32,33 +32,17 @@ export default {
 </template>
 <style scoped>
 .headerbox {
-  width: 100vw;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .namebox {
   display: flex;
   flex-direction: column;
-}
-
-/*.profilepic{
-  height: 50px; 
-  width: 50px;
-  border-radius: 50%;
-  background-color: black; 
-} */
-
-h1 {
-  text-align: center;
-}
-
-h2 {
   text-align: center;
 }
 
 main {
-  /* background-color: purple; */
   width: 100%;
 }
 </style>
