@@ -1,3 +1,5 @@
+// We will likly avoid adding content in this file
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
