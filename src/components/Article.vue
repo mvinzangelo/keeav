@@ -62,10 +62,10 @@ export default {
                 if (articleSnap.exists()) {
                     this.description = articleSnap.data().description;
                     this.link = articleSnap.data().link;
-                    this.articlePictureLink = articleSnap.data().articleImage;
+                    this.articlePictureLink = articleSnap.data().articlePictureLink;
                     this.author = articleSnap.data().author;
                     this.headline = articleSnap.data().headline;
-                    this.publisherLogoLink = articleSnap.data().publisherLogo;
+                    this.publisherLogoLink = articleSnap.data().publisherLogoLink;
                 } else {
                     console.log("No such article!");
                 }
