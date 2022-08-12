@@ -60,7 +60,6 @@ export default {
 }
 </script>
 <template>
-    <p>{{ loginStore.userID }}</p>
     <div v-if="loginStore.userID == ''" id="compAlign">
         <div v-if="!createAcc">
             <p>First Name:</p>
