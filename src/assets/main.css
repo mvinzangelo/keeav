@@ -5,10 +5,8 @@
     affecting the App.vue project and not the entire HTML */
 #app {
   max-width: 1280px;
-  min-width: 300px;
   margin: 0 auto;
-  padding: 2rem;
-
+  /* padding: 2rem; */
   font-weight: normal;
   overflow-x: hidden;
 }
@@ -23,10 +21,15 @@
   body {
     /* display: flex; */
     place-items: center;
+    /* position: absolute; */
+    margin: 0;
+    /* left: 0; */
+
+    background-color: grey;
   }
 
   #app {
-    display: inline-block;
+    display: grid;
     grid-template-columns: 1fr 1fr;
     /* padding: 0 2rem; */
   }

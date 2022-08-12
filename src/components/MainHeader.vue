@@ -1,7 +1,7 @@
 <script>
 export default {
   methods: {
-    currentDate() {
+    currentDateTime() {
       const current = new Date();
       const date = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
       // const time = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
@@ -20,7 +20,7 @@ export default {
       <img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="90" />
       <div class="namebox">
         <h1>Hammer</h1>
-        <p>{{ currentDate() }}</p>
+        <p>{{ currentDateTime() }}</p>
       </div>
       <button v-on:click="redirect_to_login"><img alt="Vue logo" class="logo" src="@/assets/human.svg"
           width="70" /></button>

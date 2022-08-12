@@ -1,34 +1,42 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { mapStores } from 'pinia'
+import { useLoginStore } from "@/stores/loginStatus";
+import MainHeader from '../src/components/MainHeader.vue'
+</script>
+
+<script>
+export default {
+  computed: {
+    ...mapStores(useLoginStore),
+  },
+}
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+      <MainHeader></MainHeader>
+      <RouterView />
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/comment">Comment</RouterLink>
       </nav>
     </div>
   </header>
-
-  <RouterView />
-</template>
+</template >
 
 <style scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
+
+  width: 100vw;
 }
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
 }
 
 nav {
@@ -40,17 +48,8 @@ nav {
   margin-top: 2rem;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
 nav a {
   display: inline-block;
-  padding: 0 1rem;
   border-left: 1px solid var(--color-border);
 }
 
@@ -62,7 +61,6 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
   }
 
   .logo {
@@ -78,8 +76,6 @@ nav a:first-of-type {
   nav {
     text-align: center;
     font-size: 1rem;
-
-    padding: 1rem 0;
     margin-top: 1rem;
   }
 }
