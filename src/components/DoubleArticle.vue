@@ -1,9 +1,8 @@
 <template>
+    <p class="topic-text"><span>{{ topic }}</span></p>
     <div class="articles-container">
-        <p><span>{{ topic }}</span></p>
         <Article :articleRef="leftArticle" ref="leftArticle"></Article>
         <Article :articleRef="rightArticle" ref="rightArticle"></Article>
-        <button v-on:click="updateTopic">Update topic</button>
     </div>
 </template>
 
@@ -68,16 +67,16 @@ export default {
 
 <style>
 .articles-container {
-    height: 100%;
-    width: 100%;
     background-color: grey;
     display: flex;
     justify-content: space-around;
 }
 
 .article-card {
-    height: 60%;
-    width: 48%;
     background-color: rgb(95, 95, 95);
+}
+
+.topic-text {
+    text-align: center;
 }
 </style>

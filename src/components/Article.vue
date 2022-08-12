@@ -11,7 +11,6 @@
         <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
         <p><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
-        <button v-on:click="updateArticle">Update</button>
     </div>
 </template>
 
@@ -119,6 +118,4 @@ a {
 a:hover {
     text-decoration: underline;
 }
-
-button {}
 </style>
