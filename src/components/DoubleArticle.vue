@@ -1,8 +1,8 @@
 <template>
     <div class="articles-container">
         <p><span>{{ topic }}</span></p>
-        <Article :articleRef="leftArticle"></Article>
-        <Article :articleRef="rightArticle"></Article>
+        <Article :articleRef="leftArticle" ref="leftArticle"></Article>
+        <Article :articleRef="rightArticle" ref="rightArticle"></Article>
         <button v-on:click="updateTopic">Update topic</button>
     </div>
 </template>
@@ -56,6 +56,12 @@ export default {
                 console.log(err);
             }
         }
+    },
+    async created() {
+        await this.updateTopic().then(() => {
+            this.$refs.leftArticle.updateArticle();
+            this.$refs.rightArticle.updateArticle();
+        });
     }
 }
 </script>
