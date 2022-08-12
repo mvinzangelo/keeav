@@ -70,23 +70,26 @@ export default {
             <p>Date of Birth:</p>
             <input type="text" v-model="dob" placeholder="date here" />
         </div>
-        <p>Email:</p>
-        <input type="text" v-model="email" placeholder="email here" />
-        <p>Password:</p>
-        <input type="password" v-model="pass" placeholder="password here" />
         <div>
-            <button v-if="createAcc" @click="signIn()">Log in</button>
-            <button v-else @click="createUser()">Create Account</button>
-            <br>
-            <button v-if="createAcc" @click="createAcc = !createAcc">Sign up</button>
-            <button v-if="!createAcc" @click="createAcc = !createAcc">Return to Login</button>
+            <p>Email:</p>
+            <input type="text" v-model="email" placeholder="email here" />
+            <p>Password:</p>
+            <input type="password" v-model="pass" placeholder="password here" />
+            <div>
+                <button v-if="createAcc" @click="signIn()">Log in</button>
+                <button v-else @click="createUser()">Create Account</button>
+                <br>
+                <button v-if="createAcc" @click="createAcc = !createAcc">Sign up</button>
+                <button v-if="!createAcc" @click="createAcc = !createAcc">Return to Login</button>
+            </div>
         </div>
     </div>
 </template>
+
     <style scoped>
     #compAlign {
-        text-align: center;
-        position: relative;
-        top: 50%;
+        place-items: center;
+        display: flex;
+        flex-direction: column;
     }
     </style>
