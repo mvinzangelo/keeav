@@ -15,9 +15,16 @@ import Article from './Article.vue';
 <script>
 import { db } from '../firebaseResources.js'
 import {
+    collection,
     doc,
+    addDoc,
     getDoc,
+    getDocs,
     query,
+    where,
+    deleteDoc,
+    orderBy,
+    limit,
 } from 'firebase/firestore'
 
 export default {
@@ -34,17 +41,16 @@ export default {
     methods: {
         async updateTopic() {
             try {
-                const topicRef = doc(db, "topics", "IR3BBS28TlRT34k3gJ4a");
-                const topicSnap = await getDoc(topicRef);
-                if (topicSnap.exists()) {
-                    this.date = topicSnap.data().date;
-                    this.topic = topicSnap.data().topic;
-                    this.leftArticle = topicSnap.data().leftArticle;
-                    this.rightArticle = topicSnap.data().rightArticle;
-                    console.log(this.leftArticle);
-
-                } else {
-                    console.log("No such document!");
+                const q = query(collection(db, 'topics'), orderBy('date', "desc"), limit(1));
+                const latestTopic = await getDocs(q);
+                if (latestTopic) {
+                    this.date = latestTopic.docs[0].data().date;
+                    this.topic = latestTopic.docs[0].data().topic;
+                    this.leftArticle = latestTopic.docs[0].data().leftArticle;
+                    this.rightArticle = latestTopic.docs[0].data().rightArticle;
+                }
+                else {
+                    console.log("Topic not found!");
                 }
             } catch (err) {
                 console.log(err);
