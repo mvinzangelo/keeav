@@ -10,6 +10,7 @@ export default {
             publisherBias: '',
             totalVotesLeft: '',
             totalVotesRight: '',
+            totalVotes: '',
             userVote: 'None'
         }
     },
@@ -17,7 +18,7 @@ export default {
         articleID: String
     },
     created() {
-        this.getData()
+        this.getData()     
     },
     methods: {
         async getData() {
@@ -31,6 +32,7 @@ export default {
                 this.publisherBias = docSnap.data().publisherBias;
                 this.totalVotesLeft = docSnap.data().totalVotesLeft
                 this.totalVotesRight = docSnap.data().totalVotesRight;
+                this.totalVotes = this.totalVotesLeft+this.totalVotesRight;
             }
             else {
                 console.log('doc does not exist');
@@ -50,11 +52,11 @@ export default {
     <div class="resultContainer" v-else>
         <h2 class="title">Bias Meter</h2>
         <h3 class="news">News Organization: {{publisher}}</h3>
-        <meter id="newsBias" min="0" max="100" value="50"></meter>
+        <progress class="bias" id="newsBias" max='100' :value="publisherBias"></progress>
         <h3 class>Author: {{author}}</h3>
-        <meter id="newsBias" min="0" max="100" value="50"></meter>
+        <progress class="bias" max="100" value="50"></progress>
         <h3>Users</h3>
-        <meter id="newsBias" min="0" max="100" value="50"></meter>
+        <progress class="bias" :max="totalVotes" :value="totalVotesRight"></progress>
     </div>
 </div>
 </template>
