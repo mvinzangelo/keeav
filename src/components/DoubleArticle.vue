@@ -1,7 +1,9 @@
 <template>
     <div class="articles-container">
-        <Article></Article>
-        <Article></Article>
+        <p><span>{{ topic }}</span></p>
+        <Article :articleRef="leftArticle"></Article>
+        <Article :articleRef="rightArticle"></Article>
+        <button v-on:click="updateTopic">Update topic</button>
     </div>
 </template>
 
@@ -11,6 +13,13 @@ import Article from './Article.vue';
 </script>
 
 <script>
+import { db } from '../firebaseResources.js'
+import {
+    doc,
+    getDoc,
+    query,
+} from 'firebase/firestore'
+
 export default {
     data() {
         return {
@@ -23,11 +32,16 @@ export default {
     props: {
     },
     methods: {
-        async getArticle() {
+        async updateTopic() {
             try {
                 const topicRef = doc(db, "topics", "IR3BBS28TlRT34k3gJ4a");
                 const topicSnap = await getDoc(topicRef);
                 if (topicSnap.exists()) {
+                    this.date = topicSnap.data().date;
+                    this.topic = topicSnap.data().topic;
+                    this.leftArticle = topicSnap.data().leftArticle;
+                    this.rightArticle = topicSnap.data().rightArticle;
+                    console.log(this.leftArticle);
 
                 } else {
                     console.log("No such document!");

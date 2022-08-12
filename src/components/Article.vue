@@ -51,16 +51,15 @@ export default {
         }
     },
     props: {
-        articleType: String,
+        articleRef: String,
     },
     methods: {
         async updateArticle() {
             try {
                 // TODO: Get article info from database
-                const articleRef = doc(db, "articles", "5afWqCvSoLihevJz4HPc");
+                const articleRef = doc(db, "articles", this.articleRef);
                 const articleSnap = await getDoc(articleRef);
                 if (articleSnap.exists()) {
-                    console.log("Article data: ", articleSnap.data());
                     this.description = articleSnap.data().description;
                     this.link = articleSnap.data().link;
                     this.articlePictureLink = articleSnap.data().articleImage;
