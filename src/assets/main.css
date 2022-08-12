@@ -10,6 +10,7 @@
   font-weight: normal;
   overflow-x: hidden;
 }
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(0, 100%, 37%, 0.94);
@@ -23,7 +24,7 @@
     /* position: absolute; */
     margin: 0;
     /* left: 0; */
-    
+
     background-color: grey;
   }
 

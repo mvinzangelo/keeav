@@ -1,24 +1,24 @@
 <script>
 
-import Comment from './comment.vue'
+import Comment from './CommentPost.vue'
 
 import { db } from '../firebaseResources';
 import {
-  collection,
-  doc,
-  addDoc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-  deleteDoc,
+    collection,
+    doc,
+    addDoc,
+    getDoc,
+    getDocs,
+    query,
+    where,
+    deleteDoc,
 } from 'firebase/firestore'
 // local functions can be decalred here
 
 export default {
     props: {
-    // properties go here
-    // ex: title: String,
+        // properties go here
+        // ex: title: String,
     },
     data() {
         return {
@@ -36,11 +36,10 @@ export default {
         //     this.count++;
         // }
         async getComments() {
-            try 
-            {   
+            try {
                 const date = new Date();
 
-                this.postedComments=[];
+                this.postedComments = [];
                 // alert('443');
                 let q = query(collection(db, ('comments')));
 
@@ -49,18 +48,15 @@ export default {
 
                 qSnap.forEach((rdoc) => {
                     this.postedComments.push(rdoc.data())
-            
+
                 });
-            } catch (e)
-            {
+            } catch (e) {
                 alert('retrieve' + e);
             }
-        
+
         },
-        async createComment()
-        {
-            if(this.desiredComment != null /*&& userLoggedIn == true */)
-            {
+        async createComment() {
+            if (this.desiredComment != null /*&& userLoggedIn == true */) {
                 try {
                     console.log('calling create comment');
                     console.log('Comment: ' + this.createComment);
@@ -74,12 +70,11 @@ export default {
                             replies: [],
                             comment: this.desiredComment
                         });
-                        // alert('commen');
-                console.log('New comment has ID:', docReference.id);
-                console.log('Completed createComment')
-                } catch(e)
-                {
-                    alert('create comment'+e);
+                    // alert('commen');
+                    console.log('New comment has ID:', docReference.id);
+                    console.log('Completed createComment')
+                } catch (e) {
+                    alert('create comment' + e);
                     console.error(e);
                 }
             }
@@ -94,34 +89,28 @@ export default {
             // this.postedComments = this.getComments();
             // alert(time);
         },
-        getTime() 
-        {
+        getTime() {
             const calendar = new Date();
             // alert(calendar);
             return calendar;
         }
-        
+
     },
-     beforeMount()
-     {
+    beforeMount() {
         this.getComments();
-     },
+    },
     components: { Comment }
 }
 </script>
 <template onl>
-<!-- HTML for components goes here -->
+    <!-- HTML for components goes here -->
     <div id="commentWrapper">
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
-                <Comment 
-                    :timeStamp="postedComments[index].timeStamp"
-                    :poster = "{}"
-                    :replies="[]"
-                    :comment="postedComments[index].comment"
-                ></Comment>
+                <Comment :timeStamp="postedComments[index].timeStamp" :poster="{}" :replies="[]"
+                    :comment="postedComments[index].comment"></Comment>
             </div>
-        </div>       
+        </div>
         <div id="commentMaker">
             <p>Comment: </p>
             <!-- <p>Where the comment would be typed initialy: {{desiredComment}}</p> -->
@@ -131,31 +120,30 @@ export default {
     </div>
 </template>
 <style scoped>
-    /* Styles for component go here */
-    #commentWrapper
-    {
-        background-color: grey;
-        width: 80%;
-        margin: 0 auto;
-        height: 400px;
-    }
-    #displayCommentBox
-    {
-        background-color: rgb(208, 208, 208);
-        /* top: 10px;  */
-        /* padding: 10px; */
-        width: 100%;
-        /* margin: 10px 10px 10px 10px; */
-    }
-    #commentMaker
-    {
-        background-color: rgb(89, 89, 89);
-        padding: 10px;
-        /* top: 10px; */
-        width: 100%;
-        /* vertical-align: bottom; */
-        position: absolute;
-        bottom: 0px;
-        
-    }
+/* Styles for component go here */
+#commentWrapper {
+    background-color: grey;
+    width: 80%;
+    margin: 0 auto;
+    height: 400px;
+}
+
+#displayCommentBox {
+    background-color: rgb(208, 208, 208);
+    /* top: 10px;  */
+    /* padding: 10px; */
+    width: 100%;
+    /* margin: 10px 10px 10px 10px; */
+}
+
+#commentMaker {
+    background-color: rgb(89, 89, 89);
+    padding: 10px;
+    /* top: 10px; */
+    width: 100%;
+    /* vertical-align: bottom; */
+    position: absolute;
+    bottom: 0px;
+
+}
 </style>   

@@ -4,10 +4,11 @@
 
   --vt-c-black: #181818;
 
-/* applying  color variables to entire project */
+  /* applying  color variables to entire project */
   --color-background: var(--vt-c-white);
   --section-gap: 200px;
 }
+
 /* global CSS for dark mode users */
 @media (prefers-color-scheme: dark) {
   :root {

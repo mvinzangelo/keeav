@@ -1,61 +1,55 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { mapStores } from 'pinia'
+import { useLoginStore } from "@/stores/loginStatus";
 import MainHeader from '../src/components/MainHeader.vue'
-import comments from './components/commentBox.vue'
+</script>
+
+<script>
+export default {
+  computed: {
+    ...mapStores(useLoginStore),
+  },
+}
 </script>
 
 <template>
   <header>
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="125"/> -->
-  
-
     <div class="wrapper">
       <MainHeader></MainHeader>
-
-      
+      <RouterView />
       <nav>
-        <!-- Add routes in here -->
-        <!-- <RouterLink to="/">Home</RouterLink> -->
-        <!-- <RouterLink to="/tempory">Tempory</RouterLink> -->
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/comment">Comment</RouterLink>
       </nav>
     </div>
   </header>
-
-  <!-- <RouterView /> -->
-  <comments/>
-</template>
+</template >
 
 <style scoped>
 header {
   line-height: 1.5;
-  max-height: 100vh; 
+  max-height: 100vh;
 
   width: 100vw;
-  /* background-color: green; */
 }
+
 .logo {
   display: block;
-  /* margin: 0 auto 2rem; */
 }
 
 nav {
   width: 100%;
+  display: flex;
+  justify-content: center;
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
 nav a {
   display: inline-block;
-  /* padding: 0 1rem; */
   border-left: 1px solid var(--color-border);
 }
 
@@ -67,7 +61,6 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    /* padding-right: calc(var(--section-gap) / 2); */
   }
 
   .logo {
@@ -81,11 +74,8 @@ nav a:first-of-type {
   }
 
   nav {
-    text-align: left;
-    margin-left: -1rem;
+    text-align: center;
     font-size: 1rem;
-
-    /* padding: 1rem 0; */
     margin-top: 1rem;
   }
 }

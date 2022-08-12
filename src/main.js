@@ -7,6 +7,9 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/main.css'
+import mitt from 'mitt'
+
+const emitter = mitt()
 
 const app = createApp(App)
 
