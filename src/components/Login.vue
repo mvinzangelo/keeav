@@ -77,9 +77,10 @@ export default {
             <div>
                 <button v-if="createAcc" @click="signIn()">Log in</button>
                 <button v-else @click="createUser()">Create Account</button>
-                <br>
-                <button v-if="createAcc" @click="createAcc = !createAcc">Sign up</button>
-                <button v-if="!createAcc" @click="createAcc = !createAcc">Return to Login</button>
+                <div>
+                    <button v-if="createAcc" @click="createAcc = !createAcc">Sign up</button>
+                    <button v-if="!createAcc" @click="createAcc = !createAcc">Return to Login</button>
+                </div>
             </div>
         </div>
     </div>
