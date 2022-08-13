@@ -4,7 +4,7 @@ export default {
     props: {
         // properties go here
         // ex: title: String,
-        timestamp: Date,
+        timestamp: String,
         poster: Object,
         replies: Array,
         comment: String,

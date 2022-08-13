@@ -25,9 +25,13 @@ export default {
             // responsive variables go here
             // ex: count: 0,
             desiredComment: undefined,
-            // date: new Date(),
             postedComments: [],
+            timer: '',
         };
+    },
+    created () {
+        this.getComments();
+        this.timer = setInterval(this.getComments, 50000);
     },
     methods: {
         // callable functions for HTML go here
@@ -47,9 +51,11 @@ export default {
                 const qSnap = await getDocs(q);
 
                 qSnap.forEach((rdoc) => {
+                    // alert(rdoc.id);
                     this.postedComments.push(rdoc.data())
 
                 });
+                
             } catch (e) {
                 alert('retrieve' + e);
             }
@@ -93,11 +99,54 @@ export default {
             const calendar = new Date();
             // alert(calendar);
             return calendar;
+        },
+        timeSince(date) {
+            // alert(typeof(date));
+            // alert(Object.keys(date));
+            let tempSeconds = date.seconds;
+            // alert('cc');
+            let nonUnixDate = new Date(tempSeconds*1000);
+            // alert(nonUnixDate);
+            let seconds = Math.floor((new Date() - nonUnixDate) / 1000);
+            // alert(seconds);
+            let interval = seconds / 31536000;
+            // alert('00');
+            if (interval > 1) {
+                // alert('11');
+                return Math.floor(interval) + " years ago";
+            }
+            interval = seconds / 2592000;
+            if (interval > 1) {
+                // alert('222');
+                return Math.floor(interval) + " months ago";
+            }
+            interval = seconds / 86400;
+            if (interval > 1) {
+                // alert('333');
+                return Math.floor(interval) + " days ago";
+            }
+            interval = seconds / 3600;
+            if (interval > 1) {
+                // alert('444');
+                return Math.floor(interval) + " hours ago";
+            }
+            interval = seconds / 60;
+            if (interval > 1) {
+                // alert('555');
+                return Math.floor(interval) + " minutes ago";
+            }
+            // alert('666');
+            return Math.floor(seconds) + " seconds ago";
+        },
+        cancelTimerAutoUpdate () {
+            clearInterval(this.timer);
         }
-
     },
     beforeMount() {
-        this.getComments();
+        // this.getComments();
+    },
+    beforeDestroy () {
+      this.cancelTimerAutoUpdate();
     },
     components: { Comment }
 }
@@ -107,7 +156,7 @@ export default {
     <div id="commentWrapper">
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
-                <Comment :timeStamp="postedComments[index].timeStamp" :poster="{}" :replies="[]"
+                <Comment :timestamp="timeSince(postedComments[index].timeStamp)" :poster="{}" :replies="[]"
                     :comment="postedComments[index].comment"></Comment>
             </div>
         </div>
