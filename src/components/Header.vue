@@ -1,6 +1,13 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import { auth } from '../firebaseResources.js';
+import { mapStores } from 'pinia'
+import { useLoginStore } from "../stores/loginStatus";
+import { signOut } from "@firebase/auth";
 export default {
+  computed: {
+    ...mapStores(useLoginStore),
+  },
   methods: {
     currentDateTime() {
       const current = new Date();
@@ -10,7 +17,15 @@ export default {
     },
     goLogin() {
       this.$router.push('/login');
-    }
+    },
+    signOut() {
+      signOut(auth).then(() => {
+        this.loginStore.$reset();
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+    },
   }
 };
 </script>
@@ -24,6 +39,8 @@ export default {
         <h1>Hammer</h1>
         <p>{{ currentDateTime() }}</p>
       </div>
+      <button style="position:absolute" v-if="this.loginStore.userID" id="compAlign" @click="signOut()">Sign
+        Out</button>
       <button>
         <RouterLink to="/login"><img alt="Vue logo" class="logo" src="@/assets/human.svg" width="70" /></RouterLink>
       </button>
@@ -49,3 +66,5 @@ main {
   width: 100%;
 }
 </style>
+
+
