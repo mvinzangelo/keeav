@@ -8,6 +8,7 @@ export default {
         poster: Object,
         replies: Array,
         comment: String,
+        cid: String,
     },
     data() {
         return {
@@ -29,7 +30,7 @@ export default {
     <div class="displayedComment">
 
         <h4 class="commentOwner">{{ poster.userName }}</h4>
-        <p>{{ timestamp }}--{{ comment }}</p>
+        <p>{{ timestamp }}--{{ comment }}-- {{cid}}</p>
     </div>
 </template>
 <style scoped>

@@ -27,11 +27,12 @@ export default {
             desiredComment: undefined,
             postedComments: [],
             timer: '',
+            AUTO_REFRESH: 50000,
         };
     },
     created () {
         this.getComments();
-        this.timer = setInterval(this.getComments, 50000);
+        this.timer = setInterval(this.getComments, this.AUTO_REFRESH);
     },
     methods: {
         // callable functions for HTML go here
@@ -43,16 +44,26 @@ export default {
             try {
                 const date = new Date();
 
-                this.postedComments = [];
+                // this.postedComments = [];
                 // alert('443');
                 let q = query(collection(db, ('comments')));
 
                 // alert('543');
                 const qSnap = await getDocs(q);
-
                 qSnap.forEach((rdoc) => {
                     // alert(rdoc.id);
-                    this.postedComments.push(rdoc.data())
+                    let newComment = true;
+                    this.postedComments.forEach((alreadyShowingComment) => {
+                        if(rdoc.id == alreadyShowingComment.cid)
+                        {
+                            newComment=false;
+                            // exi;
+                        }
+                    });
+                    if(newComment)
+                    {
+                        this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id});
+                    }
 
                 });
                 
@@ -156,8 +167,9 @@ export default {
     <div id="commentWrapper">
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
-                <Comment :timestamp="timeSince(postedComments[index].timeStamp)" :poster="{}" :replies="[]"
-                    :comment="postedComments[index].comment"></Comment>
+                <p>{{comment}}</p>
+                <Comment :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="{}" :replies="[]"
+                    :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid"></Comment>
             </div>
         </div>
         <div id="commentMaker">
