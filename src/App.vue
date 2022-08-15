@@ -11,6 +11,7 @@ export default {
     ...mapStores(useLoginStore),
   },
 }
+import Voting from './components/Voting.vue'
 </script>
 
 <template>
