@@ -129,7 +129,7 @@ export default {
         }
     },
     beforeMount() {
-        // this.getComments();
+        this.getComments();
     },
     beforeDestroy () {
       this.cancelTimerAutoUpdate();
