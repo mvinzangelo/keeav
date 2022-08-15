@@ -18,7 +18,6 @@ import Voting from './components/Voting.vue'
   <header>
     <div class="wrapper">
       <MainHeader></MainHeader>
-      <Voting articleID ="H4A0nwjJKTsZanMHVZIx"/>
       <nav class="links">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
