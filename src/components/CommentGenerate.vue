@@ -109,6 +109,8 @@ export default {
         submitComment() { // on submit we want to create comments then get comments to have the current view update
             this.createComment();
             this.getComments();
+            document.getElementById('commentSubmitionInput').value=null;
+            // document.getElementById('commentSubmitionInput').placeholder="Comment...";
         },
         getTime() {//get current date
             const calendar = new Date();
@@ -166,7 +168,7 @@ export default {
         <div id="commentMaker">
             <p>Comment: </p>
             <!-- <p>Where the comment would be typed initialy: {{desiredComment}}</p> -->
-            <textarea v-if="logginInfo" v-model="desiredComment" placeholder="Comment..."></textarea>
+            <textarea id="commentSubmitionInput" v-if="logginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>
             <p v-if="!logginInfo">Loggin to comment</p>
             <button v-if="logginInfo" class="commentSubmit" @click="submitComment">&#x27A1</button>
         </div>
