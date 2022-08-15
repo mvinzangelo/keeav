@@ -5,9 +5,4 @@ export const useLoginStore = defineStore({
     state: () => ({
         userID: ''
     }),
-    getters: {
-        isLogged() {
-            return userID.length == null ? false : true;
-        },
-    },
 })
