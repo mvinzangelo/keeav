@@ -20,7 +20,6 @@ export default {
       <RouterView />
       <nav class="links">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/comment">Comment</RouterLink>
       </nav>
     </div>
