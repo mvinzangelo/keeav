@@ -19,10 +19,6 @@ import Voting from './components/Voting.vue'
     <div class="wrapper">
       <Header></Header>
       <RouterView />
-      <nav class="links">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/comment">Comment</RouterLink>
-      </nav>
     </div>
   </header>
 </template>

@@ -26,6 +26,7 @@ export default {
         async createUser() {
             createUserWithEmailAndPassword(auth, this.email, this.pass).then(async (userCredential) => {
                 const user = userCredential.user;
+                this.loginStore.userID = user.uid;
                 this.$router.push('/')
                 try {
                     const docReference = await setDoc(
