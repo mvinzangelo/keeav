@@ -101,3 +101,25 @@ export default {
     </div>
 </template>
 
+<style>
+.bias::-webkit-progress-bar{
+    background-color: blue;
+    border-radius: 25px;
+}
+
+.bias::-webkit-progress-value{
+    background-color: red;
+    border-radius: 25px;
+}
+
+.bias {
+    background-color: blue;
+    border-radius: 25px;
+}
+
+.bias::-moz-progress-bar {
+    background-color: red;
+    border-radius: 25px;
+}
+</style>
+
