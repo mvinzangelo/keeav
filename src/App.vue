@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { mapStores } from 'pinia'
 import { useLoginStore } from "@/stores/loginStatus";
-import MainHeader from '../src/components/MainHeader.vue'
+import Header from '../src/components/Header.vue'
 </script>
 
 <script>
@@ -16,7 +16,7 @@ export default {
 <template>
   <header>
     <div class="wrapper">
-      <MainHeader></MainHeader>
+      <Header></Header>
       <RouterView />
       <nav class="links">
         <RouterLink to="/">Home</RouterLink>
@@ -24,7 +24,7 @@ export default {
       </nav>
     </div>
   </header>
-</template >
+</template>
 
 <style>
 .wrapper {
