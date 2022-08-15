@@ -15,12 +15,10 @@ export default {
       const dateTime = date;
       return dateTime;
     },
-    goLogin() {
-      this.$router.push('/login');
-    },
     signOut() {
       signOut(auth).then(() => {
         this.loginStore.$reset();
+        this.$router.push('/')
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
