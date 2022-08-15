@@ -29,10 +29,10 @@ export default {
     <!-- HTML for components goes here -->
     <div class="displayedComment">
 
-        <h4 class="commentOwner">Username: <strong>{{ poster }}</strong></h4>
+        <p class="commentOwner">Username: <strong>{{ poster }}</strong></p>
         <p>timestamp: <strong>{{ timestamp }}</strong></p>
         <p>Comment: <strong>{{ comment }}</strong></p>
-        <p>commentID: <strong>{{cid}}</strong></p>
+        <!-- <p>commentID: <strong>{{cid}}</strong></p> -->
     </div>
 </template>
 <style scoped>

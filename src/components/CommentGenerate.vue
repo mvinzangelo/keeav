@@ -158,7 +158,7 @@ export default {
     <div id="commentWrapper">
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
-                <p>{{comment}}</p>
+                <!-- <p>{{comment}}</p> -->
                 <Comment :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
                     :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid"></Comment>
             </div>
