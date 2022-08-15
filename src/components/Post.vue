@@ -65,6 +65,10 @@ export default {
             this.$refs.leftArticle.updateArticle();
             this.$refs.rightArticle.updateArticle();
         });
+    },
+    components: {
+        Article,
+        CommentGenerate,
     }
 }
 </script>
