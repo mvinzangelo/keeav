@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { mapStores } from 'pinia'
 import { useLoginStore } from "@/stores/loginStatus";
-import MainHeader from '../src/components/MainHeader.vue'
+import Header from '../src/components/Header.vue'
 </script>
 
 <script>
@@ -17,15 +17,15 @@ import Voting from './components/Voting.vue'
 <template>
   <header>
     <div class="wrapper">
-      <MainHeader></MainHeader>
+      <Header></Header>
+      <RouterView />
       <nav class="links">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/comment">Comment</RouterLink>
       </nav>
     </div>
   </header>
-</template >
+</template>
 
 <style>
 .wrapper {
