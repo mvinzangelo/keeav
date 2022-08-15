@@ -33,7 +33,7 @@ export default {
   <main>
     <div class="headerbox">
       <button>
-        <RouterLink to="/"><img alt="Vue logo" class="logo" src="@/assets/human.jpg" width="90" /></RouterLink>
+        <RouterLink to="/"><img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="90" /></RouterLink>
       </button>
       <div class="namebox">
         <h1>Hammer</h1>
