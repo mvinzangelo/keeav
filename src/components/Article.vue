@@ -11,10 +11,12 @@
         <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
         <p><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
+        <Voting :articleID="articleRef" ref="voting"></Voting>
     </div>
 </template>
 
 <script>
+import Voting from './Voting.vue'
 import { db } from '../firebaseResources.js'
 import {
     doc,
@@ -52,6 +54,8 @@ export default {
                     this.author = articleSnap.data().author;
                     this.headline = articleSnap.data().headline;
                     this.publisherLogoLink = articleSnap.data().publisherLogoLink;
+                    // update the vote when articleID is fetched
+                    this.$refs.voting.getData();
                 } else {
                     console.log("No such article!");
                 }
@@ -59,9 +63,11 @@ export default {
                 console.log(err);
             }
         }
+    },
+    components: {
+        Voting,
     }
 }
-
 </script>
 
 <style>
