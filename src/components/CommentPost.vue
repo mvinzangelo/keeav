@@ -5,7 +5,7 @@ export default {
         // properties go here
         // ex: title: String,
         timestamp: String,
-        poster: Object,
+        poster: String,
         replies: Array,
         comment: String,
         cid: String,

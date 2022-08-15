@@ -1,8 +1,8 @@
 <script>
 
 import Comment from './CommentPost.vue'
-// import { mapStores } from 'pinia';
-// import { useLoginStore } from "../stores/loginStatus";
+import { mapStores } from 'pinia';
+import { useLoginStore } from "../stores/loginStatus";
 
 import { db } from '../firebaseResources';
 import {
@@ -28,15 +28,29 @@ export default {
             // ex: count: 0,
             desiredComment: undefined, //takes in the current typed value in the comment pox
             postedComments: [], //array of all the comment in the firebase
+            logginInfo: null,
             timer: '', //timer that refreshes the comments every so often based on AUTO_Refresh
             AUTO_REFRESH: 50000,
         };
     },
-    // computed: {
-    //     ...mapStores(useLoginStore),
-    // },
-    created () {
+    computed: {
+        ...mapStores(useLoginStore),
+    },
+    async created () {
         this.getComments(); // will pull comments from firebase
+        if (this.loginStore.userID != '') {
+            try {
+                const docReference = doc(db, 'userInfo', this.loginStore.userID);
+                const response = await getDoc(docReference);
+
+                this.logginInfo = {
+                    firstName: response.firstName,
+                    ...response.data(),
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
         this.timer = setInterval(this.getComments, this.AUTO_REFRESH); //update comments every AUTO_REFRESH Amount of time
     },
     methods: {
@@ -75,12 +89,14 @@ export default {
         async createComment() { //generates a comment
             if (this.desiredComment != null /*&& userLoggedIn == true */) {
                 try {
+                    // alert((this.logginInfo.firstName + " " +  this.logginInfo.lastName));
+                    let userName = (this.logginInfo.firstName + " " +  this.logginInfo.lastName);
                     const docReference = await addDoc(
                         collection(db, ('comments')),
                         {
                             timeStamp: new Date(),
                             topicId: {},//connect to topicID store
-                            poster: {}, //connect to UserID store
+                            poster: userName, //connect to UserID store
                             replies: [], // my idea of how to implement threads
                             comment: this.desiredComment
                         });
@@ -143,15 +159,16 @@ export default {
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
                 <p>{{comment}}</p>
-                <Comment :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="{}" :replies="[]"
+                <Comment :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
                     :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid"></Comment>
             </div>
         </div>
         <div id="commentMaker">
             <p>Comment: </p>
             <!-- <p>Where the comment would be typed initialy: {{desiredComment}}</p> -->
-            <textarea v-model="desiredComment" placeholder="Comment..."></textarea>
-            <button class="commentSubmit" @click="submitComment">&#x27A1</button>
+            <textarea v-if="logginInfo" v-model="desiredComment" placeholder="Comment..."></textarea>
+            <p v-if="!logginInfo">Loggin to comment</p>
+            <button v-if="logginInfo" class="commentSubmit" @click="submitComment">&#x27A1</button>
         </div>
     </div>
 </template>
