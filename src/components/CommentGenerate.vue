@@ -20,6 +20,7 @@ import {
 export default {
     props: {
         // properties go here
+        topicId: String,
         // ex: title: String,
     },
     data() {
@@ -28,7 +29,7 @@ export default {
             // ex: count: 0,
             desiredComment: undefined, //takes in the current typed value in the comment pox
             postedComments: [], //array of all the comment in the firebase
-            logginInfo: null,
+            loginInfo: null,
             timer: '', //timer that refreshes the comments every so often based on AUTO_Refresh
             AUTO_REFRESH: 50000,
         };
@@ -43,7 +44,7 @@ export default {
                 const docReference = doc(db, 'userInfo', this.loginStore.userID);
                 const response = await getDoc(docReference);
 
-                this.logginInfo = {
+                this.loginInfo = {
                     firstName: response.firstName,
                     ...response.data(),
                 }
@@ -89,13 +90,13 @@ export default {
         async createComment() { //generates a comment
             if (this.desiredComment != null /*&& userLoggedIn == true */) {
                 try {
-                    // alert((this.logginInfo.firstName + " " +  this.logginInfo.lastName));
-                    let userName = (this.logginInfo.firstName + " " +  this.logginInfo.lastName);
+                    // alert((this.loginInfo.firstName + " " +  this.loginInfo.lastName));
+                    let userName = (this.loginInfo.firstName + " " +  this.loginInfo.lastName);
                     const docReference = await addDoc(
                         collection(db, ('comments')),
                         {
                             timeStamp: new Date(),
-                            topicId: {},//connect to topicID store
+                            topicId: this.topicId,//connect to topicID store
                             poster: userName, //connect to UserID store
                             replies: [], // my idea of how to implement threads
                             comment: this.desiredComment
@@ -167,38 +168,67 @@ export default {
         </div>
         <div id="commentMaker">
             <p>Comment: </p>
-            <!-- <p>Where the comment would be typed initialy: {{desiredComment}}</p> -->
-            <textarea id="commentSubmitionInput" v-if="logginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>
-            <p v-if="!logginInfo">Loggin to comment</p>
-            <button v-if="logginInfo" class="commentSubmit" @click="submitComment">&#x27A1</button>
+            <p class="errorLabel" v-if="!loginInfo">&#x26A0 Login to comment </p>
+            <div id="commentInlineDisplay">
+                <textarea id="commentSubmitionInput" v-if="loginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>
+                <button v-if="loginInfo" id="commentSubmit" @click="submitComment">&#x27A1</button>
+            </div>
         </div>
     </div>
 </template>
 <style scoped>
 /* Styles for component go here */
 #commentWrapper {
-    background-color: grey;
+    /* background-color: rgb(106, 69, 69); */
+    padding: 10px;
     width: 80%;
-    margin: 0 auto;
-    height: 400px;
+    overflow-x: hidden;
 }
 
 #displayCommentBox {
-    background-color: rgb(208, 208, 208);
+    /* background-color: rgb(249, 51, 51); */
     /* top: 10px;  */
     /* padding: 10px; */
+    margin: 0 auto;
+    height: 400px;
+    overflow-y: scroll;
     width: 100%;
     /* margin: 10px 10px 10px 10px; */
 }
 
 #commentMaker {
-    background-color: rgb(89, 89, 89);
+    background-color: rgb(138, 255, 208);
     padding: 10px;
-    /* top: 10px; */
-    width: 100%;
-    /* vertical-align: bottom; */
-    position: absolute;
+    width: calc(100% - 40px);
+    position: relative;
     bottom: 0px;
 
+}
+.errorLabel
+{
+    color: red;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-indent: 30px;
+}
+#commentSubmitionInput
+{
+    width: calc(100% - 50px);
+    /* border-radius: ; */
+    resize: none;
+
+}
+#commentSubmit
+{
+    background-color: rgb(201, 255, 205);
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    border-radius: 100%;
+}
+#commentInlineDisplay
+{
+    width: 100%;
+    display: inline-flex;
 }
 </style>   
