@@ -39,10 +39,12 @@ export default {
 /* Styles for component go here */
 .displayedComment {
     padding: 10px;
-    width: 100%;
-    border-radius: 20px 10px 10px 30px;
-    border: 2px solid;
-    background-color: antiquewhite;
+    width: calc(100% - 24px);
+    border-radius: 10px 5px 5px 15px;
+    margin-bottom: 2px;
+    /* border: 2px solid; */
+    box-shadow: 1px 1px 3px rgb(0, 0, 0);
+    background-color: rgb(236, 255, 221);
 
 }
 strong{
