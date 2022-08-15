@@ -4,11 +4,13 @@
         <Article :articleRef="leftArticle" ref="leftArticle"></Article>
         <Article :articleRef="rightArticle" ref="rightArticle"></Article>
     </div>
+    <CommentGenerate :topicId="topicID"></CommentGenerate>
 </template>
 
 <!-- Is there a better way of doing this? -->
 <script setup>
 import Article from './Article.vue';
+import CommentGenerate from './CommentGenerate.vue'
 </script>
 
 <script>
@@ -33,6 +35,7 @@ export default {
             topic: "Lorem ipsum",
             leftArticle: '',
             rightArticle: '',
+            topicID: '',
         }
     },
     props: {
@@ -47,6 +50,7 @@ export default {
                     this.topic = latestTopic.docs[0].data().topic;
                     this.leftArticle = latestTopic.docs[0].data().leftArticle;
                     this.rightArticle = latestTopic.docs[0].data().rightArticle;
+                    this.topicID = latestTopic.docs[0].id;
                 }
                 else {
                     console.log("Topic not found!");
