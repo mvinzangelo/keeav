@@ -1,6 +1,6 @@
 <script>
 import {db} from '../firebaseResources';
-import {doc, getDoc} from 'firebase/firestore';
+import {doc, getDoc, setDoc, addDoc, collection} from 'firebase/firestore';
 export default {
     data() {
         return {
@@ -37,6 +37,15 @@ export default {
             else {
                 console.log('doc does not exist');
             }
+        },
+        async newVote(){
+            //create new vote doc
+            const docRef = await addDoc(collection(db, "votes")), {
+                articleID: this.articleID,
+                userID: ,
+                vote: userVote
+            }
+            //update totalvotecounter
         }
     }
 };
