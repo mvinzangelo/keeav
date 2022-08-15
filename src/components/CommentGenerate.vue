@@ -110,7 +110,8 @@ export default {
         submitComment() { // on submit we want to create comments then get comments to have the current view update
             this.createComment();
             this.getComments();
-            document.getElementById('commentSubmitionInput').value=null;
+            // document.getElementById('commentSubmitionInput').value=null;
+            this.desiredComment = undefined;
             // document.getElementById('commentSubmitionInput').placeholder="Comment...";
         },
         getTime() {//get current date
