@@ -4,10 +4,11 @@ export default {
     props: {
         // properties go here
         // ex: title: String,
-        timestamp: Date,
-        poster: Object,
+        timestamp: String,
+        poster: String,
         replies: Array,
         comment: String,
+        cid: String,
     },
     data() {
         return {
@@ -28,8 +29,10 @@ export default {
     <!-- HTML for components goes here -->
     <div class="displayedComment">
 
-        <h4 class="commentOwner">{{ poster.userName }}</h4>
-        <p>{{ timestamp }}--{{ comment }}</p>
+        <p class="commentOwner">Username: <strong>{{ poster }}</strong></p>
+        <p>timestamp: <strong>{{ timestamp }}</strong></p>
+        <p>Comment: <strong>{{ comment }}</strong></p>
+        <!-- <p>commentID: <strong>{{cid}}</strong></p> -->
     </div>
 </template>
 <style scoped>
@@ -41,5 +44,8 @@ export default {
     border: 2px solid;
     background-color: antiquewhite;
 
+}
+strong{
+    font-weight: bold;
 }
 </style>

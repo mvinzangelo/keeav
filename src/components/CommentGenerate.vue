@@ -1,6 +1,8 @@
 <script>
 
 import Comment from './CommentPost.vue'
+import { mapStores } from 'pinia';
+import { useLoginStore } from "../stores/loginStatus";
 
 import { db } from '../firebaseResources';
 import {
@@ -24,10 +26,32 @@ export default {
         return {
             // responsive variables go here
             // ex: count: 0,
-            desiredComment: undefined,
-            // date: new Date(),
-            postedComments: [],
+            desiredComment: undefined, //takes in the current typed value in the comment pox
+            postedComments: [], //array of all the comment in the firebase
+            logginInfo: null,
+            timer: '', //timer that refreshes the comments every so often based on AUTO_Refresh
+            AUTO_REFRESH: 50000,
         };
+    },
+    computed: {
+        ...mapStores(useLoginStore),
+    },
+    async created () {
+        this.getComments(); // will pull comments from firebase
+        if (this.loginStore.userID != '') {
+            try {
+                const docReference = doc(db, 'userInfo', this.loginStore.userID);
+                const response = await getDoc(docReference);
+
+                this.logginInfo = {
+                    firstName: response.firstName,
+                    ...response.data(),
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        this.timer = setInterval(this.getComments, this.AUTO_REFRESH); //update comments every AUTO_REFRESH Amount of time
     },
     methods: {
         // callable functions for HTML go here
@@ -37,67 +61,94 @@ export default {
         // }
         async getComments() {
             try {
-                const date = new Date();
-
-                this.postedComments = [];
-                // alert('443');
-                let q = query(collection(db, ('comments')));
-
-                // alert('543');
-                const qSnap = await getDocs(q);
-
-                qSnap.forEach((rdoc) => {
-                    this.postedComments.push(rdoc.data())
+                //get comment periodicaly is called to pull any new comments from the database
+                // the id comparison is to prevent deleting all the comments the adding them again creating 
+                // an annoying flash
+                let q = query(collection(db, ('comments')));   
+                const qSnap = await getDocs(q); //pull database docs from firebase
+                qSnap.forEach((rdoc) => { //for each doc
+                    let newComment = true;//assume the doc is a unique comment
+                    this.postedComments.forEach((alreadyShowingComment) => { //check if any of the already posted comments matches the pulled commentId
+                        if(rdoc.id == alreadyShowingComment.cid)//if one does match, (false) do not add the comment again
+                        {
+                            newComment=false;
+                        }
+                    });
+                    if(newComment)//otherwise add the new comment
+                    {
+                        this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id});
+                    }
 
                 });
+                
             } catch (e) {
                 alert('retrieve' + e);
             }
 
         },
-        async createComment() {
+        async createComment() { //generates a comment
             if (this.desiredComment != null /*&& userLoggedIn == true */) {
                 try {
-                    console.log('calling create comment');
-                    console.log('Comment: ' + this.createComment);
-                    const date = new Date();
+                    // alert((this.logginInfo.firstName + " " +  this.logginInfo.lastName));
+                    let userName = (this.logginInfo.firstName + " " +  this.logginInfo.lastName);
                     const docReference = await addDoc(
                         collection(db, ('comments')),
                         {
                             timeStamp: new Date(),
-                            topicId: '',
-                            poster: {},
-                            replies: [],
+                            topicId: {},//connect to topicID store
+                            poster: userName, //connect to UserID store
+                            replies: [], // my idea of how to implement threads
                             comment: this.desiredComment
                         });
-                    // alert('commen');
-                    console.log('New comment has ID:', docReference.id);
-                    console.log('Completed createComment')
                 } catch (e) {
                     alert('create comment' + e);
                     console.error(e);
                 }
             }
         },
-        submitComment() {
-            const time = this.getTime();
+        submitComment() { // on submit we want to create comments then get comments to have the current view update
             this.createComment();
-            // alert('111');
             this.getComments();
-            // alert('22211');
-            // this.postedComments.push({ timestamp: new Date(), poster: NaN, responseToo: NaN, comment: this.desiredComment },);
-            // this.postedComments = this.getComments();
-            // alert(time);
         },
-        getTime() {
+        getTime() {//get current date
             const calendar = new Date();
-            // alert(calendar);
             return calendar;
+        },
+        timeSince(date) { //generate the amount of time since comment was submitted
+            let tempSeconds = date.seconds;
+            let nonUnixDate = new Date(tempSeconds*1000);
+            let seconds = Math.floor((new Date() - nonUnixDate) / 1000);
+            let interval = seconds / 31536000;
+            if (interval > 1) {
+                return Math.floor(interval) + " years ago";
+            }
+            interval = seconds / 2592000;
+            if (interval > 1) {
+                return Math.floor(interval) + " months ago";
+            }
+            interval = seconds / 86400;
+            if (interval > 1) {
+                return Math.floor(interval) + " days ago";
+            }
+            interval = seconds / 3600;
+            if (interval > 1) {
+                return Math.floor(interval) + " hours ago";
+            }
+            interval = seconds / 60;
+            if (interval > 1) {
+                return Math.floor(interval) + " minutes ago";
+            }
+            return Math.floor(seconds) + " seconds ago";
+        },
+        cancelTimerAutoUpdate () {
+            clearInterval(this.timer);
         }
-
     },
     beforeMount() {
         this.getComments();
+    },
+    beforeDestroy () {
+      this.cancelTimerAutoUpdate();
     },
     components: { Comment }
 }
@@ -107,15 +158,17 @@ export default {
     <div id="commentWrapper">
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
-                <Comment :timeStamp="postedComments[index].timeStamp" :poster="{}" :replies="[]"
-                    :comment="postedComments[index].comment"></Comment>
+                <!-- <p>{{comment}}</p> -->
+                <Comment :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
+                    :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid"></Comment>
             </div>
         </div>
         <div id="commentMaker">
             <p>Comment: </p>
             <!-- <p>Where the comment would be typed initialy: {{desiredComment}}</p> -->
-            <textarea v-model="desiredComment" placeholder="Comment..."></textarea>
-            <button class="commentSubmit" @click="submitComment">&#x27A1</button>
+            <textarea v-if="logginInfo" v-model="desiredComment" placeholder="Comment..."></textarea>
+            <p v-if="!logginInfo">Loggin to comment</p>
+            <button v-if="logginInfo" class="commentSubmit" @click="submitComment">&#x27A1</button>
         </div>
     </div>
 </template>
