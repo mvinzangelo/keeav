@@ -11,12 +11,17 @@
         <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
         <p><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
-        <button v-on:click="getArticle">Update</button>
     </div>
 </template>
 
 <script>
-import app from '../firebaseResources.js'
+import { db } from '../firebaseResources.js'
+import {
+    doc,
+    getDoc,
+    query,
+} from 'firebase/firestore'
+
 export default {
     data() {
         return {
@@ -27,29 +32,32 @@ export default {
             author: "[Author]",
             date: "mm/dd/yyyy",
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta felis ut elementum vehicula. Praesent malesuada finibus nunc, vel mollis risus vestibulum et. Pellentesque consectetur tincidunt gravida. Suspendisse gravida justo at arcu vehicula dignissim. Cras tempor orci tempor mollis vulputate. Sed varius lectus sed interdum tincidunt. In nec eros fringilla purus tristique finibus sit amet ut nisl. Nullam semper rutrum nunc, ac blandit.",
-            link: "https://edition.cnn.com/2022/08/06/europe/zaporizhzhia-nuclear-plant-intl/index.html"
-            // link: {
-            //     type: String,
-            //     default: "https://edition.cnn.com/2022/08/06/europe/zaporizhzhia-nuclear-plant-intl/index.html",
-            //     // validation function by https://stackoverflow.com/users/1092711/pavlo on https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
-            //     validator(value) {
-            //         let url;
-            //         try {
-            //             url = new URL(value);
-            //         } catch (_) {
-            //             return false;
-            //         }
-            //         return url.protocol === "http:" || url.protocol === "https:";
-            //     }
-            // }
+            link: "https://www.lipsum.com/feed/html"
+
         }
     },
     props: {
-        articleType: String,
+        articleRef: String,
     },
     methods: {
-        getArticle: () => {
-            // TODO: Get article info from database
+        async updateArticle() {
+            try {
+                // TODO: Get article info from database
+                const articleRef = doc(db, "articles", this.articleRef);
+                const articleSnap = await getDoc(articleRef);
+                if (articleSnap.exists()) {
+                    this.description = articleSnap.data().description;
+                    this.link = articleSnap.data().link;
+                    this.articlePictureLink = articleSnap.data().articlePictureLink;
+                    this.author = articleSnap.data().author;
+                    this.headline = articleSnap.data().headline;
+                    this.publisherLogoLink = articleSnap.data().publisherLogoLink;
+                } else {
+                    console.log("No such article!");
+                }
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 }
@@ -65,6 +73,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    overflow: scroll;
 }
 
 .publisher-logo {
@@ -72,6 +81,7 @@ export default {
     width: 80px;
     border-radius: 100%;
     border: 2px black solid;
+    object-fit: fill;
 }
 
 .article-img {
@@ -107,10 +117,5 @@ a {
 
 a:hover {
     text-decoration: underline;
-}
-
-button {
-    height: 50px;
-    width: 50px;
 }
 </style>
