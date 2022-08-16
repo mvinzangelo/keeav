@@ -52,7 +52,7 @@ export default {
                 console.error(err);
             }
         }
-        this.timer = setInterval(this.getComments, this.AUTO_REFRESH); //update comments every AUTO_REFRESH Amount of time
+        // this.timer = setInterval(this.getComments, this.AUTO_REFRESH); //update comments every AUTO_REFRESH Amount of time
     },
     methods: {
         // callable functions for HTML go here
