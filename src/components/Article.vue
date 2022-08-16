@@ -78,7 +78,7 @@ export default {
     color: black;
     /* display: flex; */
     flex-direction: column;
-    padding: 10px;
+    padding: 20px;
     overflow: none;
     box-shadow: 2px 1px var(--dark-byzantium);
     background-color: var(--lavender-blush);
@@ -89,7 +89,7 @@ export default {
     height: 80px;
     width: 80px;
     border-radius: 100%;
-    border: 2px black solid;
+    /* border: 2px var(--dark-byzantium) solid; */
     object-fit: fill;
 }
 
@@ -99,7 +99,7 @@ export default {
     object-fit: cover;
     margin: 10px 0;
     border-radius: 10px;
-    border: 2px black solid;
+    /* border: 2px var(--dark-byzantium) solid; */
 }
 
 .headline {
