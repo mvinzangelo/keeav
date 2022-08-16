@@ -58,8 +58,6 @@ export default {
         </button>
       </div>
     </div>
-
-
   </main>
 </template>
 <style scoped>
