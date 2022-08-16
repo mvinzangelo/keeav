@@ -32,7 +32,7 @@ export default {
 <template>
   <main>
     <div class="headerbox">
-      <button id="logo-button">
+      <button id="logo-button" @click="$router.push('/')">
         <div id="namebox">
           <h1>H<span id="ammer">ammer</span></h1>
         </div>
