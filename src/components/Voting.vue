@@ -84,7 +84,7 @@ export default {
 
 <template>
     <div class="container">
-        <h1 v-if="this.loginStore.userID !== ''" >Vote: {{ userVote }}</h1>
+        <h1 v-if="this.loginStore.userID !== ''">Vote: {{ userVote }}</h1>
         <h1 v-else>Login to vote.</h1>
         <div class="buttonContainer" v-if="userVote == 'None' && this.loginStore.userID !== ''">
             <button class="left" @click="newVote('Left')">Left</button>
@@ -103,24 +103,20 @@ export default {
 </template>
 
 <style>
-.bias::-webkit-progress-bar{
+.bias::-webkit-progress-bar {
     background-color: blue;
-    border-radius: 25px;
 }
 
-.bias::-webkit-progress-value{
+.bias::-webkit-progress-value {
     background-color: red;
-    border-radius: 25px;
 }
 
 .bias {
     background-color: blue;
-    border-radius: 25px;
 }
 
 .bias::-moz-progress-bar {
     background-color: red;
-    border-radius: 25px;
 }
 </style>
 
