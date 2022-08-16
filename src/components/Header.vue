@@ -43,20 +43,22 @@ export default {
       <!-- <button style="position:absolute; right:6.25rem" v-if="this.loginStore.userID" id="compAlign"
         @click="signOut()">Sign
         Out</button> -->
-      <ol class="nav-links">
-        <li>topics</li>
-        <li>publishers</li>
-        <li>authors</li>
-        <li>transparency</li>
-      </ol>
-      <button v-if="this.loginStore.userID == ''" class="profile">
-        <RouterLink to="/login"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
-        </RouterLink>
-      </button>
-      <button v-else class="profile">
-        <RouterLink to="/profile"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
-        </RouterLink>
-      </button>
+      <div class="right-cluster">
+        <ol class="nav-links">
+          <li>topics</li>
+          <li>publishers</li>
+          <li>authors</li>
+          <li>transparency</li>
+        </ol>
+        <button v-if="this.loginStore.userID == ''" class="profile">
+          <RouterLink to="/login"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
+          </RouterLink>
+        </button>
+        <button v-else class="profile">
+          <RouterLink to="/profile"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
+          </RouterLink>
+        </button>
+      </div>
     </div>
 
 
@@ -140,6 +142,11 @@ main {
   box-shadow: 2px 1px var(--dark-byzantium);
   /* background-color: var(--bright-lilac); */
   padding: 0;
+}
+
+.right-cluster {
+  display: flex;
+  gap: 50px;
 }
 
 img {
