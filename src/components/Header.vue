@@ -33,7 +33,7 @@ export default {
   <main>
     <div class="headerbox">
       <!-- <button> -->
-      <RouterLink to="/"><img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="90" /></RouterLink>
+      <!-- <RouterLink to="/"><img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="90" /></RouterLink> -->
       <!-- </button> -->
       <div class="namebox">
         <h1>H<span id="ammer">ammer</span></h1>
@@ -60,7 +60,7 @@ export default {
 .headerbox {
 
   /* padding: 10px; */
-  background-color: var(--lavender-blush);
+  background-color: white;
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -74,25 +74,26 @@ export default {
 }
 
 #ammer {
-  font-family: 'Lobster', cursive;
+  /* font-family: 'Lobster', cursive; */
   font-size: 40px;
   position: relative;
   top: -15px;
-  color: burlywood;
-  text-shadow: 2px 1px rgb(165, 93, 42);
+  color: var(--bright-lilac);
+  text-shadow: 2px 1px var(--dark-byzantium);
   left: -3px;
 }
 
 h1 {
   /* vertical-align: baseline; */
 
-  font-family: 'coda', cursive;
+  font-family: 'Lobster', cursive;
   vertical-align: center;
-  color: rgb(56, 56, 56);
+  color: var(--bright-lilac);
   /* margin-top: 30px; */
   position: relative;
   margin-top: 5px;
   font-size: 70px;
+  text-shadow: 2px 1px var(--dark-byzantium);
   /* background-color: aquamarine; */
 }
 
