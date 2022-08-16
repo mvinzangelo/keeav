@@ -117,6 +117,7 @@ export default {
     text-shadow: 2px 1px var(--dark-byzantium);
     color: var(--bright-lilac);
     margin: 10px 0;
+    margin-top: 25px;
 }
 
 @media screen and (max-width: 1125px) {
