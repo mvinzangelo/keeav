@@ -85,8 +85,8 @@ export default {
     /* background-color: rgb(105, 34, 34); */
 
     display: flex;
-    padding: 10px;
-    /* justify-content: center; */
+    /* padding: 10px */
+    justify-content: center;
 }
 
 .date {
@@ -114,10 +114,9 @@ export default {
     font-size: 4rem;
     font-weight: bold;
     font-family: 'Lobster', cursive;
-    /* background-color: red; */
     text-shadow: 2px 1px var(--dark-byzantium);
     color: var(--bright-lilac);
-    margin-bottom: 5px;
+    margin: 10px 0;
 }
 
 @media screen and (max-width: 1125px) {
