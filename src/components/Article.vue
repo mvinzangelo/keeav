@@ -28,14 +28,13 @@ export default {
     data() {
         return {
             headline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium.",
-            publisherLogoLink: "src/assets/placeholderImage.svg",
+            publisherLogoLink: "src/assets/placeholderImage.png",
             publisher: "[Publisher]",
-            articlePictureLink: "src/assets/placeholderImage.svg",
+            articlePictureLink: "src/assets/placeholderImage.png",
             author: "[Author]",
             date: "mm/dd/yyyy",
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta felis ut elementum vehicula. Praesent malesuada finibus nunc, vel mollis risus vestibulum et. Pellentesque consectetur tincidunt gravida. Suspendisse gravida justo at arcu vehicula dignissim. Cras tempor orci tempor mollis vulputate. Sed varius lectus sed interdum tincidunt. In nec eros fringilla purus tristique finibus sit amet ut nisl. Nullam semper rutrum nunc, ac blandit.",
             link: "https://www.lipsum.com/feed/html"
-
         }
     },
     props: {
@@ -74,15 +73,16 @@ export default {
 .block {
     /* max-width: 500px; */
     width: 45%;
-    box-shadow: 1px 1px 4px 1px #000000;
     margin: 5px auto;
     /* min-height: 600px; */
-    background-color: rgb(206, 206, 206);
     color: black;
     /* display: flex; */
     flex-direction: column;
     padding: 10px;
     overflow: none;
+    box-shadow: 2px 1px var(--dark-byzantium);
+    background-color: var(--lavender-blush);
+    border-radius: 15px;
 }
 
 .publisher-logo {
