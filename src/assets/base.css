@@ -1,7 +1,14 @@
 /* defualt values for all content */
 :root {
+  --tumbleweed: #cea07eff;
+  --banana-mania: #edd9a3ff;
+  --pale-spring-bud: #e2e8c0ff;
+  --bright-lilac: #cd8de5ff;
+  --dark-byzantium: #602f50ff;
+  --french-lilac: #975E9B;
+  --lavender-blush: #F1E4EE;
   min-height: 100vh;
-  background: #DFCFBE;
+  background: var(--lavender-blush);
   line-height: 1.6;
   /* font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; */
