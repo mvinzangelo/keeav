@@ -72,14 +72,17 @@ export default {
 
 <style>
 .block {
-    width: 500px;
-    height: 600px;
+    /* max-width: 500px; */
+    width: 45%;
+    box-shadow: 1px 1px 4px 1px #000000;
+    margin: 5px auto;
+    /* min-height: 600px; */
     background-color: rgb(206, 206, 206);
     color: black;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     padding: 10px;
-    overflow: scroll;
+    overflow: none;
 }
 
 .publisher-logo {
@@ -123,5 +126,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+@media screen and (max-width: 1125px) {
+    .block {
+        width: 96%;
+    }
 }
 </style>

@@ -110,7 +110,8 @@ export default {
         submitComment() { // on submit we want to create comments then get comments to have the current view update
             this.createComment();
             this.getComments();
-            document.getElementById('commentSubmitionInput').value=null;
+            // document.getElementById('commentSubmitionInput').value=null;
+            this.desiredComment = undefined;
             // document.getElementById('commentSubmitionInput').placeholder="Comment...";
         },
         getTime() {//get current date
@@ -181,8 +182,41 @@ export default {
 #commentWrapper {
     /* background-color: rgb(106, 69, 69); */
     padding: 10px;
-    width: 80%;
+    width: 100%;
     overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2e2e2e;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 #displayCommentBox {
