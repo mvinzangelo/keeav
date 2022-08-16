@@ -15,18 +15,13 @@ import {
     where,
     deleteDoc,
 } from 'firebase/firestore'
-// local functions can be decalred here
 
 export default {
     props: {
-        // properties go here
         topicId: String,
-        // ex: title: String,
     },
     data() {
         return {
-            // responsive variables go here
-            // ex: count: 0,
             desiredComment: undefined, //takes in the current typed value in the comment pox
             postedComments: [], //array of all the comment in the firebase
             loginInfo: null,
@@ -59,12 +54,7 @@ export default {
         }
         // this.timer = setInterval(this.getComments, this.AUTO_REFRESH); //update comments every AUTO_REFRESH Amount of time
     },
-    methods: {
-        // callable functions for HTML go here
-        // ex: incCount()
-        // {
-        //     this.count++;
-        // }
+    methods: {  
         async getComments() {
             try {
                 //get comment periodicaly is called to pull any new comments from the database
