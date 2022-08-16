@@ -1,15 +1,15 @@
 <template>
     <div class="block">
+        <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
         <div class="info-wrapper">
             <p><img class="publisher-logo" :src="publisherLogoLink" alt="Logo"> </p>
             <div class="info-text">
                 <p class="headline"><a :href="link" target="_blank">{{ headline }}</a></p>
-                <p>By: <span>{{ author }}</span></p>
+                <p class="author">By: <span>{{ author }}</span></p>
                 <!-- <p><span>{{ publisher }}</span></p> -->
             </div>
         </div>
-        <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
-        <p><span> {{ description }}</span></p>
+        <p class="description"><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
         <Voting :articleID="articleRef" ref="voting"></Voting>
     </div>
@@ -69,8 +69,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .block {
+    position: relative;
     /* max-width: 500px; */
     width: 45%;
     margin: 5px auto;
@@ -78,17 +79,21 @@ export default {
     color: black;
     /* display: flex; */
     flex-direction: column;
-    padding: 20px;
+    /* padding: 20px; */
     overflow: none;
     box-shadow: 2px 1px var(--dark-byzantium);
     background-color: var(--lavender-blush);
     border-radius: 15px;
+    overflow: hidden;
 }
 
 .publisher-logo {
     height: 80px;
     width: 80px;
-    border-radius: 100%;
+    position: absolute;
+    top: 44%;
+    left: 7px;
+    /* border-radius: 100%; */
     /* border: 2px var(--dark-byzantium) solid; */
     object-fit: fill;
 }
@@ -97,8 +102,8 @@ export default {
     height: 300px;
     width: 100%;
     object-fit: cover;
-    margin: 10px 0;
-    border-radius: 10px;
+    /* margin: 10px 0; */
+    /* border-radius: 10px; */
     /* border: 2px var(--dark-byzantium) solid; */
 }
 
@@ -106,6 +111,17 @@ export default {
     font-weight: bolder;
     font-size: 1.3rem;
     line-height: 1;
+    padding-left: 80px;
+    padding-right: 15px;
+}
+
+.author {
+    margin-top: 5px;
+    padding-left: 80px;
+}
+
+.description {
+    padding: 15px 15px;
 }
 
 .info-wrapper {
@@ -116,7 +132,7 @@ export default {
 .info-text {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 a {
