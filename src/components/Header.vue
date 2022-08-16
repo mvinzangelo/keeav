@@ -39,16 +39,24 @@ export default {
           </RouterLink>
         </div>
       </button>
-      <button style="position:absolute; right:6.25rem" v-if="this.loginStore.userID" id="compAlign"
+
+      <!-- <button style="position:absolute; right:6.25rem" v-if="this.loginStore.userID" id="compAlign"
         @click="signOut()">Sign
-        Out</button>
-      <button v-if="this.loginStore.userID == ''">
-        <RouterLink to="/login"><img alt="Vue logo" class="logo" src="@/assets/human.svg" width="70" /></RouterLink>
+        Out</button> -->
+      <ol class="nav-links">
+        <li>topics</li>
+        <li>publishers</li>
+        <li>authors</li>
+        <li>transparency</li>
+      </ol>
+      <button v-if="this.loginStore.userID == ''" class="profile">
+        <RouterLink to="/login"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
+        </RouterLink>
       </button>
-      <button v-else>
-        <RouterLink to="/profile"><img alt="Vue logo" class="logo" src="@/assets/human.svg" width="70" /></RouterLink>
+      <button v-else class="profile">
+        <RouterLink to="/profile"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
+        </RouterLink>
       </button>
-      <!-- <div class="profilepic"> -->
     </div>
 
 
@@ -58,7 +66,6 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Coda:wght@800&family=Lobster&display=swap');
 
 .headerbox {
-
   /* padding: 10px; */
   background-color: white;
   display: flex;
@@ -101,6 +108,16 @@ main {
   width: 100%;
 }
 
+.nav-links {
+  font-size: 1.5rem;
+  display: flex;
+  gap: 40px;
+  font-family: 'Lobster', cursive;
+  align-items: center;
+  color: rgb(85, 85, 85);
+  /* text-shadow: 2px 1px rgb(80, 80, 80); */
+}
+
 #logo-button {
   background: none;
   color: inherit;
@@ -114,6 +131,21 @@ main {
 #logo-button:hover {
   text-shadow: 2px 1px var(--bright-lilac);
   color: var(--dark-byzantium);
+}
+
+.profile {
+  border-radius: 50%;
+  overflow: hidden;
+  border: 0;
+  box-shadow: 2px 1px var(--dark-byzantium);
+  /* background-color: var(--bright-lilac); */
+  padding: 0;
+}
+
+img {
+  height: 80px;
+  width: auto;
+  border-radius: 50%;
 }
 </style>
 
