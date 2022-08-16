@@ -33,7 +33,7 @@ export default {
   <main>
     <div class="headerbox">
       <!-- <button> -->
-        <RouterLink to="/"><img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="90" /></RouterLink>
+      <RouterLink to="/"><img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="90" /></RouterLink>
       <!-- </button> -->
       <div class="namebox">
         <h1>H<span id="ammer">ammer</span></h1>
@@ -55,16 +55,15 @@ export default {
   </main>
 </template>
 <style scoped>
-
 @import url('https://fonts.googleapis.com/css2?family=Coda:wght@800&family=Lobster&display=swap');
+
 .headerbox {
-  
+
   /* padding: 10px; */
-  background-color: rgb(191, 191, 191);
+  background-color: var(--lavender-blush);
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  border-bottom: 5px solid black;
 }
 
 .namebox {
@@ -73,6 +72,7 @@ export default {
   flex-direction: column;
   text-align: center;
 }
+
 #ammer {
   font-family: 'Lobster', cursive;
   font-size: 40px;
@@ -82,10 +82,10 @@ export default {
   text-shadow: 2px 1px rgb(165, 93, 42);
   left: -3px;
 }
-h1
-{
+
+h1 {
   /* vertical-align: baseline; */
-  
+
   font-family: 'coda', cursive;
   vertical-align: center;
   color: rgb(56, 56, 56);
@@ -95,8 +95,15 @@ h1
   font-size: 70px;
   /* background-color: aquamarine; */
 }
+
 main {
   width: 100%;
+}
+
+.logo {
+  /* background-color: var(--dark-byzantium);
+  border-radius: 50%;
+  padding: 10px; */
 }
 </style>
 
