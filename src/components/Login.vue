@@ -91,7 +91,7 @@ export default {
             <p>Profile Picture:</p>
             <input type="file" @change="" />
             <p>Date of Birth:</p>
-            <input type="date" v-model="dob" />
+            <input type="date" v-model="dob" max="2000-01-02" />
             <p>Phone Number:</p>
             <input type="tel" v-model="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
         </div>
