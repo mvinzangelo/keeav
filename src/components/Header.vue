@@ -33,7 +33,7 @@ export default {
   <main>
     <div class="headerbox">
       <button id="logo-button">
-        <div class="namebox">
+        <div id="namebox">
           <RouterLink to="/">
             <h1>H<span id="ammer">ammer</span></h1>
           </RouterLink>
@@ -97,12 +97,12 @@ h1 {
 
   font-family: 'Lobster', cursive;
   vertical-align: center;
-  color: var(--bright-lilac);
   /* margin-top: 30px; */
   position: relative;
   margin-top: 5px;
   font-size: 70px;
   text-shadow: 2px 1px var(--dark-byzantium);
+  color: var(--bright-lilac);
   /* background-color: aquamarine; */
 }
 
@@ -130,9 +130,9 @@ main {
   outline: inherit;
 }
 
-#logo-button:hover {
+#namebox:hover {
   text-shadow: 2px 1px var(--bright-lilac);
-  color: var(--dark-byzantium);
+  color: black;
 }
 
 .profile {
@@ -153,6 +153,11 @@ img {
   height: 80px;
   width: auto;
   border-radius: 50%;
+}
+
+li:hover {
+  color: var(--bright-lilac);
+
 }
 </style>
 
