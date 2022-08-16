@@ -68,11 +68,11 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Coda:wght@800&family=Lobster&display=swap');
 
 .headerbox {
-  /* padding: 10px; */
+  /* padding: 20px; */
+  padding: 10px 50px;
   background-color: white;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
 }
 
 .namebox {
