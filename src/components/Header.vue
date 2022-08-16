@@ -37,7 +37,7 @@ export default {
       <!-- </button> -->
       <div class="namebox">
         <h1>H<span id="ammer">ammer</span></h1>
-        <p>{{ currentDateTime() }}</p>
+        <!-- <p>{{ currentDateTime() }}</p> -->
       </div>
       <button style="position:absolute; right:6.25rem" v-if="this.loginStore.userID" id="compAlign"
         @click="signOut()">Sign
