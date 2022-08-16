@@ -34,9 +34,7 @@ export default {
     <div class="headerbox">
       <button id="logo-button">
         <div id="namebox">
-          <RouterLink to="/">
-            <h1>H<span id="ammer">ammer</span></h1>
-          </RouterLink>
+          <h1>H<span id="ammer">ammer</span></h1>
         </div>
       </button>
 
@@ -75,11 +73,12 @@ export default {
   justify-content: space-between;
 }
 
-.namebox {
+#namebox {
   display: flex;
   /* background-color: cadetblue; */
   flex-direction: column;
   text-align: center;
+  text-decoration: none;
 }
 
 #ammer {
@@ -87,23 +86,16 @@ export default {
   font-size: 40px;
   position: relative;
   top: -15px;
-  color: var(--bright-lilac);
-  text-shadow: 2px 1px var(--dark-byzantium);
   left: -3px;
 }
 
 h1 {
   /* vertical-align: baseline; */
-
-  font-family: 'Lobster', cursive;
   vertical-align: center;
   /* margin-top: 30px; */
   position: relative;
   margin-top: 5px;
   font-size: 70px;
-  text-shadow: 2px 1px var(--dark-byzantium);
-  color: var(--bright-lilac);
-  /* background-color: aquamarine; */
 }
 
 main {
@@ -116,23 +108,26 @@ main {
   gap: 40px;
   font-family: 'Lobster', cursive;
   align-items: center;
-  color: rgb(85, 85, 85);
+  color: rgb(87, 87, 87);
   /* text-shadow: 2px 1px rgb(80, 80, 80); */
 }
 
 #logo-button {
   background: none;
-  color: inherit;
   border: none;
   padding: 0;
   font: inherit;
   cursor: pointer;
-  outline: inherit;
+  outline: 0;
+  text-decoration: none;
+  font-family: 'Lobster', cursive;
+  text-shadow: 2px 1px var(--dark-byzantium);
+  color: var(--bright-lilac);
 }
 
-#namebox:hover {
+#logo-button:hover {
   text-shadow: 2px 1px var(--bright-lilac);
-  color: black;
+  color: var(--dark-byzantium);
 }
 
 .profile {
