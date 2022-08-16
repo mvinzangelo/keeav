@@ -85,8 +85,8 @@ export default {
     /* background-color: rgb(105, 34, 34); */
 
     display: flex;
-    /* padding: 10px */
-    justify-content: center;
+    padding: 10px;
+    /* justify-content: center; */
 }
 
 .date {
