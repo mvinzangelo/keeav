@@ -32,6 +32,11 @@ export default {
             loginInfo: null,
             timer: '', //timer that refreshes the comments every so often based on AUTO_Refresh
             AUTO_REFRESH: 50000,
+            // threads?
+            selectedID: undefined,
+            parentComment: undefined,
+            // parentCommentId: undefined,
+
         };
     },
     computed: {
@@ -151,7 +156,22 @@ export default {
         },
         cancelTimerAutoUpdate () {
             clearInterval(this.timer);
-        }
+        },
+
+        //threads
+        selectComment(id, replyTo) {
+            // alert("test: " + String(a));
+            if(id == this.selectedID)
+            {
+                this.selectedID = undefined;
+                this.parentComment = undefined;
+            }
+            else
+            {
+                this.selectedID = id;
+                this.parentComment = replyTo;
+            }
+        },
     },
     beforeMount() {
         this.getComments();
@@ -162,18 +182,23 @@ export default {
     components: { Comment }
 }
 </script>
-<template onl>
+<template>
     <!-- HTML for components goes here -->
+    <h2>1 {{parentComment}}</h2>
+    <h2>2 {{selectedID}}</h2>
+    <!-- <h2>3 {{parentCommentId}}</h2> -->
+
     <div id="commentWrapper">
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
                 <!-- <p>{{comment}}</p> -->
-                <Comment :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
+                <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
                     :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid"></Comment>
             </div>
         </div>
         <div id="commentMaker">
             <p>Comment: </p>
+            <p v-if="!login && selectedID">Reply to: <span id="commentReplyTo">{{parentComment}}</span></p>
             <p class="errorLabel" v-if="!loginInfo">&#x26A0 Login to comment </p>
             <div id="commentInlineDisplay">
                 <textarea id="commentSubmitionInput" v-if="loginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>

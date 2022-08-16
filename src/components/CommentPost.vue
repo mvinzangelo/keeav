@@ -9,6 +9,10 @@ export default {
         replies: Array,
         comment: String,
         cid: String,
+
+        // threads
+        parentId: undefined,
+        parentComment: undefined,
     },
     data() {
         return {
@@ -28,7 +32,8 @@ export default {
 <template>
     <!-- HTML for components goes here -->
     <div class="displayedComment">
-
+        <p>parentId: <strong>{{parentId}}</strong></p>
+        <p>parentComment <strong>{{parentComment}}</strong></p>
         <p class="commentOwner">Username: <strong>{{ poster }}</strong></p>
         <p>timestamp: <strong>{{ timestamp }}</strong></p>
         <p>Comment: <strong>{{ comment }}</strong></p>
