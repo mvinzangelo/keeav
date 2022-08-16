@@ -116,11 +116,13 @@ export default {
 
 .description {
     padding: 15px 15px;
+    line-height: 1.5;
 }
 
 .info-wrapper {
     display: flex;
     gap: 15px;
+    padding: 5px 15px;
 }
 
 .info-text {
