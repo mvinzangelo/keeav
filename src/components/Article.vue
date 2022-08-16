@@ -11,7 +11,7 @@
         </div>
         <p class="description"><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
-        <Voting :articleID="articleRef" ref="voting"></Voting>
+        <Voting id="voting" :articleID="articleRef" ref="voting"></Voting>
     </div>
 </template>
 
@@ -77,10 +77,8 @@ export default {
     margin: 5px auto;
     /* min-height: 600px; */
     color: black;
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
-    /* padding: 20px; */
-    overflow: none;
     box-shadow: 2px 1px var(--dark-byzantium);
     background-color: var(--lavender-blush);
     border-radius: 15px;
@@ -90,7 +88,7 @@ export default {
 .publisher-logo {
     height: 80px;
     width: 80px;
-    /* border-radius: 100%; */
+    border-radius: 100%;
     /* border: 2px var(--dark-byzantium) solid; */
     object-fit: fill;
 }
@@ -140,5 +138,11 @@ a {
     .block {
         width: 96%;
     }
+}
+
+#voting {
+    height: 100%;
+    width: auto;
+    margin: 0 auto;
 }
 </style>
