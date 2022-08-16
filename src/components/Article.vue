@@ -73,7 +73,7 @@ export default {
 .block {
     position: relative;
     /* max-width: 500px; */
-    width: 45%;
+    width: 48%;
     margin: 5px auto;
     /* min-height: 600px; */
     color: black;
@@ -90,9 +90,6 @@ export default {
 .publisher-logo {
     height: 80px;
     width: 80px;
-    position: absolute;
-    top: 44%;
-    left: 7px;
     /* border-radius: 100%; */
     /* border: 2px var(--dark-byzantium) solid; */
     object-fit: fill;
@@ -110,14 +107,11 @@ export default {
 .headline {
     font-weight: bolder;
     font-size: 1.3rem;
-    line-height: 1;
-    padding-left: 80px;
-    padding-right: 15px;
+    line-height: 1.2;
 }
 
 .author {
     margin-top: 5px;
-    padding-left: 80px;
 }
 
 .description {
