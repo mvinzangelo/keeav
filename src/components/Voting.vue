@@ -104,19 +104,19 @@ export default {
 
 <style>
 .bias::-webkit-progress-bar {
-    background-color: blue;
+    background-color: rgb(145, 145, 255);
 }
 
 .bias::-webkit-progress-value {
-    background-color: red;
+    background-color: rgb(255, 128, 128);
 }
 
 .bias {
-    background-color: blue;
+    background-color: rgb(145, 145, 255);
 }
 
 .bias::-moz-progress-bar {
-    background-color: red;
+    background-color: rgb(255, 128, 128);
 }
 </style>
 
