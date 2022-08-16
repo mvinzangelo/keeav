@@ -32,13 +32,13 @@ export default {
 <template>
   <main>
     <div class="headerbox">
-      <!-- <button> -->
-      <!-- <RouterLink to="/"><img alt="Vue logo" class="logo" src="@/assets/hammer.svg" width="90" /></RouterLink> -->
-      <!-- </button> -->
-      <div class="namebox">
-        <h1>H<span id="ammer">ammer</span></h1>
-        <!-- <p>{{ currentDateTime() }}</p> -->
-      </div>
+      <button id="logo-button">
+        <div class="namebox">
+          <RouterLink to="/">
+            <h1>H<span id="ammer">ammer</span></h1>
+          </RouterLink>
+        </div>
+      </button>
       <button style="position:absolute; right:6.25rem" v-if="this.loginStore.userID" id="compAlign"
         @click="signOut()">Sign
         Out</button>
@@ -101,10 +101,19 @@ main {
   width: 100%;
 }
 
-.logo {
-  /* background-color: var(--dark-byzantium);
-  border-radius: 50%;
-  padding: 10px; */
+#logo-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+#logo-button:hover {
+  text-shadow: 2px 1px var(--bright-lilac);
+  color: var(--dark-byzantium);
 }
 </style>
 

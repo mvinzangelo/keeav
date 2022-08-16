@@ -124,9 +124,6 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
 @media screen and (max-width: 1125px) {
     .block {
         width: 96%;
