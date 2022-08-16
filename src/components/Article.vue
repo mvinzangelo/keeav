@@ -144,5 +144,6 @@ a {
     height: 100%;
     width: auto;
     margin: 0 auto;
+    margin-bottom: 10px;
 }
 </style>
