@@ -67,7 +67,8 @@ export default {
                 // an annoying flash
                 let q = query(collection(db, ('comments')));   
                 const qSnap = await getDocs(q); //pull database docs from firebase
-                qSnap.forEach((rdoc) => { //for each doc
+                qSnap.forEach((rdoc) => 
+                { //for each doc
                     let newComment = true;//assume the doc is a unique comment
                     this.postedComments.forEach((alreadyShowingComment) => { //check if any of the already posted comments matches the pulled commentId
                         if(rdoc.id == alreadyShowingComment.cid)//if one does match, (false) do not add the comment again
@@ -79,7 +80,11 @@ export default {
                     {
                         this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id});
                     }
-
+                    this.postedComments.sort(function(a,b)
+                    {
+                        // alert(a.cdata.timeStamp);
+                      return a.cdata.timeStamp -  b.cdata.timeStamp;
+                    });
                 });
                 
             } catch (e) {
@@ -220,9 +225,8 @@ export default {
 }
 
 #displayCommentBox {
-    /* background-color: rgb(249, 51, 51); */
-    /* top: 10px;  */
-    /* padding: 10px; */
+    display: flex;
+    flex-direction: column-reverse;
     margin: 0 auto;
     height: 400px;
     overflow-y: scroll;
