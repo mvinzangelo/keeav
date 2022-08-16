@@ -1,12 +1,11 @@
 <template>
     <p class="topic-text"><span>{{ topic }}</span></p>
     <div id="section-container">
-        <div class="articles-container">
-            <Article :articleRef="leftArticle" ref="leftArticle"></Article>
-            <Article :articleRef="rightArticle" ref="rightArticle"></Article>
-        </div>
-        <CommentGenerate :topicId="topicID"></CommentGenerate>
-
+    <div class="articles-container">
+        <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
+        <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
+    </div>
+    <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
 
@@ -36,8 +35,8 @@ export default {
         return {
             date: "mm/dd/yyyy",
             topic: "Lorem ipsum",
-            leftArticle: '',
-            rightArticle: '',
+            leftArticleID: '',
+            rightArticleID: '',
             topicID: '',
         }
     },
@@ -51,8 +50,8 @@ export default {
                 if (latestTopic) {
                     this.date = latestTopic.docs[0].data().date;
                     this.topic = latestTopic.docs[0].data().topic;
-                    this.leftArticle = latestTopic.docs[0].data().leftArticle;
-                    this.rightArticle = latestTopic.docs[0].data().rightArticle;
+                    this.leftArticleID = latestTopic.docs[0].data().leftArticle;
+                    this.rightArticleID = latestTopic.docs[0].data().rightArticle;
                     this.topicID = latestTopic.docs[0].id;
                 }
                 else {
@@ -68,6 +67,10 @@ export default {
             this.$refs.leftArticle.updateArticle();
             this.$refs.rightArticle.updateArticle();
         });
+    },
+    components: {
+        Article,
+        CommentGenerate,
     }
 }
 </script>
