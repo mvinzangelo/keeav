@@ -176,8 +176,6 @@ export default {
 </script>
 <template>
     <!-- HTML for components goes here -->
-    <h2>1 {{parentComment}}</h2>
-    <h2>2 {{selectedID}}</h2>
     <!-- <h2>3 {{parentCommentId}}</h2> -->
 
     <div id="commentWrapper">
@@ -190,7 +188,7 @@ export default {
         </div>
         <div id="commentMaker">
             <p>Comment: </p>
-            <p v-if="!login && selectedID">Reply to: <span id="commentReplyTo">{{parentComment}}</span></p>
+            <p class="replyToPrompt" v-if="!login && selectedID">Reply to: <span id="commentReplyTo">{{parentComment}}</span></p>
             <p class="errorLabel" v-if="!loginInfo">&#x26A0 Login to comment </p>
             <div id="commentInlineDisplay">
                 <textarea id="commentSubmitionInput" v-if="loginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>
@@ -258,6 +256,12 @@ export default {
     position: relative;
     bottom: 0px;
 
+}
+.replyToPrompt
+{
+    font-weight: bold;
+    color:#1c03c5;
+    font-size: 17px;
 }
 .errorLabel
 {
