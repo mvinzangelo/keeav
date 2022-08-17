@@ -32,10 +32,12 @@ export default {
                 this.author = docSnap.data().author;
                 this.authorBias = docSnap.data().authorBias;
                 this.publisher = docSnap.data().publisher;
-                this.publisherBias = docSnap.data().publisherBias;
                 this.totalVotesLeft = docSnap.data().totalVotesLeft
                 this.totalVotesRight = docSnap.data().totalVotesRight;
                 this.totalVotes = this.totalVotesLeft + this.totalVotesRight;
+
+                const pbSnap = await getDoc(doc(db, 'publishers', this.publisher));
+                this.publisherBias = pbSnap.data().publisherBias;
 
                 const votesRef = collection(db, 'votes');
 
