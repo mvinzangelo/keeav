@@ -32,9 +32,15 @@ export default {
 </script>
 <template>
     <div v-if="readUserData">
+        <!-- figure out how to get pfp -->
+        <p>Username: {{ readUserData.userName || 'Missing Username' }}</p>
         <p>First Name: {{ readUserData.firstName || 'Missing First Name' }}</p>
         <p>Last Name: {{ readUserData.lastName || 'Missing First Name' }}</p>
-        <p>Date of Birth: {{ readUserData.dob || 'Missing First Name' }}</p>
+        <p>Date of Birth: {{ readUserData.dob || 'Missing Date of Birth' }}</p>
+        <p>Bio: {{ readUserData.bio || 'Missing Bio' }}</p>
+        <p>Email: {{ readUserData.email || 'Missing Email' }}</p>
+        <p>Phone Number: {{ readUserData.phoneNumber || 'Missing Phone Number' }}</p>
+        <p>Political Stance: {{ readUserData.political || 'Missing Political Stance' }}</p>
     </div>
 </template>
 <style>

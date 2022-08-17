@@ -11,12 +11,13 @@ export default {
             createAcc: true,
             firstName: '',
             lastName: '',
-            readUsersData: '',
+            userName: '',
             email: '',
-            user: '',
             pass: '',
+            phoneNumber: '',
+            political: '',
             dob: '',
-            userFilter: '',
+            bio: '',
         };
     },
     computed: {
@@ -34,7 +35,13 @@ export default {
                         {
                             firstName: this.firstName,
                             lastName: this.lastName,
-                            dob: this.dob
+                            userName: this.userName,
+                            email: this.email,
+                            dob: this.dob,
+                            phoneNumber: this.phoneNumber,
+                            political: this.political,
+                            dob: this.dob,
+                            bio: this.bio,
                         }
                     );
                 } catch (err) {
@@ -68,8 +75,27 @@ export default {
             <input type="text" v-model="firstName" placeholder="'John'" />
             <p>Last Name:</p>
             <input type="text" v-model="lastName" placeholder="'Doe'" />
+            <p>Username:</p>
+            <input type="text" v-model="userName" placeholder="'johndoe'" />
+            <p>Bio:</p>
+            <textarea type="text" v-model="bio" placeholder="'I lean...'" />
+            <p>Political:</p>
+            <div class="vote">
+                <input type="radio" v-model="political" name="political" value="left" placeholder="Left">
+                <label for="left">Left</label><br>
+                <input type="radio" v-model="political" name="political" value="moderate">
+                <label for="moderate">Moderate</label><br>
+                <input type="radio" v-model="political" name="political" value="right">
+                <label for="right">Right</label><br>
+                <input type="radio" v-model="political" name="political" value="undecided">
+                <label for="right">Undecided</label><br>
+            </div>
+            <p>Profile Picture:</p>
+            <input type="file" @change="" />
             <p>Date of Birth:</p>
-            <input type="text" v-model="dob" placeholder="'01/01/1990'" />
+            <input type="date" v-model="dob" max="2000-01-02" />
+            <p>Phone Number:</p>
+            <input type="tel" v-model="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="'1234567890'" />
         </div>
         <div>
             <p>Email:</p>
@@ -89,6 +115,12 @@ export default {
 </template>
 
     <style scoped>
+    .vote {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+    }
+    
     #compAlign {
         place-items: center;
         display: flex;
