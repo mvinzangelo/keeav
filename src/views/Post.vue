@@ -6,14 +6,15 @@
             <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
             <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
         </div>
+        <button @click="$router.go({ path: `/topic/x` })">Go back</button>
         <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
 
 <!-- Is there a better way of doing this? -->
 <script setup>
-import Article from './Article.vue';
-import CommentGenerate from './CommentGenerate.vue'
+import Article from '../components/Article.vue';
+import CommentGenerate from '../components/CommentGenerate.vue'
 </script>
 
 <script>
@@ -46,6 +47,9 @@ export default {
     methods: {
         async updateTopic() {
             try {
+                if (!this.$route.params.topicID) {
+                    console.log("NO PARAM FOR TOPIC ID!");
+                }
                 const q = query(collection(db, 'topics'), orderBy('date', "desc"), limit(1));
                 const latestTopic = await getDocs(q);
                 if (latestTopic) {
