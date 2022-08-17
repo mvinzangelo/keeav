@@ -99,9 +99,10 @@ export default {
         </div>
         <div>
             <p>Email:</p>
-            <input type="text" @keypress.enter="signIn()" v-model="email" placeholder="'john@doe.com'" />
+            <input type="text" v-model="email" placeholder="'john@doe.com'" />
             <p>Password:</p>
-            <input type="password" @keypress.enter="signIn()" v-model="pass" placeholder="'Password'" />
+            <input type="password" @keypress.enter="createAcc ? signIn() : createUser()" v-model="pass"
+                placeholder="'Password'" />
         </div>
         <div>
             <button v-if="createAcc" @click="signIn()">Log in</button>
