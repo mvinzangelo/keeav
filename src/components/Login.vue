@@ -80,20 +80,22 @@ export default {
             <p>Bio:</p>
             <textarea type="text" v-model="bio" placeholder="'I lean...'" />
             <p>Political:</p>
-            <input type="radio" v-model="political" name="political" value="left" placeholder="Left">
-            <label for="left">Left</label><br>
-            <input type="radio" v-model="political" name="political" value="moderate">
-            <label for="moderate">Moderate</label><br>
-            <input type="radio" v-model="political" name="political" value="right">
-            <label for="right">Right</label>
-            <input type="radio" v-model="political" name="political" value="undecided">
-            <label for="right">Undecided</label>
+            <div class="vote">
+                <input type="radio" v-model="political" name="political" value="left" placeholder="Left">
+                <label for="left">Left</label><br>
+                <input type="radio" v-model="political" name="political" value="moderate">
+                <label for="moderate">Moderate</label><br>
+                <input type="radio" v-model="political" name="political" value="right">
+                <label for="right">Right</label><br>
+                <input type="radio" v-model="political" name="political" value="undecided">
+                <label for="right">Undecided</label><br>
+            </div>
             <p>Profile Picture:</p>
             <input type="file" @change="" />
             <p>Date of Birth:</p>
             <input type="date" v-model="dob" max="2000-01-02" />
             <p>Phone Number:</p>
-            <input type="tel" v-model="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+            <input type="tel" v-model="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="'1234567890'" />
         </div>
         <div>
             <p>Email:</p>
@@ -113,6 +115,12 @@ export default {
 </template>
 
     <style scoped>
+    .vote {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+    }
+    
     #compAlign {
         place-items: center;
         display: flex;
