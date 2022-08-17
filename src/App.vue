@@ -1,6 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import Header from '../src/components/Header.vue'
+import Footer from '../src/components/Footer.vue'
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import Header from '../src/components/Header.vue'
     <div class="wrapper">
       <Header></Header>
       <RouterView />
+      <Footer></Footer>
     </div>
   </header>
 </template>
@@ -17,7 +19,7 @@ import Header from '../src/components/Header.vue'
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+
   overflow-x: hidden;
   gap: 10px;
 }

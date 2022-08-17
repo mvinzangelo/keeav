@@ -1,11 +1,12 @@
 <template>
     <p class="topic-text"><span>{{ topic }}</span></p>
+    <p class="date">{{ date }}</p>
     <div id="section-container">
-    <div class="articles-container">
-        <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
-        <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
-    </div>
-    <CommentGenerate :topicId="topicID"></CommentGenerate>
+        <div class="articles-container">
+            <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
+            <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
+        </div>
+        <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
 
@@ -77,18 +78,26 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
+
 .articles-container {
     margin: 0 auto;
     width: 100%;
     /* background-color: rgb(105, 34, 34); */
-    
+
     display: flex;
     /* padding: 10px */
     justify-content: center;
 }
-#section-container
-{
-    width: calc(100% - 500px );
+
+.date {
+    text-align: center;
+    font-size: 2rem;
+    color: rgb(87, 87, 87);
+    margin-bottom: 30px;
+}
+
+#section-container {
+    width: calc(100% - 500px);
     /* background-color: darksalmon; */
     /* display: flex; */
     /* justify-content: center; */
@@ -102,24 +111,25 @@ export default {
 
 .topic-text {
     text-align: center;
-    font-size: 40px;
+    font-size: 4rem;
     font-weight: bold;
-    font-family: 'Playfair Display', serif;
-    /* background-color: red; */
-    text-decoration: 3px underline goldenrod;
-    padding: 20px
+    font-family: 'Lobster', cursive;
+    text-shadow: 2px 1px var(--dark-byzantium);
+    color: var(--bright-lilac);
+    margin: 10px 0;
+    margin-top: 25px;
 }
 
 @media screen and (max-width: 1125px) {
-  .articles-container {
-    width: 100%;
-    /* background-color: saddlebrown; */
-    display: inline;
-  }
-  #section-container
-    {
+    .articles-container {
+        width: 100%;
+        /* background-color: saddlebrown; */
+        display: inline;
+    }
+
+    #section-container {
         width: calc(80% - 100px);
     }
- 
+
 }
 </style>

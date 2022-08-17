@@ -1,17 +1,17 @@
 <template>
     <div class="block">
+        <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
         <div class="info-wrapper">
             <p><img class="publisher-logo" :src="publisherLogoLink" alt="Logo"> </p>
             <div class="info-text">
                 <p class="headline"><a :href="link" target="_blank">{{ headline }}</a></p>
-                <p>By: <span>{{ author }}</span></p>
+                <p class="author">By: <span>{{ author }}</span></p>
                 <!-- <p><span>{{ publisher }}</span></p> -->
             </div>
         </div>
-        <a :href="link" target="_blank"><img class="article-img" :src="articlePictureLink" alt="Article image"> </a>
-        <p><span> {{ description }}</span></p>
+        <p class="description"><span> {{ description }}</span></p>
         <!-- <p>Article: <a v-bind:href="link" target="_blank">{{ link }}</a></p> -->
-        <Voting :articleID="articleRef" ref="voting"></Voting>
+        <Voting id="voting" :articleID="articleRef" ref="voting"></Voting>
     </div>
 </template>
 
@@ -28,14 +28,13 @@ export default {
     data() {
         return {
             headline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium.",
-            publisherLogoLink: "src/assets/placeholderImage.svg",
+            publisherLogoLink: "src/assets/placeholderImage.png",
             publisher: "[Publisher]",
-            articlePictureLink: "src/assets/placeholderImage.svg",
+            articlePictureLink: "src/assets/placeholderImage.png",
             author: "[Author]",
             date: "mm/dd/yyyy",
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta felis ut elementum vehicula. Praesent malesuada finibus nunc, vel mollis risus vestibulum et. Pellentesque consectetur tincidunt gravida. Suspendisse gravida justo at arcu vehicula dignissim. Cras tempor orci tempor mollis vulputate. Sed varius lectus sed interdum tincidunt. In nec eros fringilla purus tristique finibus sit amet ut nisl. Nullam semper rutrum nunc, ac blandit.",
             link: "https://www.lipsum.com/feed/html"
-
         }
     },
     props: {
@@ -70,26 +69,27 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .block {
+    position: relative;
     /* max-width: 500px; */
-    width: 45%;
-    box-shadow: 1px 1px 4px 1px #000000;
+    width: 48%;
     margin: 5px auto;
     /* min-height: 600px; */
-    background-color: rgb(206, 206, 206);
     color: black;
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
-    padding: 10px;
-    overflow: none;
+    box-shadow: 2px 1px var(--dark-byzantium);
+    background-color: var(--lavender-blush);
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .publisher-logo {
     height: 80px;
     width: 80px;
     border-radius: 100%;
-    border: 2px black solid;
+    /* border: 2px var(--dark-byzantium) solid; */
     object-fit: fill;
 }
 
@@ -97,26 +97,36 @@ export default {
     height: 300px;
     width: 100%;
     object-fit: cover;
-    margin: 10px 0;
-    border-radius: 10px;
-    border: 2px black solid;
+    /* margin: 10px 0; */
+    /* border-radius: 10px; */
+    /* border: 2px var(--dark-byzantium) solid; */
 }
 
 .headline {
     font-weight: bolder;
     font-size: 1.3rem;
-    line-height: 1;
+    line-height: 1.2;
+}
+
+.author {
+    margin-top: 5px;
+}
+
+.description {
+    padding: 15px 15px;
+    line-height: 1.5;
 }
 
 .info-wrapper {
     display: flex;
     gap: 15px;
+    padding: 5px 15px;
 }
 
 .info-text {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 a {
@@ -124,12 +134,16 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
 @media screen and (max-width: 1125px) {
     .block {
         width: 96%;
     }
+}
+
+#voting {
+    height: 100%;
+    width: auto;
+    margin: 0 auto;
+    margin-bottom: 10px;
 }
 </style>
