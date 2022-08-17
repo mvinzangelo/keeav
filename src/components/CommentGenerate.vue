@@ -178,20 +178,6 @@ export default {
                 this.parentComment = replyTo.substring(0,50);
             }
         },
-        list_to_tree(list) { //turn posted comments into tree
-            var map = {}, node, roots = [];
-
-            for (var i = 0; i < list.length; i += 1) {
-                node = list[i];
-                if (node.parentId !== null) {
-                // if you have dangling branches check that map[node.parentId] exists
-                list[map[node.parentId]].children.push(node);
-                } else {
-                roots.push(node);
-                }
-            }
-            return roots;
-        },
     },
     beforeMount() {
         this.getComments();
