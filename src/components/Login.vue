@@ -24,6 +24,17 @@ export default {
         ...mapStores(useLoginStore),
     },
     methods: {
+        getDate() {
+            var today = new Date();
+            let eighteen;
+            if (today.getMonth() < 10) {
+                eighteen = today.getFullYear() - 18 + '-0' + (today.getMonth() + 1) + '-' + today.getDate();
+            }
+            else {
+                eighteen = today.getFullYear() - 18 + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            }
+            return eighteen;
+        },
         async createUser() {
             createUserWithEmailAndPassword(auth, this.email, this.pass).then(async (userCredential) => {
                 const user = userCredential.user;
@@ -93,7 +104,7 @@ export default {
             <p>Profile Picture:</p>
             <input type="file" @change="" />
             <p>Date of Birth:</p>
-            <input type="date" v-model="dob" max="2000-01-02" />
+            <input type="date" v-model="dob" min="1900-01-01" :max="getDate()" />
             <p>Phone Number:</p>
             <input type="tel" v-model="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="'1234567890'" />
         </div>
