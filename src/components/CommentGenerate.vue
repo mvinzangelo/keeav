@@ -60,7 +60,8 @@ export default {
                 //get comment periodicaly is called to pull any new comments from the database
                 // the id comparison is to prevent deleting all the comments the adding them again creating 
                 // an annoying flash
-                let q = query(collection(db, ('comments')));   
+                let q = query(collection(db, ('comments')));  
+                q = query(q, where('topicId', '==', this.topicId)) 
                 const qSnap = await getDocs(q); //pull database docs from firebase
                 qSnap.forEach((rdoc) => 
                 { //for each doc
