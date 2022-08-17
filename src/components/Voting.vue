@@ -89,6 +89,7 @@ export default {
         <h1 v-if="this.loginStore.userID !== ''">Vote: {{ userVote }}</h1>
         <h1 v-else>Login to vote.</h1>
         <div class="buttonContainer" v-if="userVote == 'None' && this.loginStore.userID !== ''">
+            <div class="votePrompt">How do you feel this article leans?</div>
             <button class="left" @click="newVote('Left')">Left</button>
             <button class="right" @click="newVote('Right')">Right</button>
         </div>
@@ -105,6 +106,8 @@ export default {
 </template>
 
 <style>
+
+
 .bias::-webkit-progress-bar {
     background-color: rgb(145, 145, 255);
 }
