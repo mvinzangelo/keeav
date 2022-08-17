@@ -143,7 +143,8 @@ export default {
         font-weight: bold;
     }
     
-    input {
+    input,
+    textarea {
         border: 0.125rem solid grey;
         outline: none;
         width: 12rem;
