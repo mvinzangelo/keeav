@@ -15,23 +15,23 @@ import {
     where,
     deleteDoc,
 } from 'firebase/firestore'
-// local functions can be decalred here
 
 export default {
     props: {
-        // properties go here
         topicId: String,
-        // ex: title: String,
     },
     data() {
         return {
-            // responsive variables go here
-            // ex: count: 0,
             desiredComment: undefined, //takes in the current typed value in the comment pox
             postedComments: [], //array of all the comment in the firebase
             loginInfo: null,
             timer: '', //timer that refreshes the comments every so often based on AUTO_Refresh
             AUTO_REFRESH: 50000,
+            // threads?
+            selectedID: null,
+            parentComment: null,
+            // parentCommentId: undefined,
+
         };
     },
     computed: {
@@ -54,12 +54,7 @@ export default {
         }
         // this.timer = setInterval(this.getComments, this.AUTO_REFRESH); //update comments every AUTO_REFRESH Amount of time
     },
-    methods: {
-        // callable functions for HTML go here
-        // ex: incCount()
-        // {
-        //     this.count++;
-        // }
+    methods: {  
         async getComments() {
             try {
                 //get comment periodicaly is called to pull any new comments from the database
@@ -104,7 +99,9 @@ export default {
                             topicId: this.topicId,//connect to topicID store
                             poster: userName, //connect to UserID store
                             replies: [], // my idea of how to implement threads
-                            comment: this.desiredComment
+                            comment: this.desiredComment,
+                            parentId: this.selectedID,
+                            parentComment: this.parentComment,
                         });
                 } catch (e) {
                     alert('create comment' + e);
@@ -151,7 +148,22 @@ export default {
         },
         cancelTimerAutoUpdate () {
             clearInterval(this.timer);
-        }
+        },
+
+        //threads
+        selectComment(id, replyTo) {
+            // alert("test: " + String(a));
+            if(id == this.selectedID)
+            {
+                this.selectedID = null;
+                this.parentComment = null;
+            }
+            else
+            {
+                this.selectedID = id;
+                this.parentComment = replyTo.substring(0,50);
+            }
+        },
     },
     beforeMount() {
         this.getComments();
@@ -162,18 +174,21 @@ export default {
     components: { Comment }
 }
 </script>
-<template onl>
+<template>
     <!-- HTML for components goes here -->
+    <!-- <h2>3 {{parentCommentId}}</h2> -->
+
     <div id="commentWrapper">
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
                 <!-- <p>{{comment}}</p> -->
-                <Comment :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
-                    :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid"></Comment>
+                <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
+                    :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid" :parentId="postedComments[index].cdata.parentId" :parentComment="postedComments[index].cdata.parentComment"></Comment>
             </div>
         </div>
         <div id="commentMaker">
             <p>Comment: </p>
+            <p class="replyToPrompt" v-if="!login && selectedID">Reply to: <span id="commentReplyTo">{{parentComment}}</span></p>
             <p class="errorLabel" v-if="!loginInfo">&#x26A0 Login to comment </p>
             <div id="commentInlineDisplay">
                 <textarea id="commentSubmitionInput" v-if="loginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>
@@ -228,10 +243,10 @@ export default {
     display: flex;
     flex-direction: column-reverse;
     margin: 0 auto;
+    background-color: #7dbc6e;
     height: 400px;
     overflow-y: scroll;
     width: 100%;
-    /* margin: 10px 10px 10px 10px; */
 }
 
 #commentMaker {
@@ -241,6 +256,12 @@ export default {
     position: relative;
     bottom: 0px;
 
+}
+.replyToPrompt
+{
+    font-weight: bold;
+    color:#1c03c5;
+    font-size: 17px;
 }
 .errorLabel
 {
