@@ -31,6 +31,7 @@ export default {
             // threads?
             selectedID: null,
             parentComment: null,
+            lastCommentPull: null,
             // parentCommentId: undefined,
 
         };
@@ -39,7 +40,6 @@ export default {
         ...mapStores(useLoginStore),
     },
     async created () {
-        this.getComments(); // will pull comments from firebase
         if (this.loginStore.userID != '') {
             try {
                 const docReference = doc(db, 'userInfo', this.loginStore.userID);
@@ -53,7 +53,7 @@ export default {
                 console.error(err);
             }
         }
-        // this.timer = setInterval(this.getComments, this.AUTO_REFRESH); //update comments every AUTO_REFRESH Amount of time
+        this.getComments(); // will pull comments from firebase
     },
     methods: {  
         async getComments() {
@@ -80,20 +80,37 @@ export default {
                     }
                     this.postedComments.sort(function(a,b)
                     {
-                        // alert(a.cdata.timeStamp);
                       return a.cdata.timeStamp -  b.cdata.timeStamp;
                     });
                 });
-                
+                this.lastCommentPull = new Date();
             } catch (e) {
                 alert('retrieve' + e);
+            }
+
+        },
+        async updateComments() {
+            try {
+                let q = query(collection(db, ('comments')));  
+                // alert("d "+ this.lastCommentPull);
+                q = query(q, where('timeStamp', '>', this.lastCommentPull));
+                const qSnap = await getDocs(q); //pull database docs from firebase
+                qSnap.forEach((rdoc) => 
+                { //for each doc
+                    // alert(rdoc.data().timeStamp);
+                    // alert(rdoc.data().comment);
+                    this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id});
+                    this.lastCommentPull = new Date();
+
+                });
+            } catch (e) {
+                alert("updateComments" + e);
             }
 
         },
         async createComment() { //generates a comment
             if (this.desiredComment != null /*&& userLoggedIn == true */) {
                 try {
-                    // alert((this.loginInfo.firstName + " " +  this.loginInfo.lastName));
                     let userName = (this.loginInfo.firstName + " " +  this.loginInfo.lastName);
                     const docReference = await addDoc(
                         collection(db, ('comments')),
@@ -101,12 +118,11 @@ export default {
                             timeStamp: new Date(),
                             topicId: this.topicId,//connect to topicID store
                             poster: userName, //connect to UserID store
-                            // replies: [], // my idea of how to implement threads
                             comment: this.desiredComment,
                             parentId: this.selectedID,
                             parentComment: this.parentComment,
                         });
-                } catch (e) {
+                } catch (e) {   
                     alert('create comment' + e);
                     console.error(e);
                 }
@@ -114,7 +130,7 @@ export default {
         },
         submitComment() { // on submit we want to create comments then get comments to have the current view update
             this.createComment();
-            this.getComments();
+            this.updateComments();
             // document.getElementById('commentSubmitionInput').value=null;
             this.desiredComment = undefined;
             // document.getElementById('commentSubmitionInput').placeholder="Comment...";
@@ -149,13 +165,8 @@ export default {
             }
             return Math.floor(seconds) + " seconds ago";
         },
-        cancelTimerAutoUpdate () {
-            clearInterval(this.timer);
-        },
-
         //threads
         selectComment(id, replyTo) {
-            // alert("test: " + String(a));
             if(id == this.selectedID)
             {
                 this.selectedID = null;
@@ -167,12 +178,24 @@ export default {
                 this.parentComment = replyTo.substring(0,50);
             }
         },
+        list_to_tree(list) { //turn posted comments into tree
+            var map = {}, node, roots = [];
+
+            for (var i = 0; i < list.length; i += 1) {
+                node = list[i];
+                if (node.parentId !== null) {
+                // if you have dangling branches check that map[node.parentId] exists
+                list[map[node.parentId]].children.push(node);
+                } else {
+                roots.push(node);
+                }
+            }
+            return roots;
+        },
     },
     beforeMount() {
         this.getComments();
-    },
-    beforeDestroy () {
-      this.cancelTimerAutoUpdate();
+        this.lastCommentPull = null;
     },
     components: { Comment }
 }
