@@ -11,8 +11,8 @@ export default {
         cid: String,
 
         // threads
-        parentId: undefined,
-        parentComment: undefined,
+        parentId: String,
+        parentComment: String,
     },
     data() {
         return {
@@ -26,17 +26,27 @@ export default {
         // {
         //     this.count++;
         // }
+        getHref(a)
+        {
+            return ('#'+a);
+        }
     }
 }
 </script>
 <template>
     <!-- HTML for components goes here -->
     <div class="displayedComment">
-        <p>parentId: <strong>{{parentId}}</strong></p>
-        <p>parentComment <strong>{{parentComment}}</strong></p>
+        <!-- <p>parentId: <strong> {{parentId}} </strong></p>
+        <p>parentComment <strong> {{parentComment}} </strong></p>
         <p class="commentOwner">Username: <strong>{{ poster }}</strong></p>
         <p>timestamp: <strong>{{ timestamp }}</strong></p>
-        <p>Comment: <strong>{{ comment }}</strong></p>
+         -->
+         <span class="userPoster">
+            <img width="15" src="../assets/tempAvatar.png"/>
+            <p class="userName">{{ poster }}</p>
+         </span>
+        <a class="repliedComment" :href="getHref(parentId)" v-if="parentId != null"><strong>Reply to:</strong>{{parentComment}} ...</a>
+        <p class="ActualComment">{{ comment }}</p>
         <!-- <p>commentID: <strong>{{cid}}</strong></p> -->
     </div>
 </template>
@@ -51,6 +61,30 @@ export default {
     box-shadow: 1px 1px 3px rgb(0, 0, 0);
     background-color: rgb(236, 255, 221);
 
+}
+.repliedComment
+{
+    border-left: 4px solid rgb(183, 183, 183);
+    padding-left: 4px;
+    color: rgb(114, 114, 114);
+}
+.userName
+{
+    /* vertical-align: center;
+    background-color: blue; */
+    vertical-align: middle;
+}
+.userPoster
+{
+    /* background-color: red; */
+    display: flex;
+    margin-bottom: 10px;
+    vertical-align: center;
+}
+
+.ActualComment
+{
+    margin-top: 4px;
 }
 strong{
     font-weight: bold;

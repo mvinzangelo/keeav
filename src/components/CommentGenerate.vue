@@ -28,8 +28,8 @@ export default {
             timer: '', //timer that refreshes the comments every so often based on AUTO_Refresh
             AUTO_REFRESH: 50000,
             // threads?
-            selectedID: undefined,
-            parentComment: undefined,
+            selectedID: null,
+            parentComment: null,
             // parentCommentId: undefined,
 
         };
@@ -99,7 +99,9 @@ export default {
                             topicId: this.topicId,//connect to topicID store
                             poster: userName, //connect to UserID store
                             replies: [], // my idea of how to implement threads
-                            comment: this.desiredComment
+                            comment: this.desiredComment,
+                            parentId: this.selectedID,
+                            parentComment: this.parentComment,
                         });
                 } catch (e) {
                     alert('create comment' + e);
@@ -153,13 +155,13 @@ export default {
             // alert("test: " + String(a));
             if(id == this.selectedID)
             {
-                this.selectedID = undefined;
-                this.parentComment = undefined;
+                this.selectedID = null;
+                this.parentComment = null;
             }
             else
             {
                 this.selectedID = id;
-                this.parentComment = replyTo;
+                this.parentComment = replyTo.substring(0,50);
             }
         },
     },
@@ -183,7 +185,7 @@ export default {
             <div v-for="(comment, index) in postedComments">
                 <!-- <p>{{comment}}</p> -->
                 <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
-                    :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid"></Comment>
+                    :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid" :parentId="postedComments[index].cdata.parentId" :parentComment="postedComments[index].cdata.parentComment"></Comment>
             </div>
         </div>
         <div id="commentMaker">
