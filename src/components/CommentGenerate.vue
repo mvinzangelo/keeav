@@ -11,6 +11,7 @@ import {
     addDoc,
     getDoc,
     getDocs,
+    setDoc,
     query,
     where,
     deleteDoc,
@@ -62,6 +63,7 @@ export default {
                 // an annoying flash
                 let q = query(collection(db, ('comments')));  
                 q = query(q, where('topicId', '==', this.topicId)) 
+                // q = query(q, where('parentId', '==', null))
                 const qSnap = await getDocs(q); //pull database docs from firebase
                 qSnap.forEach((rdoc) => 
                 { //for each doc
@@ -99,7 +101,7 @@ export default {
                             timeStamp: new Date(),
                             topicId: this.topicId,//connect to topicID store
                             poster: userName, //connect to UserID store
-                            replies: [], // my idea of how to implement threads
+                            // replies: [], // my idea of how to implement threads
                             comment: this.desiredComment,
                             parentId: this.selectedID,
                             parentComment: this.parentComment,
@@ -183,7 +185,7 @@ export default {
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
                 <!-- <p>{{comment}}</p> -->
-                <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
+                <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" 
                     :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid" :parentId="postedComments[index].cdata.parentId" :parentComment="postedComments[index].cdata.parentComment"></Comment>
             </div>
         </div>
