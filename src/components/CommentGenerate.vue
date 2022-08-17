@@ -243,10 +243,10 @@ export default {
     display: flex;
     flex-direction: column-reverse;
     margin: 0 auto;
+    background-color: #7dbc6e;
     height: 400px;
     overflow-y: scroll;
     width: 100%;
-    /* margin: 10px 10px 10px 10px; */
 }
 
 #commentMaker {
