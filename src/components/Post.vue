@@ -61,13 +61,21 @@ export default {
             } catch (err) {
                 console.log(err);
             }
-        }
+        },
+    postDateTime() {
+        // to get as string 
+        this.date = new Date(this.date.seconds * 1000).toDateString();
+        this.date = this.date.slice(3, this.date.length);
+        //alert(this.date);
+    }
     },
     async created() {
         await this.updateTopic().then(() => {
             this.$refs.leftArticle.updateArticle();
             this.$refs.rightArticle.updateArticle();
         });
+
+        this.postDateTime();
     },
     components: {
         Article,
