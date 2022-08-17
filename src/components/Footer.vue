@@ -2,8 +2,8 @@
     <main>
         <div class="footer-info">
             <img src="../assets/hammer.svg" alt="Hammer logo" id="hammer-logo">
-            <div class="footer-info-text">
-            </div>
+            <!-- <div class="footer-info-text">
+            </div> -->
         </div>
     </main>
 </template>

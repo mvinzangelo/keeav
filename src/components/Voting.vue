@@ -32,10 +32,12 @@ export default {
                 this.author = docSnap.data().author;
                 this.authorBias = docSnap.data().authorBias;
                 this.publisher = docSnap.data().publisher;
-                this.publisherBias = docSnap.data().publisherBias;
                 this.totalVotesLeft = docSnap.data().totalVotesLeft
                 this.totalVotesRight = docSnap.data().totalVotesRight;
                 this.totalVotes = this.totalVotesLeft + this.totalVotesRight;
+
+                const pbSnap = await getDoc(doc(db, 'publishers', this.publisher));
+                this.publisherBias = pbSnap.data().publisherBias;
 
                 const votesRef = collection(db, 'votes');
 
@@ -84,7 +86,7 @@ export default {
 
 <template>
     <div class="container">
-        <h1 v-if="this.loginStore.userID !== ''" >Vote: {{ userVote }}</h1>
+        <h1 v-if="this.loginStore.userID !== ''">Vote: {{ userVote }}</h1>
         <h1 v-else>Login to vote.</h1>
         <div class="buttonContainer" v-if="userVote == 'None' && this.loginStore.userID !== ''">
             <button class="left" @click="newVote('Left')">Left</button>
@@ -103,24 +105,20 @@ export default {
 </template>
 
 <style>
-.bias::-webkit-progress-bar{
-    background-color: blue;
-    border-radius: 25px;
+.bias::-webkit-progress-bar {
+    background-color: rgb(145, 145, 255);
 }
 
-.bias::-webkit-progress-value{
-    background-color: red;
-    border-radius: 25px;
+.bias::-webkit-progress-value {
+    background-color: rgb(255, 128, 128);
 }
 
 .bias {
-    background-color: blue;
-    border-radius: 25px;
+    background-color: rgb(145, 145, 255);
 }
 
 .bias::-moz-progress-bar {
-    background-color: red;
-    border-radius: 25px;
+    background-color: rgb(255, 128, 128);
 }
 </style>
 
