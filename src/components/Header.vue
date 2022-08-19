@@ -53,7 +53,7 @@ export default {
           </RouterLink>
         </button>
         <button v-else class="profile">
-          <RouterLink to="/profile"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
+          <RouterLink to="/profile"><img alt="Vue logo" :src=this.loginStore.image />
           </RouterLink>
         </button>
       </div>
@@ -144,7 +144,10 @@ main {
 
 img {
   height: 80px;
-  width: auto;
+  float: left;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
   border-radius: 50%;
 }
 
