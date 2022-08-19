@@ -6,7 +6,7 @@
             <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
             <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
         </div>
-        <button @click="$router.go({ path: `/topic/x` })">Go back</button>
+        <button @click="$router.push({ path: `/topic/x` })">Go back</button>
         <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
@@ -68,6 +68,7 @@ export default {
         }
     },
     async created() {
+        console.log(this.$route.params.topicID);
         await this.updateTopic().then(() => {
             this.$refs.leftArticle.updateArticle();
             this.$refs.rightArticle.updateArticle();
