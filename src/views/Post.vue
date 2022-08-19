@@ -50,14 +50,17 @@ export default {
                 if (!this.$route.params.topicID) {
                     console.log("NO PARAM FOR TOPIC ID!");
                 }
+                else {
+
+                }
                 const q = query(collection(db, 'topics'), orderBy('date', "desc"), limit(1));
-                const latestTopic = await getDocs(q);
-                if (latestTopic) {
-                    this.date = latestTopic.docs[0].data().date;
-                    this.topic = latestTopic.docs[0].data().topic;
-                    this.leftArticleID = latestTopic.docs[0].data().leftArticle;
-                    this.rightArticleID = latestTopic.docs[0].data().rightArticle;
-                    this.topicID = latestTopic.docs[0].id;
+                const topic = await getDocs(q);
+                if (topic) {
+                    this.date = topic.docs[0].data().date;
+                    this.topic = topic.docs[0].data().topic;
+                    this.leftArticleID = topic.docs[0].data().leftArticle;
+                    this.rightArticleID = topic.docs[0].data().rightArticle;
+                    this.topicID = topic.docs[0].id;
                 }
                 else {
                     console.log("Topic not found!");
