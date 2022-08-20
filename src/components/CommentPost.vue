@@ -6,7 +6,7 @@ export default {
         // ex: title: String,
         timestamp: String,
         poster: String,
-        replies: Array,
+        children: Array,
         comment: String,
         cid: String,
 

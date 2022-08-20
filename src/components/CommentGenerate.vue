@@ -25,6 +25,7 @@ export default {
         return {
             desiredComment: undefined, //takes in the current typed value in the comment pox
             postedComments: [], //array of all the comment in the firebase
+            commentTreeStructure: null,
             loginInfo: null,
             timer: '', //timer that refreshes the comments every so often based on AUTO_Refresh
             AUTO_REFRESH: 50000,
@@ -76,13 +77,16 @@ export default {
                     });
                     if(newComment)//otherwise add the new comment
                     {
-                        this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id});
+                        this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id, children: [], localID: null});
                     }
                     this.postedComments.sort(function(a,b)
                     {
                       return a.cdata.timeStamp -  b.cdata.timeStamp;
                     });
                 });
+                
+                // this.commentTreeStructure = this.commentMap(this.postedComments);
+                // alert(JSON.stringify(this.commentMap(this.postedComments)));
                 this.lastCommentPull = new Date();
             } catch (e) {
                 alert('retrieve' + e);
@@ -99,10 +103,13 @@ export default {
                 { //for each doc
                     // alert(rdoc.data().timeStamp);
                     // alert(rdoc.data().comment);
-                    this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id});
+                    this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id, children: [], localID: null});
                     this.lastCommentPull = new Date();
 
                 });
+                
+                // this.commentTreeStructure = this.commentMap(this.postedComments);
+                alert(this.commentMap(this.postedComments));
             } catch (e) {
                 alert("updateComments" + e);
             }
@@ -178,6 +185,32 @@ export default {
                 this.parentComment = replyTo.substring(0,50);
             }
         },
+        // commentMap(list)//function modification from one found on stack overflow
+        // {//https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript#18018037
+        //     var map = {}, node, roots = [], cidToLocal = {};
+
+        //     for (let i = 0; i < list.length; i++) {
+        //         map[list[i].cid] = i; // initialize the map
+        //         list[i].children = []; // initialize the children
+        //         cidToLocal[list[i].cid] = i;
+        //     }
+        //     // alert(JSON.stringify(map));
+            
+        //     for (let i = 0; i < list.length; i++) {
+        //         node = list[i];
+        //         if (node.cdata.parentId !== null) {
+        //         // if you have dangling branches check that map[node.parentId] exists
+        //         // alert("a " + map[cidToLocal[node.cdata.parentId]] );
+        //         list[map[node.cdata.parentId]].children.push(node);
+        //         } else {
+        //         roots.push(node);
+        //         }
+        //     }
+            
+        //     // alert(JSON.stringify(roots), null, 4);
+        //     console.log(JSON.stringify(roots), null, 4);
+        //     return roots;
+        // },
     },
     beforeMount() {
         this.getComments();
