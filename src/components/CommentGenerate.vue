@@ -231,7 +231,7 @@ export default {
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
                 <!-- <p>{{comment}}</p> -->
-                <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timeSince="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" 
+                <Comment class="comment" :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timeSince="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" 
                     :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid" :parentId="postedComments[index].cdata.parentId" :parentComment="postedComments[index].cdata.parentComment"></Comment>
             </div>
         </div>
@@ -338,5 +338,16 @@ export default {
 {
     width: 100%;
     display: inline-flex;
+}
+
+.blink {
+  animation: blinker 0.3s linear 2;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+    background-color: aquamarine;
+  }
 }
 </style>   

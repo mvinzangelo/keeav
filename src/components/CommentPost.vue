@@ -29,7 +29,22 @@ export default {
         getHref(a)
         {
             return ('#'+a);
-        }
+        },
+        // removeBlinks()
+        // {
+        //     document.querySelectorAll('.blink').forEach(function(element) {
+        //         element.classList.remove(' blink');
+        //     });
+
+        // },
+        animateComment(pid)
+        {
+            // alert("test");
+            // this.removeBlinks();
+            
+            let parent = document.getElementById(pid);
+            parent.classList.add("blink");
+        },
     },
     mounted()
     {
@@ -50,7 +65,7 @@ export default {
             <img width="15" src="../assets/tempAvatar.png"/>
             <p class="userName">{{ poster }}</p>
          </span>
-        <a class="repliedComment" :href="getHref(parentId)" v-if="parentId != null"><strong>Reply to:</strong>{{parentComment}} ...</a>
+        <a class="repliedComment" :href="getHref(parentId)" v-if="parentId != null" @click="animateComment(parentId)"><strong>Reply to:</strong>{{parentComment}} ...</a>
         <p class="ActualComment">{{ comment }}</p>
         <p class="timeSince">{{ timeSince }}</p>
         <!-- <p>commentID: <strong>{{cid}}</strong></p> -->
