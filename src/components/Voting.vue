@@ -39,7 +39,7 @@ export default {
                 const pbSnap = await getDoc(doc(db, 'publishers', this.publisher));
                 this.publisherBias = pbSnap.data().publisherBias;
 
-                const votesRef = collection(db, 'votes');
+                const votesRef = collection(db, 'articleVotes');
 
                 const q = query(votesRef, where('articleID', '==', this.articleID), where('userID', '==', this.loginStore.userID));
 
@@ -55,7 +55,7 @@ export default {
             //create new vote doc
             this.userVote = vote;
             try {
-                const docRef = await addDoc(collection(db, "votes"), {
+                const docRef = await addDoc(collection(db, "articleVotes"), {
                     articleID: this.articleID,
                     userID: this.loginStore.userID,
                     vote: this.userVote

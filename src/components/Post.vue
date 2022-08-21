@@ -6,6 +6,7 @@
             <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
             <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
         </div>
+        <TopicVoting :topicId="topicID" ref="topicVote"></TopicVoting>
         <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
@@ -14,6 +15,7 @@
 <script setup>
 import Article from './Article.vue';
 import CommentGenerate from './CommentGenerate.vue'
+import TopicVoting from './TopicVoting.vue'
 </script>
 
 <script>
@@ -54,6 +56,7 @@ export default {
                     this.leftArticleID = latestTopic.docs[0].data().leftArticle;
                     this.rightArticleID = latestTopic.docs[0].data().rightArticle;
                     this.topicID = latestTopic.docs[0].id;
+                    this.$refs.topicVote.getData();
                 }
                 else {
                     console.log("Topic not found!");
