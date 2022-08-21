@@ -4,7 +4,7 @@ export default {
     props: {
         // properties go here
         // ex: title: String,
-        timestamp: String,
+        timeSince: String,
         poster: String,
         children: Array,
         comment: String,
@@ -30,6 +30,11 @@ export default {
         {
             return ('#'+a);
         }
+    },
+    mounted()
+    {
+        let wrapper = document.getElementById('displayCommentBox');
+        wrapper.scrollTop = wrapper.scrollHeight;
     }
 }
 </script>
@@ -47,6 +52,7 @@ export default {
          </span>
         <a class="repliedComment" :href="getHref(parentId)" v-if="parentId != null"><strong>Reply to:</strong>{{parentComment}} ...</a>
         <p class="ActualComment">{{ comment }}</p>
+        <p class="timeSince">{{ timeSince }}</p>
         <!-- <p>commentID: <strong>{{cid}}</strong></p> -->
     </div>
 </template>
@@ -66,6 +72,7 @@ export default {
 {
     border-left: 4px solid rgb(183, 183, 183);
     padding-left: 4px;
+    line-height: 25px;
     color: rgb(114, 114, 114);
 }
 .userName
@@ -84,7 +91,14 @@ export default {
 
 .ActualComment
 {
-    margin-top: 4px;
+    margin: 0 4px;
+}
+.timeSince
+{
+    margin-top: 5px;
+    color: grey;
+    margin-left: 10px;
+    font-size: 11px;
 }
 strong{
     font-weight: bold;

@@ -88,6 +88,8 @@ export default {
                 // this.commentTreeStructure = this.commentMap(this.postedComments);
                 // alert(JSON.stringify(this.commentMap(this.postedComments)));
                 this.lastCommentPull = new Date();
+                let wrapper = document.getElementById('displayCommentBox');
+                // wrapper.scrollTop = wrapper.scrollHeight+100;
             } catch (e) {
                 alert('retrieve' + e);
             }
@@ -109,7 +111,9 @@ export default {
                 });
                 
                 // this.commentTreeStructure = this.commentMap(this.postedComments);
-                alert(this.commentMap(this.postedComments));
+                // alert(this.commentMap(this.postedComments));
+                let wrapper = document.getElementById('displayCommentBox');
+                // wrapper.scrollTop = wrapper.scrollHeight + 100;
             } catch (e) {
                 alert("updateComments" + e);
             }
@@ -138,8 +142,8 @@ export default {
         submitComment() { // on submit we want to create comments then get comments to have the current view update
             this.createComment();
             this.updateComments();
-            // document.getElementById('commentSubmitionInput').value=null;
             this.desiredComment = undefined;
+            // document.getElementById('commentSubmitionInput').value=null;
             // document.getElementById('commentSubmitionInput').placeholder="Comment...";
         },
         getTime() {//get current date
@@ -227,7 +231,7 @@ export default {
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
                 <!-- <p>{{comment}}</p> -->
-                <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" 
+                <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timeSince="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" 
                     :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid" :parentId="postedComments[index].cdata.parentId" :parentComment="postedComments[index].cdata.parentComment"></Comment>
             </div>
         </div>
@@ -286,7 +290,7 @@ export default {
 
 #displayCommentBox {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     margin: 0 auto;
     background-color: #7dbc6e;
     height: 400px;
