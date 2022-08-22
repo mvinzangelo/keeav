@@ -6,7 +6,7 @@
             <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
             <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
         </div>
-        <button @click="$router.push({ path: `/topic/x` })">Go back</button>
+        <button @click="$router.push({ path: `/topic/NhRDXaZT9InPzhvDQSlh` })">Go back</button>
         <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
@@ -49,35 +49,46 @@ export default {
             try {
                 if (!this.$route.params.topicID) {
                     console.log("NO PARAM FOR TOPIC ID!");
+                    const q = query(collection(db, 'topics'), orderBy('date', "desc"), limit(1));
+                    const topic = await getDocs(q);
+                    if (topic) {
+                        this.date = topic.docs[0].data().date;
+                        this.topic = topic.docs[0].data().topic;
+                        this.leftArticleID = topic.docs[0].data().leftArticle;
+                        this.rightArticleID = topic.docs[0].data().rightArticle;
+                        this.topicID = topic.docs[0].id;
+                    }
+                    else {
+                        console.log("Topic not found!");
+                    }
                 }
                 else {
-
+                    console.log(this.$route.params.topicID);
+                    const topicRef = doc(db, "topics", this.$route.params.topicID);
+                    const topicSnap = await getDoc(topicRef);
+                    if (topicSnap.exists()) {
+                        this.date = topicSnap.data().date;
+                        this.topic = topicSnap.data().topic;
+                        this.leftArticleID = topicSnap.data().leftArticle;
+                        this.rightArticleID = topicSnap.data().rightArticle;
+                        this.topicID = topicSnap.data().id;
+                    } else {
+                        console.log("No such topic!");
+                    }
                 }
-                const q = query(collection(db, 'topics'), orderBy('date', "desc"), limit(1));
-                const topic = await getDocs(q);
-                if (topic) {
-                    this.date = topic.docs[0].data().date;
-                    this.topic = topic.docs[0].data().topic;
-                    this.leftArticleID = topic.docs[0].data().leftArticle;
-                    this.rightArticleID = topic.docs[0].data().rightArticle;
-                    this.topicID = topic.docs[0].id;
-                }
-                else {
-                    console.log("Topic not found!");
-                }
-            } catch (err) {
+            }
+            catch (err) {
                 console.log(err);
             }
         },
-    postDateTime() {
-        // to get as string 
-        this.date = new Date(this.date.seconds * 1000).toDateString();
-        this.date = this.date.slice(3, this.date.length);
-        //alert(this.date);
-    }
+        postDateTime() {
+            // to get as string 
+            this.date = new Date(this.date.seconds * 1000).toDateString();
+            this.date = this.date.slice(3, this.date.length);
+            //alert(this.date);
+        }
     },
     async created() {
-        console.log(this.$route.params.topicID);
         await this.updateTopic().then(() => {
             this.$refs.leftArticle.updateArticle();
             this.$refs.rightArticle.updateArticle();
