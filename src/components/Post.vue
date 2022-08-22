@@ -6,6 +6,7 @@
             <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
             <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
         </div>
+       <!-- <TopicVoting :topicId="topicID" ref="topicVote"></TopicVoting>-->
         <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
@@ -14,6 +15,7 @@
 <script setup>
 import Article from './Article.vue';
 import CommentGenerate from './CommentGenerate.vue'
+import TopicVoting from './TopicVoting.vue'
 </script>
 
 <script>
@@ -73,6 +75,7 @@ export default {
         await this.updateTopic().then(() => {
             this.$refs.leftArticle.updateArticle();
             this.$refs.rightArticle.updateArticle();
+            //this.$refs.topicVote.getData();
         });
 
         this.postDateTime();
@@ -80,6 +83,7 @@ export default {
     components: {
         Article,
         CommentGenerate,
+        TopicVoting
     }
 }
 </script>
