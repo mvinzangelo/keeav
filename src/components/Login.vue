@@ -1,7 +1,8 @@
 <script>
 // local functions can be decalred here
-import { db, auth } from '../firebaseResources.js';
-import { setDoc, doc } from "firebase/firestore";
+import { db, auth, storage } from '../firebaseResources.js';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 import { mapStores } from 'pinia';
 import { useLoginStore } from "../stores/loginStatus";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "@firebase/auth";
@@ -18,16 +19,47 @@ export default {
             political: '',
             dob: '',
             bio: '',
+            pfp: null,
         };
     },
     computed: {
         ...mapStores(useLoginStore),
     },
     methods: {
+        selectImage() {
+            this.$refs.fileInput.click()
+        },
+        pickFile() {
+            let input = this.$refs.fileInput;
+            let file = input.files;
+            if (file && file[0]) {
+                let reader = new FileReader;
+                reader.onload = e => {
+                    this.pfp = e.target.result;
+                }
+                reader.readAsDataURL(file[0]);
+            }
+        },
+        getDate() {
+            var today = new Date();
+            let eighteen;
+            if (today.getMonth() < 10) {
+                eighteen = today.getFullYear() - 18 + '-0' + (today.getMonth() + 1) + '-' + today.getDate();
+            }
+            else {
+                eighteen = today.getFullYear() - 18 + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            }
+            return eighteen;
+        },
         async createUser() {
             createUserWithEmailAndPassword(auth, this.email, this.pass).then(async (userCredential) => {
                 const user = userCredential.user;
                 this.loginStore.userID = user.uid;
+                this.loginStore.image = this.pfp;
+                const storageRef = ref(storage, 'pfp/' + user.uid);
+                uploadBytes(storageRef, this.$refs.fileInput.files[0]).then((snapshot) => {
+                });
+
                 this.$router.push('/')
                 try {
                     const docReference = await setDoc(
@@ -55,9 +87,17 @@ export default {
         },
         signIn() {
             signInWithEmailAndPassword(auth, this.email, this.pass)
-                .then((userCredential) => {
+                .then(async (userCredential) => {
                     const user = userCredential.user;
                     this.loginStore.userID = user.uid;
+                    getDownloadURL(ref(storage, 'pfp/' + user.uid))
+                        .then((url) => {
+                            this.loginStore.image = url;
+                        })
+                        .catch((error) => {
+                            const errorCode = error.code;
+                            const errorMessage = error.message;
+                        });
                     this.$router.push('/')
                 })
                 .catch((error) => {
@@ -91,9 +131,16 @@ export default {
                 <label for="right">Undecided</label><br>
             </div>
             <p>Profile Picture:</p>
-            <input type="file" @change="" />
+
+            <div>
+                <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${pfp})` }" @click="selectImage">
+                </div>
+
+                <input ref="fileInput" type="file" @input="pickFile">
+            </div>
+
             <p>Date of Birth:</p>
-            <input type="date" v-model="dob" max="2000-01-02" />
+            <input type="date" v-model="dob" min="1900-01-01" :max="getDate()" />
             <p>Phone Number:</p>
             <input type="tel" v-model="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="'1234567890'" />
         </div>
@@ -116,6 +163,16 @@ export default {
 </template>
 
     <style scoped>
+    .imagePreviewWrapper {
+        width: 12rem;
+        border-radius: 50%;
+        height: 12rem;
+        display: block;
+        cursor: pointer;
+        background-size: cover;
+        background-position: center center;
+    }
+    
     .vote {
         display: flex;
         flex-direction: column;
@@ -132,7 +189,8 @@ export default {
         font-weight: bold;
     }
     
-    input {
+    input,
+    textarea {
         border: 0.125rem solid grey;
         outline: none;
         width: 12rem;
