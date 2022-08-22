@@ -30,20 +30,23 @@ export default {
         {
             return ('#'+a);
         },
-        // removeBlinks()
-        // {
-        //     document.querySelectorAll('.blink').forEach(function(element) {
-        //         element.classList.remove(' blink');
-        //     });
+        removeBlinks()
+        {
+            document.querySelectorAll('.blink').forEach(function(element) {
+                element.classList.remove('blink');
+                // alert('try unblink');
+            });
 
-        // },
+        },
         animateComment(pid)
         {
             // alert("test");
-            // this.removeBlinks();
+            this.removeBlinks();
             
             let parent = document.getElementById(pid);
-            parent.classList.add("blink");
+            setTimeout(function() {
+                parent.classList.add("blink");
+            }, 10);
         },
     },
     mounted()
