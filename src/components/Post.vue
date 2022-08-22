@@ -6,7 +6,7 @@
             <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
             <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
         </div>
-        <TopicVoting :topicId="topicID" ref="topicVote"></TopicVoting>
+       <!-- <TopicVoting :topicId="topicID" ref="topicVote"></TopicVoting>-->
         <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
@@ -75,7 +75,7 @@ export default {
         await this.updateTopic().then(() => {
             this.$refs.leftArticle.updateArticle();
             this.$refs.rightArticle.updateArticle();
-            this.$refs.topicVote.getData();
+            //this.$refs.topicVote.getData();
         });
 
         this.postDateTime();
