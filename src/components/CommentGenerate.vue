@@ -11,6 +11,7 @@ import {
     addDoc,
     getDoc,
     getDocs,
+    setDoc,
     query,
     where,
     deleteDoc,
@@ -24,12 +25,14 @@ export default {
         return {
             desiredComment: undefined, //takes in the current typed value in the comment pox
             postedComments: [], //array of all the comment in the firebase
+            commentTreeStructure: null,
             loginInfo: null,
             timer: '', //timer that refreshes the comments every so often based on AUTO_Refresh
             AUTO_REFRESH: 50000,
             // threads?
             selectedID: null,
             parentComment: null,
+            lastCommentPull: null,
             // parentCommentId: undefined,
 
         };
@@ -38,7 +41,6 @@ export default {
         ...mapStores(useLoginStore),
     },
     async created () {
-        this.getComments(); // will pull comments from firebase
         if (this.loginStore.userID != '') {
             try {
                 const docReference = doc(db, 'userInfo', this.loginStore.userID);
@@ -52,7 +54,7 @@ export default {
                 console.error(err);
             }
         }
-        // this.timer = setInterval(this.getComments, this.AUTO_REFRESH); //update comments every AUTO_REFRESH Amount of time
+        this.getComments(); // will pull comments from firebase
     },
     methods: {  
         async getComments() {
@@ -62,6 +64,7 @@ export default {
                 // an annoying flash
                 let q = query(collection(db, ('comments')));  
                 q = query(q, where('topicId', '==', this.topicId)) 
+                // q = query(q, where('parentId', '==', null))
                 const qSnap = await getDocs(q); //pull database docs from firebase
                 qSnap.forEach((rdoc) => 
                 { //for each doc
@@ -74,24 +77,51 @@ export default {
                     });
                     if(newComment)//otherwise add the new comment
                     {
-                        this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id});
+                        this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id, children: [], localID: null});
                     }
                     this.postedComments.sort(function(a,b)
                     {
-                        // alert(a.cdata.timeStamp);
                       return a.cdata.timeStamp -  b.cdata.timeStamp;
                     });
                 });
                 
+                // this.commentTreeStructure = this.commentMap(this.postedComments);
+                // alert(JSON.stringify(this.commentMap(this.postedComments)));
+                this.lastCommentPull = new Date();
+                let wrapper = document.getElementById('displayCommentBox');
+                // wrapper.scrollTop = wrapper.scrollHeight+100;
             } catch (e) {
                 alert('retrieve' + e);
+            }
+
+        },
+        async updateComments() {
+            try {
+                let q = query(collection(db, ('comments')));  
+                // alert("d "+ this.lastCommentPull);
+                q = query(q, where('timeStamp', '>', this.lastCommentPull));
+                const qSnap = await getDocs(q); //pull database docs from firebase
+                qSnap.forEach((rdoc) => 
+                { //for each doc
+                    // alert(rdoc.data().timeStamp);
+                    // alert(rdoc.data().comment);
+                    this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id, children: [], localID: null});
+                    this.lastCommentPull = new Date();
+
+                });
+                
+                // this.commentTreeStructure = this.commentMap(this.postedComments);
+                // alert(this.commentMap(this.postedComments));
+                let wrapper = document.getElementById('displayCommentBox');
+                // wrapper.scrollTop = wrapper.scrollHeight + 100;
+            } catch (e) {
+                alert("updateComments" + e);
             }
 
         },
         async createComment() { //generates a comment
             if (this.desiredComment != null /*&& userLoggedIn == true */) {
                 try {
-                    // alert((this.loginInfo.firstName + " " +  this.loginInfo.lastName));
                     let userName = (this.loginInfo.firstName + " " +  this.loginInfo.lastName);
                     const docReference = await addDoc(
                         collection(db, ('comments')),
@@ -99,12 +129,11 @@ export default {
                             timeStamp: new Date(),
                             topicId: this.topicId,//connect to topicID store
                             poster: userName, //connect to UserID store
-                            replies: [], // my idea of how to implement threads
                             comment: this.desiredComment,
                             parentId: this.selectedID,
                             parentComment: this.parentComment,
                         });
-                } catch (e) {
+                } catch (e) {   
                     alert('create comment' + e);
                     console.error(e);
                 }
@@ -112,9 +141,9 @@ export default {
         },
         submitComment() { // on submit we want to create comments then get comments to have the current view update
             this.createComment();
-            this.getComments();
-            // document.getElementById('commentSubmitionInput').value=null;
+            this.updateComments();
             this.desiredComment = undefined;
+            // document.getElementById('commentSubmitionInput').value=null;
             // document.getElementById('commentSubmitionInput').placeholder="Comment...";
         },
         getTime() {//get current date
@@ -147,13 +176,8 @@ export default {
             }
             return Math.floor(seconds) + " seconds ago";
         },
-        cancelTimerAutoUpdate () {
-            clearInterval(this.timer);
-        },
-
         //threads
         selectComment(id, replyTo) {
-            // alert("test: " + String(a));
             if(id == this.selectedID)
             {
                 this.selectedID = null;
@@ -165,12 +189,36 @@ export default {
                 this.parentComment = replyTo.substring(0,50);
             }
         },
+        // commentMap(list)//function modification from one found on stack overflow
+        // {//https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript#18018037
+        //     var map = {}, node, roots = [], cidToLocal = {};
+
+        //     for (let i = 0; i < list.length; i++) {
+        //         map[list[i].cid] = i; // initialize the map
+        //         list[i].children = []; // initialize the children
+        //         cidToLocal[list[i].cid] = i;
+        //     }
+        //     // alert(JSON.stringify(map));
+            
+        //     for (let i = 0; i < list.length; i++) {
+        //         node = list[i];
+        //         if (node.cdata.parentId !== null) {
+        //         // if you have dangling branches check that map[node.parentId] exists
+        //         // alert("a " + map[cidToLocal[node.cdata.parentId]] );
+        //         list[map[node.cdata.parentId]].children.push(node);
+        //         } else {
+        //         roots.push(node);
+        //         }
+        //     }
+            
+        //     // alert(JSON.stringify(roots), null, 4);
+        //     console.log(JSON.stringify(roots), null, 4);
+        //     return roots;
+        // },
     },
     beforeMount() {
         this.getComments();
-    },
-    beforeDestroy () {
-      this.cancelTimerAutoUpdate();
+        this.lastCommentPull = null;
     },
     components: { Comment }
 }
@@ -183,7 +231,7 @@ export default {
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
                 <!-- <p>{{comment}}</p> -->
-                <Comment :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timestamp="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" :replies="[]"
+                <Comment class="comment" :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timeSince="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" 
                     :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid" :parentId="postedComments[index].cdata.parentId" :parentComment="postedComments[index].cdata.parentComment"></Comment>
             </div>
         </div>
@@ -242,7 +290,7 @@ export default {
 
 #displayCommentBox {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     margin: 0 auto;
     background-color: #7dbc6e;
     height: 400px;
@@ -290,5 +338,16 @@ export default {
 {
     width: 100%;
     display: inline-flex;
+}
+
+.blink {
+  animation: blinker 0.3s linear 2;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+    background-color: aquamarine;
+  }
 }
 </style>   
