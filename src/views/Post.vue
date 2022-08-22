@@ -71,7 +71,7 @@ export default {
                         this.topic = topicSnap.data().topic;
                         this.leftArticleID = topicSnap.data().leftArticle;
                         this.rightArticleID = topicSnap.data().rightArticle;
-                        this.topicID = topicSnap.data().id;
+                        this.topicID = topicSnap.id;
                     } else {
                         console.log("No such topic!");
                     }
