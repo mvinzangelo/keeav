@@ -189,6 +189,13 @@ export default {
                 this.parentComment = replyTo.substring(0,50);
             }
         },
+        clearReplyTo() {
+            if(this.selectedID)
+            {
+                this.selectedID = null;
+                this.parentComment = null;
+            }
+        },
         // commentMap(list)//function modification from one found on stack overflow
         // {//https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript#18018037
         //     var map = {}, node, roots = [], cidToLocal = {};
@@ -237,7 +244,7 @@ export default {
         </div>
         <div id="commentMaker">
             <p>Comment: </p>
-            <p class="replyToPrompt" v-if="!login && selectedID">Reply to: <span id="commentReplyTo">{{parentComment}}</span></p>
+            <p class="replyToPrompt" v-if="!login && selectedID"><button class="removeReplyTo" @click="clearReplyTo">X</button>Reply to: <span id="commentReplyTo">{{parentComment}}</span></p>
             <p class="errorLabel" v-if="!loginInfo">&#x26A0 Login to comment </p>
             <div id="commentInlineDisplay">
                 <textarea id="commentSubmitionInput" v-if="loginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>
@@ -305,6 +312,23 @@ export default {
     position: relative;
     bottom: 0px;
 
+}
+.removeReplyTo
+{
+    background-color: rgb(255, 192, 192);
+    font-weight: bold;
+    border-radius: 100%;
+    /* height: 20px; */
+    text-align: center;
+    border: 1px solid;
+    padding: 2px 5px;
+    margin-right: 4px;
+    /* width: 20px; */
+} 
+
+.removeReplyTo:hover
+{
+    background-color: rgb(255, 128, 128)(255, 165, 165);
 }
 .replyToPrompt
 {
