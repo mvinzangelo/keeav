@@ -15,18 +15,23 @@ export default {
     props: {
         topicId: String,
     },
-    async created(){
+    created(){
         //this.getData();
     },
     methods: {
         async getData(){
-            const votesRef = collection(db, 'topicVotes');
+            try{
+                const votesRef = collection(db, 'topicVotes');
 
-            const q = query(votesRef, where('topicID', '==', this.topicId));
+                const q = query(votesRef, where('topicID', '==', this.topicId), where('userID', '==', this.loginStore.userID));
 
-            const querySnapshot = await getDocs(q);
-            this.topicVote = querySnapshot.docs[0].data().vote;
-            console.log(this.topicVote);
+                const querySnapshot = await getDocs(q);
+                this.topicVote = querySnapshot.docs[0].data().vote;
+                console.log(this.topicVote);
+            }
+            catch(error){
+                console.log(error);
+            }
         },
         async newVote(vote) {
             this.topicVote = vote;

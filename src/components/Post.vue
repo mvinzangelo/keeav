@@ -56,7 +56,6 @@ export default {
                     this.leftArticleID = latestTopic.docs[0].data().leftArticle;
                     this.rightArticleID = latestTopic.docs[0].data().rightArticle;
                     this.topicID = latestTopic.docs[0].id;
-                    this.$refs.topicVote.getData();
                 }
                 else {
                     console.log("Topic not found!");
@@ -76,6 +75,7 @@ export default {
         await this.updateTopic().then(() => {
             this.$refs.leftArticle.updateArticle();
             this.$refs.rightArticle.updateArticle();
+            this.$refs.topicVote.getData();
         });
 
         this.postDateTime();
@@ -83,6 +83,7 @@ export default {
     components: {
         Article,
         CommentGenerate,
+        TopicVoting
     }
 }
 </script>
