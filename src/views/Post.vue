@@ -1,18 +1,15 @@
 <template>
     <p class="topic-text"><span>{{ topic }}</span></p>
     <p class="date">{{ date }}</p>
-    <div id="section-container">
-        <div class="articles-container">
-            <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
-            <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
-        </div>
-        <div class="navigation-btns">
-            <button v-if="previousTopicID" @click="$router.push({ path: `/topic/${previousTopicID}` })">Previous
-                topic</button>
-            <button v-if="nextTopicID" @click="$router.push({ path: `/topic/${nextTopicID}` })">Next topic</button>
-        </div>
-        <CommentGenerate :topicId="topicID"></CommentGenerate>
+    <button class="navigation-btn" v-if="previousTopicID"
+        @click="$router.push({ path: `/topic/${previousTopicID}` })">←</button>
+    <div class="articles-container">
+        <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
+        <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
     </div>
+    <button class="navigation-btn" v-if="nextTopicID"
+        @click="$router.push({ path: `/topic/${nextTopicID}` })">→</button>
+    <CommentGenerate :topicId="topicID"></CommentGenerate>
 </template>
 
 <!-- Is there a better way of doing this? -->
@@ -134,10 +131,11 @@ export default {
 }
 
 #section-container {
-    width: calc(100% - 500px);
+    width: calc(100% - 400px);
     /* background-color: darksalmon; */
-    /* display: flex; */
-    /* justify-content: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
 }
 
@@ -157,10 +155,11 @@ export default {
     margin-top: 25px;
 }
 
-.navigation-btns {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.navigation-btn {
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+
 }
 
 @media screen and (max-width: 1125px) {
