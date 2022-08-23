@@ -1,5 +1,5 @@
 <script setup>
-import publishers from '../components/publisher.vue'
+import publishers from '../components/publisherContainer.vue'
 </script>
 
 <template>
