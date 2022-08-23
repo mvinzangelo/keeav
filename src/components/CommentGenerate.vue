@@ -40,7 +40,7 @@ export default {
     computed: {
         ...mapStores(useLoginStore),
     },
-    async created () {
+    async created() {
         if (this.loginStore.userID != '') {
             try {
                 const docReference = doc(db, 'userInfo', this.loginStore.userID);
@@ -56,35 +56,33 @@ export default {
         }
         this.getComments(); // will pull comments from firebase
     },
-    methods: {  
+    methods: {
         async getComments() {
             try {
                 //get comment periodicaly is called to pull any new comments from the database
                 // the id comparison is to prevent deleting all the comments the adding them again creating 
                 // an annoying flash
-                let q = query(collection(db, ('comments')));  
-                q = query(q, where('topicId', '==', this.topicId)) 
+                let q = query(collection(db, ('comments')));
+                q = query(q, where('topicId', '==', this.topicId))
                 // q = query(q, where('parentId', '==', null))
                 const qSnap = await getDocs(q); //pull database docs from firebase
-                qSnap.forEach((rdoc) => 
-                { //for each doc
+                qSnap.forEach((rdoc) => { //for each doc
                     let newComment = true;//assume the doc is a unique comment
                     this.postedComments.forEach((alreadyShowingComment) => { //check if any of the already posted comments matches the pulled commentId
-                        if(rdoc.id == alreadyShowingComment.cid)//if one does match, (false) do not add the comment again
+                        if (rdoc.id == alreadyShowingComment.cid)//if one does match, (false) do not add the comment again
                         {
-                            newComment=false;
+                            newComment = false;
                         }
                     });
-                    if(newComment)//otherwise add the new comment
+                    if (newComment)//otherwise add the new comment
                     {
-                        this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id, children: [], localID: null});
+                        this.postedComments.push({ cdata: rdoc.data(), cid: rdoc.id, children: [], localID: null });
                     }
-                    this.postedComments.sort(function(a,b)
-                    {
-                      return a.cdata.timeStamp -  b.cdata.timeStamp;
+                    this.postedComments.sort(function (a, b) {
+                        return a.cdata.timeStamp - b.cdata.timeStamp;
                     });
                 });
-                
+
                 // this.commentTreeStructure = this.commentMap(this.postedComments);
                 // alert(JSON.stringify(this.commentMap(this.postedComments)));
                 this.lastCommentPull = new Date();
@@ -97,19 +95,18 @@ export default {
         },
         async updateComments() {
             try {
-                let q = query(collection(db, ('comments')));  
+                let q = query(collection(db, ('comments')));
                 // alert("d "+ this.lastCommentPull);
                 q = query(q, where('timeStamp', '>', this.lastCommentPull));
                 const qSnap = await getDocs(q); //pull database docs from firebase
-                qSnap.forEach((rdoc) => 
-                { //for each doc
+                qSnap.forEach((rdoc) => { //for each doc
                     // alert(rdoc.data().timeStamp);
                     // alert(rdoc.data().comment);
-                    this.postedComments.push({cdata: rdoc.data(), cid: rdoc.id, children: [], localID: null});
+                    this.postedComments.push({ cdata: rdoc.data(), cid: rdoc.id, children: [], localID: null });
                     this.lastCommentPull = new Date();
 
                 });
-                
+
                 // this.commentTreeStructure = this.commentMap(this.postedComments);
                 // alert(this.commentMap(this.postedComments));
                 let wrapper = document.getElementById('displayCommentBox');
@@ -122,7 +119,7 @@ export default {
         async createComment() { //generates a comment
             if (this.desiredComment != null /*&& userLoggedIn == true */) {
                 try {
-                    let userName = (this.loginInfo.firstName + " " +  this.loginInfo.lastName);
+                    let userName = (this.loginInfo.firstName + " " + this.loginInfo.lastName);
                     const docReference = await addDoc(
                         collection(db, ('comments')),
                         {
@@ -133,7 +130,7 @@ export default {
                             parentId: this.selectedID,
                             parentComment: this.parentComment,
                         });
-                } catch (e) {   
+                } catch (e) {
                     alert('create comment' + e);
                     console.error(e);
                 }
@@ -152,7 +149,7 @@ export default {
         },
         timeSince(date) { //generate the amount of time since comment was submitted
             let tempSeconds = date.seconds;
-            let nonUnixDate = new Date(tempSeconds*1000);
+            let nonUnixDate = new Date(tempSeconds * 1000);
             let seconds = Math.floor((new Date() - nonUnixDate) / 1000);
             let interval = seconds / 31536000;
             if (interval > 1) {
@@ -178,20 +175,17 @@ export default {
         },
         //threads
         selectComment(id, replyTo) {
-            if(id == this.selectedID)
-            {
+            if (id == this.selectedID) {
                 this.selectedID = null;
                 this.parentComment = null;
             }
-            else
-            {
+            else {
                 this.selectedID = id;
-                this.parentComment = replyTo.substring(0,50);
+                this.parentComment = replyTo.substring(0, 50);
             }
         },
         clearReplyTo() {
-            if(this.selectedID)
-            {
+            if (this.selectedID) {
                 this.selectedID = null;
                 this.parentComment = null;
             }
@@ -206,7 +200,7 @@ export default {
         //         cidToLocal[list[i].cid] = i;
         //     }
         //     // alert(JSON.stringify(map));
-            
+
         //     for (let i = 0; i < list.length; i++) {
         //         node = list[i];
         //         if (node.cdata.parentId !== null) {
@@ -217,7 +211,7 @@ export default {
         //         roots.push(node);
         //         }
         //     }
-            
+
         //     // alert(JSON.stringify(roots), null, 4);
         //     console.log(JSON.stringify(roots), null, 4);
         //     return roots;
@@ -238,16 +232,22 @@ export default {
         <div id="displayCommentBox">
             <div v-for="(comment, index) in postedComments">
                 <!-- <p>{{comment}}</p> -->
-                <Comment class="comment" :id="postedComments[index].cid" @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)" :timeSince="timeSince(postedComments[index].cdata.timeStamp)" :poster="postedComments[index].cdata.poster" 
-                    :comment="postedComments[index].cdata.comment" :cid="postedComments[index].cid" :parentId="postedComments[index].cdata.parentId" :parentComment="postedComments[index].cdata.parentComment"></Comment>
+                <Comment class="comment" :id="postedComments[index].cid"
+                    @click="selectComment(postedComments[index].cid, postedComments[index].cdata.comment)"
+                    :timeSince="timeSince(postedComments[index].cdata.timeStamp)"
+                    :poster="postedComments[index].cdata.poster" :comment="postedComments[index].cdata.comment"
+                    :cid="postedComments[index].cid" :parentId="postedComments[index].cdata.parentId"
+                    :parentComment="postedComments[index].cdata.parentComment"></Comment>
             </div>
         </div>
         <div id="commentMaker">
-            <p>Comment: </p>
-            <p class="replyToPrompt" v-if="!login && selectedID"><button class="removeReplyTo" @click="clearReplyTo">X</button>Reply to: <span id="commentReplyTo">{{parentComment}}</span></p>
+            <p id="comment">Comment: </p>
+            <p class="replyToPrompt" v-if="!login && selectedID"><button class="removeReplyTo"
+                    @click="clearReplyTo">X</button>Reply to: <span id="commentReplyTo">{{ parentComment }}</span></p>
             <p class="errorLabel" v-if="!loginInfo">&#x26A0 Login to comment </p>
             <div id="commentInlineDisplay">
-                <textarea id="commentSubmitionInput" v-if="loginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>
+                <textarea id="commentSubmitionInput" v-if="loginInfo" v-model="desiredComment"
+                    @keypress.enter="submitComment" placeholder="Comment..."></textarea>
                 <button v-if="loginInfo" id="commentSubmit" @click="submitComment">&#x27A1</button>
             </div>
         </div>
@@ -255,66 +255,82 @@ export default {
 </template>
 <style scoped>
 /* Styles for component go here */
+#comment {
+    color: #ffffff;
+    margin-left: 1%;
+}
+
 #commentWrapper {
     /* background-color: rgb(106, 69, 69); */
     padding: 10px;
     width: 100%;
     overflow-x: hidden;
 }
+
 ::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
+    width: 3px;
+    height: 3px;
 }
+
 ::-webkit-scrollbar-button {
-  width: 0px;
-  height: 0px;
+    width: 0px;
+    height: 0px;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #2e2e2e;
-  border: 0px none #ffffff;
-  border-radius: 50px;
+    background: #2e2e2e;
+    border: 0px none #ffffff;
+    border-radius: 50px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffffff;
+    background: #ffffff;
 }
+
 ::-webkit-scrollbar-thumb:active {
-  background: #000000;
+    background: #000000;
 }
+
 ::-webkit-scrollbar-track {
-  background: #666666;
-  border: 0px none #ffffff;
-  border-radius: 50px;
+    background: #666666;
+    border: 0px none #ffffff;
+    border-radius: 50px;
 }
+
 ::-webkit-scrollbar-track:hover {
-  background: #666666;
+    background: #666666;
 }
+
 ::-webkit-scrollbar-track:active {
-  background: #333333;
+    background: #333333;
 }
+
 ::-webkit-scrollbar-corner {
-  background: transparent;
+    background: transparent;
 }
 
 #displayCommentBox {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    background-color: #7dbc6e;
+    background-color: rgb(120, 105, 150);
+    border-radius: 15px;
     height: 400px;
     overflow-y: scroll;
     width: 100%;
 }
 
 #commentMaker {
-    background-color: rgb(138, 255, 208);
-    padding: 10px;
-    width: calc(100% - 40px);
+    border-radius: 15px;
+    background-color: rgb(10, 17, 40);
+    /* padding: 10px; */
+    /* width: calc(100% - 40px); */
+    width: 100%;
     position: relative;
     bottom: 0px;
-
 }
-.removeReplyTo
-{
+
+.removeReplyTo {
     background-color: rgb(255, 192, 192);
     font-weight: bold;
     border-radius: 100%;
@@ -324,54 +340,54 @@ export default {
     padding: 2px 5px;
     margin-right: 4px;
     /* width: 20px; */
-} 
+}
 
-.removeReplyTo:hover
-{
+.removeReplyTo:hover {
     background-color: rgb(255, 128, 128)(255, 165, 165);
 }
-.replyToPrompt
-{
+
+.replyToPrompt {
     font-weight: bold;
-    color:#1c03c5;
+    color: #1c03c5;
     font-size: 17px;
 }
-.errorLabel
-{
-    color: red;
+
+.errorLabel {
+    color: #fe2836;
     font-weight: bold;
     font-size: 1.2rem;
     text-indent: 30px;
 }
-#commentSubmitionInput
-{
-    width: calc(100% - 50px);
-    /* border-radius: ; */
-    resize: none;
 
+#commentSubmitionInput {
+    width: calc(100% - 50px);
+    height: 35px;
+    border-radius: 15px;
+    flex-direction: column-reverse;
 }
-#commentSubmit
-{
+
+#commentSubmit {
     background-color: rgb(201, 255, 205);
     width: 50px;
     height: 50px;
     vertical-align: middle;
     border-radius: 100%;
 }
-#commentInlineDisplay
-{
+
+#commentInlineDisplay {
     width: 100%;
-    display: inline-flex;
+    display: flex;
+    align-items: flex-end;
 }
 
 .blink {
-  animation: blinker 0.3s linear 2;
+    animation: blinker 0.3s linear 2;
 }
 
 @keyframes blinker {
-  50% {
-    opacity: 0;
-    background-color: aquamarine;
-  }
+    50% {
+        opacity: 0;
+        background-color: aquamarine;
+    }
 }
 </style>   
