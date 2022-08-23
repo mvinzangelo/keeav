@@ -7,8 +7,9 @@
             <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
         </div>
         <div class="navigation-btns">
-            <button @click="$router.push({ path: `/topic/${previousTopicID}` })">Previous topic</button>
-            <button @click="$router.push({ path: `/topic/${nextTopicID}` })">Next topic</button>
+            <button v-if="previousTopicID" @click="$router.push({ path: `/topic/${previousTopicID}` })">Previous
+                topic</button>
+            <button v-if="nextTopicID" @click="$router.push({ path: `/topic/${nextTopicID}` })">Next topic</button>
         </div>
         <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
