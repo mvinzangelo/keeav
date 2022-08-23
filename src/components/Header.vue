@@ -44,7 +44,8 @@ export default {
       <div class="right-cluster">
         <ol class="nav-links">
           <li>topics</li>
-          <li>publishers</li>
+          <li>
+          <RouterLink to="/publisher">Publisher</RouterLink></li>
           <!-- <li>authors</li> -->
           <!-- <li>transparency</li> -->
         </ol>
