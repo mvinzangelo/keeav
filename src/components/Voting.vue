@@ -93,7 +93,7 @@ export default {
             <button class="presser" id='left' @click="newVote('Left')">Left</button>
             <button class="presser" id='right' @click="newVote('Right')">Right</button>
         </div>
-        <div class="resultContainer" v-else>
+        <div class="resultContainer" v-else-if="this.loginStore.userID !== ''">
             <h2 class="title">Bias Meter</h2>
             <h3 class="news">News Organization: {{ publisher }}</h3>
             <progress class="bias" id="newsBias" max='100' :value="publisherBias"></progress>
