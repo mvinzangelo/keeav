@@ -1,15 +1,21 @@
 <template>
     <p class="topic-text"><span>{{ topic }}</span></p>
     <p class="date">{{ date }}</p>
-    <button class="navigation-btn" v-if="previousTopicID"
-        @click="$router.push({ path: `/topic/${previousTopicID}` })">←</button>
-    <div class="articles-container">
-        <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
-        <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
+    <div id="section-container">
+        <div class="articles-container">
+            <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
+            <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
+        </div>
+        <div class="buttons">
+            <div v-if="!previousTopicID"></div>
+            <button class="navigation-btn" v-if="previousTopicID"
+                @click="$router.push({ path: `/topic/${previousTopicID}` })">←</button>
+            <button class="navigation-btn" v-if="nextTopicID"
+                @click="$router.push({ path: `/topic/${nextTopicID}` })">→</button>
+            <div v-if="!nextTopicID"></div>
+        </div>
+        <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
-    <button class="navigation-btn" v-if="nextTopicID"
-        @click="$router.push({ path: `/topic/${nextTopicID}` })">→</button>
-    <CommentGenerate :topicId="topicID"></CommentGenerate>
 </template>
 
 <!-- Is there a better way of doing this? -->
@@ -134,6 +140,7 @@ export default {
     width: calc(100% - 400px);
     /* background-color: darksalmon; */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
@@ -160,6 +167,12 @@ export default {
     width: 80px;
     border-radius: 100%;
 
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 @media screen and (max-width: 1125px) {
