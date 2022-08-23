@@ -39,6 +39,8 @@ export default {
             topic: "Lorem ipsum",
             leftArticleID: '',
             rightArticleID: '',
+            previousTopicID: '',
+            nextTopicID: '',
             topicID: '',
         }
     },
@@ -56,6 +58,8 @@ export default {
                         this.topic = topic.docs[0].data().topic;
                         this.leftArticleID = topic.docs[0].data().leftArticle;
                         this.rightArticleID = topic.docs[0].data().rightArticle;
+                        this.previousTopicID = topic.docs[0].data().previousTopic;
+                        this.nextTopicID = topic.docs[0].data().nextTopic;
                         this.topicID = topic.docs[0].id;
                     }
                     else {
@@ -71,6 +75,8 @@ export default {
                         this.topic = topicSnap.data().topic;
                         this.leftArticleID = topicSnap.data().leftArticle;
                         this.rightArticleID = topicSnap.data().rightArticle;
+                        this.previousTopicID = topicSnap.data().previousTopic;
+                        this.nextTopicID = topicSnap.data().nextTopic;
                         this.topicID = topicSnap.id;
                     } else {
                         console.log("No such topic!");
