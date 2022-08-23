@@ -8,7 +8,7 @@ import Footer from '../src/components/Footer.vue'
   <header>
     <div class="wrapper">
       <Header></Header>
-      <RouterView />
+      <RouterView :key="$route.fullPath" @showLoading="showLoading" />
       <Footer></Footer>
     </div>
   </header>
