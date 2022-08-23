@@ -45,8 +45,8 @@ export default {
         <ol class="nav-links">
           <li>topics</li>
           <li>publishers</li>
-          <li>authors</li>
-          <li>transparency</li>
+          <!-- <li>authors</li> -->
+          <!-- <li>transparency</li> -->
         </ol>
         <button v-if="this.loginStore.userID == ''" class="profile">
           <RouterLink to="/login"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
