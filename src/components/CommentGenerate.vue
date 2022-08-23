@@ -245,7 +245,7 @@ export default {
         <div id="commentMaker">
             <p>Comment: </p>
             <p class="replyToPrompt" v-if="!login && selectedID"><button class="removeReplyTo" @click="clearReplyTo">X</button>Reply to: <span id="commentReplyTo">{{parentComment}}</span></p>
-            <p class="errorLabel" v-if="!loginInfo">&#x26A0 Login to comment </p>
+            <RouterLink to='/login' v-if="!loginInfo"><p class="errorLabel" v-if="!loginInfo">&#x26A0 Login to comment </p></RouterLink>
             <div id="commentInlineDisplay">
                 <textarea id="commentSubmitionInput" v-if="loginInfo" v-model="desiredComment" @keypress.enter="submitComment" placeholder="Comment..."></textarea>
                 <button v-if="loginInfo" id="commentSubmit" @click="submitComment">&#x27A1</button>
@@ -342,6 +342,9 @@ export default {
     font-weight: bold;
     font-size: 1.2rem;
     text-indent: 30px;
+}
+.errorLabel:hover {
+    color: lightcoral;
 }
 #commentSubmitionInput
 {

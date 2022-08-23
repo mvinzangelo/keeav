@@ -87,7 +87,7 @@ export default {
 <template>
     <div class="container">
         <h1 v-if="this.loginStore.userID !== ''">Your vote: {{ userVote }}</h1>
-        <h1 class='loginWarning' v-else>Login to vote.</h1>
+        <RouterLink to='/login' v-else><h1 class='loginWarning'>&#x26A0 Login to vote.</h1></RouterLink>
         <div class="buttonContainer" v-if="userVote == 'None' && this.loginStore.userID !== ''">
             <div class="votePrompt">How do you feel this article leans?</div>
             <button class="presser" id='left' @click="newVote('Left')">Left</button>
@@ -104,6 +104,15 @@ export default {
 </template>
 
 <style>
+.loginWarning {
+    color: red;
+    font-weight: bold;
+}
+
+.loginWarning:hover {
+    color: lightcoral;
+}
+
 .bias{
     margin-bottom: 10px;
 }
