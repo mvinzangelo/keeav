@@ -10,21 +10,18 @@ export default {
     data() {
         return {
             // responsive variables go here
-                // ex: count: 0,
+            
         }
     },
     methods : {
         // callable functions for HTML go here
-            // ex: incCount()
-            // {
-            //     this.count++;
-            // }
+            
     }
 }
 </script>
 <template>
 <h2 class = "pname"> {{publisherName}}</h2>
-<a :src = "publisherWebsite"> <img :href = "publisherLogo"/></a>
+<a :href="publisherWebsite" target="_blank"> <img alt="publisher logo" :src="publisherLogo"/></a>
 <progress class="bias" max='100' :value="publisherBias"></progress>
 </template>
 <style scoped>

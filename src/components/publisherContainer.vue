@@ -49,7 +49,7 @@ export default {
 </script>
 <template>
     <div id = "publisherExplain"> 
-        <p> Main paragraph from Eddie</p>
+        <!-- <p> Main paragraph from Eddie</p> -->
     </div>
 
     <div v-for="(publisher, index) in publisherArray" id = "publisherContainer">
@@ -59,11 +59,10 @@ export default {
             :publisherLogo = "publisherArray[index].publisherData.publisherLogoLink"
             :publisherBias = "publisherArray[index].publisherData.publisherBias"
             
-            
             ></PublisherBox>
         
     </div>
-<!-- HTML for components goes here -->
+
 </template>
 <style scoped>
     /* Styles for component go here */
