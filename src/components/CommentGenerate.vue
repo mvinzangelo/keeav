@@ -357,6 +357,7 @@ export default {
     font-weight: bold;
     font-size: 1.2rem;
     text-indent: 30px;
+    margin-bottom: 2%;
 }
 
 #commentSubmitionInput {
