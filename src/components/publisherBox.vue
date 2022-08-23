@@ -2,8 +2,10 @@
 // local functions can be decalred here
 export default {
     props: {
-        // properties go here
-            // ex: title: String,
+        publisherName: String,
+        publisherWebsite: String,
+        publisherLogo: String,
+        publisherBias: Number
     },
     data() {
         return {
@@ -21,7 +23,9 @@ export default {
 }
 </script>
 <template>
-<!-- HTML for components goes here -->
+<h2 class = "pname"> {{publisherName}}</h2>
+<a :src = "publisherWebsite"> <img :href = "publisherLogo"/></a>
+<progress class="bias" max='100' :value="publisherBias"></progress>
 </template>
 <style scoped>
     /* Styles for component go here */

@@ -1,23 +1,50 @@
 <script>
+
+import {db} from '../firebaseResources';
+import {
+    collection,
+    doc,
+    addDoc,
+    getDoc,
+    getDocs,
+    setDoc,
+    query,
+    where,
+    deleteDoc,
+} from 'firebase/firestore'
+import PublisherBox from '../components/publisherBox.vue';
+
 // local functions can be decalred here
 export default {
     props: {
-        // properties go here
-            // ex: title: String,
+    // properties go here
+    // ex: title: String,
     },
     data() {
         return {
-            // responsive variables go here
-                // ex: count: 0,
-        }
+            publisherArray: [], //array for publishers
+        };
     },
-    methods : {
-        // callable functions for HTML go here
-            // ex: incCount()
-            // {
-            //     this.count++;
-            // }
-    }
+    methods: {
+        async getPublishersDB() {
+            try {
+                let pcluster = query(collection(db, ("publishers")));
+                const qSnap = await getDocs(pcluster); //pull database docs from firebase
+                qSnap.forEach((rdoc) => {
+                    this.publisherArray.push({ politicPublisher: rdoc.id, publisherData: rdoc.data() });
+                    // alert(rdoc.id);
+                });
+                // alert(JSON.stringify(this.publisherArray));
+            }
+            catch (e) {
+                alert("retrieve" + e);
+            }
+        },
+    },
+    beforeMount() {
+        this.getPublishersDB();
+    },
+    components: { PublisherBox }
 }
 </script>
 <template>
@@ -25,7 +52,15 @@ export default {
         <p> Main paragraph from Eddie</p>
     </div>
 
-    <div id = "publisherContainer">
+    <div v-for="(publisher, index) in publisherArray" id = "publisherContainer">
+        <PublisherBox 
+            :publisherName = "publisherArray[index].politicPublisher"
+            :publisherWebsite = "publisherArray[index].publisherData.website"
+            :publisherLogo = "publisherArray[index].publisherData.publisherLogoLink"
+            :publisherBias = "publisherArray[index].publisherData.publisherBias"
+            
+            
+            ></PublisherBox>
         
     </div>
 <!-- HTML for components goes here -->
