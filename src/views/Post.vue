@@ -6,7 +6,10 @@
             <Article :articleRef="leftArticleID" ref="leftArticle"></Article>
             <Article :articleRef="rightArticleID" ref="rightArticle"></Article>
         </div>
-        <button @click="$router.push({ path: `/topic/NhRDXaZT9InPzhvDQSlh` })">Go back</button>
+        <div class="navigation-btns">
+            <button @click="$router.push({ path: `/topic/${previousTopicID}` })">Previous topic</button>
+            <button @click="$router.push({ path: `/topic/${nextTopicID}` })">Next topic</button>
+        </div>
         <CommentGenerate :topicId="topicID"></CommentGenerate>
     </div>
 </template>
@@ -151,6 +154,12 @@ export default {
     color: var(--bright-lilac);
     margin: 10px 0;
     margin-top: 25px;
+}
+
+.navigation-btns {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 @media screen and (max-width: 1125px) {
