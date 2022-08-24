@@ -2,7 +2,7 @@
 // local functions can be decalred here
 import { db, auth, storage } from '../firebaseResources.js';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { setDoc, doc, getDoc } from "firebase/firestore";
+import { setDoc, doc, getDoc, query, getDocs } from "firebase/firestore";
 import { mapStores } from 'pinia';
 import { useLoginStore } from "../stores/loginStatus";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "@firebase/auth";
@@ -10,6 +10,8 @@ export default {
     data() {
         return {
             createAcc: true,
+            errorUsername: false,
+            errorEmail: false,
             firstName: '',
             lastName: '',
             userName: '',
@@ -50,6 +52,31 @@ export default {
                 eighteen = today.getFullYear() - 18 + '-' + (today.getMonth() + 1) + '-' + today.getDate();
             }
             return eighteen;
+        },
+        async checkUniqueness() {
+            try {
+                const userRef = collection(db, 'userInfo');
+                const queryUserName = query(userRef, where('userName', '==', this.userName));
+                const querySnapshot = await getDocs(queryUserName);
+                const queryEmail = query(userRef, where('email','==', this.email))
+                const querySnapshot1 = await getDocs(queryEmail);
+
+                if(querySnapshot.docs[0].data().userName == this.userName){
+                    this.errorUsername = true;
+                }
+                else if(querySnapshot.docs[0].data().email == this.email){
+                    this.errorEmail = true;
+                }
+                else{
+                    this.errorEmail = false;
+                    this.errorUsername = false;
+                    this.createUser();
+                }
+
+            }
+            catch(error){
+                console.log(error);
+            }
         },
         async createUser() {
             createUserWithEmailAndPassword(auth, this.email, this.pass).then(async (userCredential) => {
@@ -117,6 +144,7 @@ export default {
             <input type="text" v-model="lastName" placeholder="'Doe'" />
             <p>Username:</p>
             <input type="text" v-model="userName" placeholder="'johndoe'" />
+            <p class='errorMsg' v-if="errorUsername">Username has been taken.</p>
             <p>Bio:</p>
             <textarea type="text" v-model="bio" placeholder="'I lean...'" />
             <p>Political:</p>
@@ -147,13 +175,14 @@ export default {
         <div>
             <p>Email:</p>
             <input type="text" v-model="email" placeholder="'john@doe.com'" />
+            <p class='errorMsg' v-if="errorEmail">Username has been taken.</p>
             <p>Password:</p>
             <input type="password" @keypress.enter="createAcc ? signIn() : createUser()" v-model="pass"
                 placeholder="'Password'" />
         </div>
         <div>
             <button v-if="createAcc" @click="signIn()">Log in</button>
-            <button v-else @click="createUser()">Create Account</button>
+            <button v-else @click="checkUniqueness()">Create Account</button>
             <div>
                 <button v-if="createAcc" @click="createAcc = !createAcc">Sign up</button>
                 <button v-if="!createAcc" @click="createAcc = !createAcc">Return to Login</button>
