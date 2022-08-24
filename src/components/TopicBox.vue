@@ -24,13 +24,13 @@ export default {
 
 <style scoped>
 a {
-    height: 100px;
+    /* height: 100px; */
     width: 50%;
     text-decoration: none;
     border-radius: 4px;
     padding: 10px;
     color: var(--dark-byzantium);
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 h1:hover {

@@ -44,7 +44,7 @@ export default {
             <RouterLink to="/all-topics">topics</RouterLink>
           </li>
           <li>
-            <RouterLink to="/publisher">publisher</RouterLink>
+            <RouterLink to="/publisher">about</RouterLink>
           </li>
           <li v-if="this.loginStore.userID">
             <button v-if="this.loginStore.userID" id="logo-button" @click="signOut()">Sign
