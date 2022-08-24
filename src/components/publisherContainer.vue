@@ -48,8 +48,37 @@ export default {
 }
 </script>
 <template>
-    <div id = "publisherExplain"> 
-        <!-- <p> Main paragraph from Eddie</p> -->
+<div class="publisherExplain"> 
+    <div id="data"> 
+        <h2>How we get our Data:</h2>
+            <p>We get our publisher bias rating from AllSides, 
+                but in the future we plan to aggregate from multiple bias rating websites. 
+            </p>
+    </div>
+    <div id="articles"> 
+        <h2>How we choose our articles:</h2>
+            <p>Our editorial board, which consists of political 
+                scientists from both sides of the political spectrum, selects the articles and the topics. 
+            </p>
+    </div>
+    <div id="rules"> 
+        <h2>Community Rules:</h2>
+            <ol>
+                <li>No racist slurs</li>
+                <li>No personal attacks on another User</li>
+                <li>No posting of personal details of another user</li>
+                <li>No Derogatory Words</li>
+                <li>No Doxing</li>
+                <li>No Endangering Information</li>
+                <li>No Hate Speech</li>
+            </ol>
+    </div>
+    <div id="moderate"> 
+        <h2>How we Moderate:</h2>
+            <p>We plan to have a moderation team that moderates 
+                comments according to the rules above.
+            </p>
+    </div>
     </div>
 
     <div v-for="(publisher, index) in publisherArray" class = "publisherContainer">
@@ -72,5 +101,33 @@ export default {
         margin-bottom: 40px;
         font-family: 'Lobster', cursive;
         border-radius: 15px;
+    }
+    h2 {
+        display: block; 
+        font-size: 1.5em; 
+        margin-top: 0.83em;
+        margin-bottom: 0.83em; 
+        margin-left: 0; 
+        margin-right: 0; 
+        font-weight: bold;
+    }
+    ol {
+        /* background-color: pink; */
+        display: block; 
+        list-style-type: decimal; 
+        margin-top: 1em; 
+        margin-bottom: 1em; 
+        margin-left: 0; 
+        margin-right: 0; 
+        padding-left: 40px;
+    }
+    .publisherExplain {
+        background-color: #cd8de5ff;
+        border-radius: 15px;
+        margin-bottom: 35px;
+        padding: 10px;
+    }
+    #data {
+        margin-top: -20px;
     }
 </style>
