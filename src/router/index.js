@@ -10,6 +10,7 @@ const router = createRouter({
     },
     {
       path: '/topic/:topicID',
+      name: 'topic',
       component: () => import('@/views/Post.vue')
     },
     {
