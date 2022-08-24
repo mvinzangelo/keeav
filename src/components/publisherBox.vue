@@ -37,6 +37,7 @@ export default {
     .ImageLogo {
         width: 100px;
         border-radius: 100%;
+        height: 100px;
         
     }
     .pname {
