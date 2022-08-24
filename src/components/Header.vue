@@ -43,9 +43,12 @@ export default {
         Out</button> -->
       <div class="right-cluster">
         <ol class="nav-links">
-          <li>topics</li>
           <li>
-          <RouterLink to="/publisher">publisher</RouterLink></li>
+            <RouterLink to="/all-topics">topics</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/publisher">publisher</RouterLink>
+          </li>
 
         </ol>
         <button v-if="this.loginStore.userID == ''" class="profile">
@@ -100,7 +103,8 @@ main {
   width: 100%;
 }
 
-.nav-links, a {
+.nav-links,
+a {
   font-size: 1.5rem;
   display: flex;
   gap: 40px;
@@ -151,7 +155,8 @@ img {
   border-radius: 50%;
 }
 
-li:hover, a:hover {
+li:hover,
+a:hover {
   color: var(--bright-lilac);
 
 }
