@@ -20,10 +20,18 @@ export default {
 }
 </script>
 <template>
-<h2 class = "pname"> {{publisherName}}</h2>
-<a :href="publisherWebsite" target="_blank"> <img alt="publisher logo" :src="publisherLogo"/></a>
-<progress class="bias" max='100' :value="publisherBias"></progress>
+<div>
+    <a :href="publisherWebsite" target="_blank"> <img alt="publisher logo" class="ImageLogo" :src="publisherLogo"/></a>
+</div>
+<div>
+    <h2 class = "pname"> {{publisherName}}</h2>
+    <progress class="bias" max='100' :value="publisherBias"></progress>
+</div>
+<!-- <h2 class = "pname"> {{publisherName}}</h2> -->
+<!-- <progress class="bias" max='100' :value="publisherBias"></progress> -->
 </template>
 <style scoped>
-    /* Styles for component go here */
+    .ImageLogo {
+        width: 100px;
+    }
 </style>

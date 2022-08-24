@@ -52,8 +52,8 @@ export default {
         <!-- <p> Main paragraph from Eddie</p> -->
     </div>
 
-    <div v-for="(publisher, index) in publisherArray" id = "publisherContainer">
-        <PublisherBox 
+    <div v-for="(publisher, index) in publisherArray" class = "publisherContainer">
+        <PublisherBox
             :publisherName = "publisherArray[index].politicPublisher"
             :publisherWebsite = "publisherArray[index].publisherData.website"
             :publisherLogo = "publisherArray[index].publisherData.publisherLogoLink"
@@ -65,5 +65,8 @@ export default {
 
 </template>
 <style scoped>
-    /* Styles for component go here */
+    .publisherContainer{
+        display: inline-flex;
+        background-color: purple;
+    }
 </style>
