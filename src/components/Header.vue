@@ -38,9 +38,9 @@ export default {
         </div>
       </button>
 
-      <!-- <button style="position:absolute; right:6.25rem" v-if="this.loginStore.userID" id="compAlign"
+      <button style="position:absolute; right:110px; top:7rem" v-if="this.loginStore.userID" id="compAlign"
         @click="signOut()">Sign
-        Out</button> -->
+        Out</button>
       <div class="right-cluster">
         <ol class="nav-links">
           <li>
