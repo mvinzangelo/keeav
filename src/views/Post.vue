@@ -132,6 +132,10 @@ export default {
     justify-content: center;
 }
 
+.topic-text {
+    width: calc(100% - 400px);
+}
+
 .date {
     text-align: center;
     font-size: 2rem;
