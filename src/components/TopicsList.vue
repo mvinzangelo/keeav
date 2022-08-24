@@ -57,3 +57,12 @@ export default {
     </div>
 </template>
 
+<style>
+.topics-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>
+
