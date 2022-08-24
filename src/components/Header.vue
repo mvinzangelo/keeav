@@ -38,9 +38,6 @@ export default {
         </div>
       </button>
 
-      <button style="position:absolute; right:110px; top:7rem" v-if="this.loginStore.userID" id="compAlign"
-        @click="signOut()">Sign
-        Out</button>
       <div class="right-cluster">
         <ol class="nav-links">
           <li>
@@ -49,7 +46,10 @@ export default {
           <li>
             <RouterLink to="/publisher">publisher</RouterLink>
           </li>
-
+          <li v-if="this.loginStore.userID">
+            <button v-if="this.loginStore.userID" id="logo-button" @click="signOut()">Sign
+              Out</button>
+          </li>
         </ol>
         <button v-if="this.loginStore.userID == ''" class="profile">
           <RouterLink to="/login"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
