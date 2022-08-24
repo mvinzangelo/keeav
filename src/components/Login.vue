@@ -2,7 +2,7 @@
 // local functions can be decalred here
 import { db, auth, storage } from '../firebaseResources.js';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { setDoc, doc, getDoc, query, getDocs } from "firebase/firestore";
+import { setDoc, doc, getDoc, query, getDocs, collection, where} from "firebase/firestore";
 import { mapStores } from 'pinia';
 import { useLoginStore } from "../stores/loginStatus";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "@firebase/auth";
@@ -61,18 +61,23 @@ export default {
                 const queryEmail = query(userRef, where('email','==', this.email))
                 const querySnapshot1 = await getDocs(queryEmail);
 
-                if(querySnapshot.docs[0].data().userName == this.userName){
+                if(!querySnapshot.empty){
                     this.errorUsername = true;
                 }
-                else if(querySnapshot.docs[0].data().email == this.email){
+                else{
+                    this.errorUsername = false;
+                }
+                if(!querySnapshot1.empty){
                     this.errorEmail = true;
                 }
                 else{
                     this.errorEmail = false;
+                }
+                if(querySnapshot.empty && querySnapshot1.empty){
+                    this.errorEmail = false;
                     this.errorUsername = false;
                     this.createUser();
                 }
-
             }
             catch(error){
                 console.log(error);
@@ -175,7 +180,7 @@ export default {
         <div>
             <p>Email:</p>
             <input type="text" v-model="email" placeholder="'john@doe.com'" />
-            <p class='errorMsg' v-if="errorEmail">Username has been taken.</p>
+            <p class='errorMsg' v-if="errorEmail">Email has been taken.</p>
             <p>Password:</p>
             <input type="password" @keypress.enter="createAcc ? signIn() : createUser()" v-model="pass"
                 placeholder="'Password'" />
@@ -192,6 +197,11 @@ export default {
 </template>
 
     <style scoped>
+
+    .errorMsg {
+        color: red;
+        margin-bottom: 10px;
+    }
     .imagePreviewWrapper {
         width: 12rem;
         border-radius: 50%;
