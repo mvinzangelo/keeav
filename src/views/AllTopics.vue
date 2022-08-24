@@ -1,9 +1,9 @@
 <script setup>
 
 import TopicsList from '../components/TopicsList.vue'
+import TopicBox from '../components/TopicBox.vue'
 </script>
 
 <template>
-    <h1>This is the topics</h1>
-    <TopicsList></TopicsList>
+    <TopicsList />
 </template>
