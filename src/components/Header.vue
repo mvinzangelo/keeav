@@ -47,10 +47,9 @@ export default {
             <RouterLink to="/all-topics">topics</RouterLink>
           </li>
           <li>
-            <RouterLink to="/publisher">Publisher</RouterLink>
+            <RouterLink to="/publisher">publisher</RouterLink>
           </li>
-          <!-- <li>authors</li> -->
-          <!-- <li>transparency</li> -->
+
         </ol>
         <button v-if="this.loginStore.userID == ''" class="profile">
           <RouterLink to="/login"><img alt="Vue logo" src="@/assets/userPlaceholder.jpg" />
@@ -104,7 +103,8 @@ main {
   width: 100%;
 }
 
-.nav-links {
+.nav-links,
+a {
   font-size: 1.5rem;
   display: flex;
   gap: 40px;
@@ -155,7 +155,8 @@ img {
   border-radius: 50%;
 }
 
-li:hover {
+li:hover,
+a:hover {
   color: var(--bright-lilac);
 
 }
