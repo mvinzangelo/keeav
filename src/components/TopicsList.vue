@@ -10,6 +10,7 @@ import {
     query,
     where,
     deleteDoc,
+    orderBy,
 } from 'firebase/firestore'
 import TopicBox from '../components/TopicBox.vue';
 
@@ -25,7 +26,7 @@ export default {
     methods: {
         async getTopicsDB() {
             try {
-                let pcluster = query(collection(db, ("topics")));
+                let pcluster = query(collection(db, ("topics")), orderBy('date', "desc"));
                 const qSnap = await getDocs(pcluster); //pull database docs from firebase
                 qSnap.forEach((rdoc) => {
                     this.topicsArray.push({ topicID: rdoc.id, topicData: rdoc.data() });
@@ -35,6 +36,11 @@ export default {
                 alert("retrieve" + e);
             }
         },
+        postDateTime(inputDate) {
+            let date = new Date(inputDate.seconds * 1000).toDateString();
+            date = date.slice(3, date.length);
+            return date;
+        }
     },
     beforeMount() {
         this.getTopicsDB();
@@ -46,7 +52,7 @@ export default {
 <template>
     <div v-for="(topic, index) in topicsArray" class="topics-container">
         <TopicBox :topicID="topicsArray[index].topicID" :topic="topicsArray[index].topicData.topic"
-            :date="topicsArray[index].topicData.date">
+            :date="postDateTime(topicsArray[index].topicData.date)">
         </TopicBox>
     </div>
 </template>

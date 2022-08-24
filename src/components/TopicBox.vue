@@ -2,7 +2,7 @@
 export default {
     props: {
         topic: String,
-        date: Number,
+        date: String,
         topicID: String,
     },
     data() {
