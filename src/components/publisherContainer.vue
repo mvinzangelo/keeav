@@ -67,6 +67,10 @@ export default {
 <style scoped>
     .publisherContainer{
         display: inline-flex;
-        background-color: purple;
+        background-color: #cd8de5ff;
+        padding: 10px;
+        margin-bottom: 40px;
+        font-family: 'Lobster', cursive;
+        border-radius: 15px;
     }
 </style>
